@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Ferranfg\Base\Tests;
 
 class ExampleTest extends TestCase
 {

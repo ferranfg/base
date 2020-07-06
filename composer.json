@@ -1,22 +1,22 @@
 {
-    "name": "spatie/:package_name",
-    "description": ":package_description",
+    "name": "ferranfg/base",
+    "description": "",
     "keywords": [
-        "spatie",
-        ":package_name"
+        "ferranfg",
+        "base"
     ],
-    "homepage": "https://github.com/spatie/:package_name",
+    "homepage": "https://github.com/ferranfg/base",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": "https://spatie.be",
+            "name": "Ferran Figueredo",
+            "email": "ferranfg@gmail.com",
+            "homepage": "https://ferranfigueredo.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4"
+        "php": "^7.3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Ferranfg\\Base\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Ferranfg\\Base\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,10 +47,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "Ferranfg\\Base\\BaseServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "Base": "Ferranfg\\Base\\BaseFacade"
             }
         }
     },

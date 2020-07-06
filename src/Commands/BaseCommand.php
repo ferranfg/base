@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Skeleton\Commands;
+namespace Ferranfg\Base\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class BaseCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'base';
 
     public $description = 'My command';
 
