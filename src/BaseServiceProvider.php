@@ -2,14 +2,16 @@
 
 namespace Ferranfg\Base;
 
+use Laravel\Cashier\Cashier;
 use Illuminate\Support\ServiceProvider;
-use Ferranfg\Base\Commands\BaseCommand;
+use Ferranfg\Base\Commands\InstallCommand;
 
 class BaseServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole())
+        {
             $this->publishes([
                 __DIR__.'/../config/base.php' => config_path('base.php'),
             ], 'config');
@@ -18,14 +20,22 @@ class BaseServiceProvider extends ServiceProvider
                 __DIR__.'/../resources/views' => base_path('resources/views/vendor/base'),
             ], 'views');
 
-            if (! class_exists('CreatePackageTable')) {
+            if ( ! class_exists('CreatePackageTable'))
+            {
+                $time = date('Y_m_d_His', time());
+
                 $this->publishes([
-                    __DIR__ . '/../database/migrations/create_base_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_base_table.php'),
+                    // Spatie
+                    __DIR__ . '/../database/migrations/create_tags_table.php.stub' => database_path("migrations/{$time}_create_tags_table.php"),
+                    __DIR__ . '/../database/migrations/create_activity_log_table.php.stub' => database_path("migrations/{$time}_create_activity_log_table.php"),
+                    // Base
+                    __DIR__ . '/../database/migrations/create_posts_table.php.stub' => database_path("migrations/{$time}_create_posts_table.php"),
+                    __DIR__ . '/../database/migrations/create_comments_table.php.stub' => database_path("migrations/{$time}_create_comments_table.php"),
                 ], 'migrations');
             }
 
             $this->commands([
-                BaseCommand::class,
+                InstallCommand::class,
             ]);
         }
 
@@ -35,5 +45,7 @@ class BaseServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/base.php', 'base');
+
+        Cashier::ignoreMigrations();
     }
 }

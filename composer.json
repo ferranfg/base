@@ -16,7 +16,12 @@
         }
     ],
     "require": {
-        "php": "^7.3"
+        "php": "^7.3",
+        "laravel/nova": "^3.7",
+        "laravel/spark-aurelius": "^10.0",
+        "ramsey/uuid": "^3.7",
+        "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-tags": "^2.6"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
@@ -47,7 +52,9 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ferranfg\\Base\\BaseServiceProvider"
+                "Ferranfg\\Base\\BaseServiceProvider",
+                "Laravel\\Spark\\Providers\\SparkServiceProvider",
+                "Laravel\\Cashier\\CashierServiceProvider"
             ],
             "aliases": {
                 "Base": "Ferranfg\\Base\\BaseFacade"
