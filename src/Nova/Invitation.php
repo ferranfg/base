@@ -2,12 +2,11 @@
 
 namespace Ferranfg\Base\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 
 class Invitation extends Resource
 {
@@ -31,7 +30,7 @@ class Invitation extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'email'
+        'id', 'email',
     ];
 
     /**
@@ -49,10 +48,9 @@ class Invitation extends Resource
 
             BelongsTo::make('Team'),
 
-            Boolean::make('Expired', function ()
-            {
+            Boolean::make('Expired', function () {
                 return $this->isExpired();
-            })
+            }),
         ];
     }
 

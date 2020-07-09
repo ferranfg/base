@@ -2,15 +2,14 @@
 
 namespace Ferranfg\Base\Nova\Actions;
 
-use Laravel\Spark\Spark;
 use Illuminate\Bus\Queueable;
-use Laravel\Nova\Actions\Action;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
 use Laravel\Spark\Contracts\Interactions\Settings\Teams\SendInvitation;
+use Laravel\Spark\Spark;
 
 class EmailTeamInvitation extends Action
 {
@@ -25,8 +24,7 @@ class EmailTeamInvitation extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        foreach ($models as $invitation)
-        {
+        foreach ($models as $invitation) {
             Spark::interact(SendInvitation::class, [$invitation->team, $invitation->email, $invitation->role]);
         }
     }

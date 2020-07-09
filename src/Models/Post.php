@@ -2,8 +2,8 @@
 
 namespace Ferranfg\Base\Models;
 
-use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Tags\HasTags;
 
 class Post extends Model
 {
@@ -30,7 +30,7 @@ class Post extends Model
      */
     public static $status = [
         'draft' => 'Draft',
-        'published' => 'Published'
+        'published' => 'Published',
     ];
 
     /**
@@ -40,7 +40,7 @@ class Post extends Model
      */
     public static $types = [
         'post' => 'Post',
-        'page' => 'Page'
+        'page' => 'Page',
     ];
 
     /**
