@@ -19,4 +19,16 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = ['*'];
+
+
+    public function author()
+    {
+
+    }
+
+    public function post()
+    {
+
+    }
+
 }

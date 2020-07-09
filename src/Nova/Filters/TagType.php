@@ -6,7 +6,7 @@ use Ferranfg\Base\Base;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class PostStatus extends Filter
+class TagType extends Filter
 {
     /**
      * Apply the filter to the given query.
@@ -18,7 +18,7 @@ class PostStatus extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('status', $value);
+        return $query->where('type', $value);
     }
 
     /**
@@ -29,6 +29,6 @@ class PostStatus extends Filter
      */
     public function options(Request $request)
     {
-        return array_flip(Base::post()::$status);
+        return array_flip(Base::tag()::$types);
     }
 }

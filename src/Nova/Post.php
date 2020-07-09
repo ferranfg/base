@@ -57,11 +57,11 @@ class Post extends Resource
 
             Select::make('Status')
                 ->rules('required')
-                ->options(Base::postModel()::$status),
+                ->options(Base::post()::$status),
 
             Select::make('Type')
                 ->rules('required')
-                ->options(Base::postModel()::$types),
+                ->options(Base::post()::$types),
 
             Markdown::make('Content')
                 ->rules('required'),

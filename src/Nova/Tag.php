@@ -2,10 +2,12 @@
 
 namespace Ferranfg\Base\Nova;
 
+use Ferranfg\Base\Base;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Ferranfg\Base\Nova\Filters\TagType;
 
 class Tag extends Resource
 {
@@ -33,16 +35,6 @@ class Tag extends Resource
     ];
 
     /**
-     * The available types values.
-     *
-     * @var array
-     */
-    public static $types = [
-        'tag' => 'Tag',
-        'category' => 'Category',
-    ];
-
-    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -58,7 +50,7 @@ class Tag extends Resource
 
             Select::make('Type')
                 ->rules('required')
-                ->options(self::$types),
+                ->options(Base::tag()::$types),
         ];
     }
 
@@ -81,7 +73,9 @@ class Tag extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new TagType,
+        ];
     }
 
     /**

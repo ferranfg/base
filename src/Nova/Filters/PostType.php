@@ -29,6 +29,6 @@ class PostType extends Filter
      */
     public function options(Request $request)
     {
-        return array_flip(Base::postModel()::$types);
+        return array_flip(Base::post()::$types);
     }
 }
