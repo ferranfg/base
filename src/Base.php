@@ -20,5 +20,4 @@ class Base
     {
         return static::$postModel;
     }
-
 }

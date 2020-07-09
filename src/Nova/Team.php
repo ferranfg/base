@@ -2,15 +2,13 @@
 
 namespace Ferranfg\Base\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 
 class Team extends Resource
 {
@@ -34,7 +32,7 @@ class Team extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name'
+        'id', 'name',
     ];
 
     /**
@@ -52,13 +50,11 @@ class Team extends Resource
 
             BelongsTo::make('Owner', 'owner', User::class),
 
-            Number::make('Users', function ()
-            {
+            Number::make('Users', function () {
                 return $this->users()->count();
             }),
 
-            Number::make('Invitations', function ()
-            {
+            Number::make('Invitations', function () {
                 return $this->invitations()->count();
             }),
 

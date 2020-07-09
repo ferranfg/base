@@ -3,16 +3,15 @@
 namespace Ferranfg\Base\Nova;
 
 use Ferranfg\Base\Base;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Markdown;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\MorphToMany;
-use Ferranfg\Base\Nova\Filters\PostType;
 use Ferranfg\Base\Nova\Filters\PostStatus;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Ferranfg\Base\Nova\Filters\PostType;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 
 class Post extends Resource
 {
@@ -36,7 +35,7 @@ class Post extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'title'
+        'id', 'title',
     ];
 
     /**
@@ -92,7 +91,7 @@ class Post extends Resource
     {
         return [
             new PostType,
-            new PostStatus
+            new PostStatus,
         ];
     }
 

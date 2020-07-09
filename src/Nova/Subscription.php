@@ -2,12 +2,11 @@
 
 namespace Ferranfg\Base\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Stripe\Subscription as StripeSubscription;
 
 class Subscription extends Resource
@@ -32,7 +31,7 @@ class Subscription extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'stripe_id'
+        'id', 'name', 'stripe_id',
     ];
 
     /**
@@ -59,8 +58,8 @@ class Subscription extends Resource
                 StripeSubscription::STATUS_TRIALING => 'info',
                 StripeSubscription::STATUS_UNPAID => 'warning',
                 StripeSubscription::STATUS_INCOMPLETE => 'danger',
-                StripeSubscription::STATUS_INCOMPLETE_EXPIRED => 'danger'
-            ])
+                StripeSubscription::STATUS_INCOMPLETE_EXPIRED => 'danger',
+            ]),
         ];
     }
 

@@ -2,8 +2,8 @@
 
 namespace Ferranfg\Base\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Ferranfg\Base\BaseServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

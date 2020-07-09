@@ -2,16 +2,15 @@
 
 namespace Ferranfg\Base;
 
-use Laravel\Cashier\Cashier;
-use Illuminate\Support\ServiceProvider;
 use Ferranfg\Base\Commands\InstallCommand;
+use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Cashier;
 
 class BaseServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        if ($this->app->runningInConsole())
-        {
+        if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/base.php' => config_path('base.php'),
             ], 'config');
@@ -20,8 +19,7 @@ class BaseServiceProvider extends ServiceProvider
                 __DIR__.'/../resources/views' => base_path('resources/views/vendor/base'),
             ], 'views');
 
-            if ( ! class_exists('CreatePackageTable'))
-            {
+            if (! class_exists('CreatePackageTable')) {
                 $time = date('Y_m_d_His', time());
 
                 $this->publishes([

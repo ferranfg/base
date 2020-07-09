@@ -2,8 +2,8 @@
 
 namespace Ferranfg\Base\Models;
 
-use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Tags\HasTags;
 
 class Product extends Model
 {
@@ -15,5 +15,4 @@ class Product extends Model
      * @var string
      */
     protected $table = 'posts';
-
 }

@@ -4,9 +4,8 @@ namespace Ferranfg\Base\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Text;
 
 class Tag extends Resource
 {
@@ -30,7 +29,7 @@ class Tag extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name'
+        'id', 'name',
     ];
 
     /**
@@ -40,7 +39,7 @@ class Tag extends Resource
      */
     public static $types = [
         'tag' => 'Tag',
-        'category' => 'Category'
+        'category' => 'Category',
     ];
 
     /**
