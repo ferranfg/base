@@ -2,9 +2,9 @@
 
 namespace Ferranfg\Base\Exceptions;
 
-use Monolog\Logger;
-use Monolog\Handler\PsrHandler;
 use Google\Cloud\Logging\LoggingClient;
+use Monolog\Handler\PsrHandler;
+use Monolog\Logger;
 
 class Stackdriver
 {
