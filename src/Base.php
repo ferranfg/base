@@ -2,9 +2,24 @@
 
 namespace Ferranfg\Base;
 
+use Laravel\Spark\Spark;
 use Ferranfg\Base\Configuration\ManagesModelOptions;
 
-class Base
+class Base extends Spark
 {
     use ManagesModelOptions;
+
+    /**
+     * The user model class name.
+     *
+     * @var string
+     */
+    public static $userModel = 'App\User';
+
+    /**
+     * The team model class name.
+     *
+     * @var string
+     */
+    public static $teamModel = 'Ferranfg\Base\Models\Team';
 }

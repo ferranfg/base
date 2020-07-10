@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Ferranfg\Base\Base;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
@@ -65,6 +66,14 @@ class Product extends Model
      */
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(Base::$userModel, 'owner_id');
+    }
+
+    /**
+     * Get the comments of the product.
+     */
+    public function comments()
+    {
+        return $this->morphMany(Base::$commentModel, 'commentable');
     }
 }

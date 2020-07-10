@@ -4,6 +4,7 @@ namespace Ferranfg\Base;
 
 use Blade;
 use Ferranfg\Base\Base;
+use Laravel\Spark\Spark;
 use Laravel\Cashier\Cashier;
 use Illuminate\Support\ServiceProvider;
 use Spatie\NovaTranslatable\Translatable;
@@ -61,5 +62,8 @@ class BaseServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/base.php', 'base');
 
         Cashier::ignoreMigrations();
+
+        Spark::useUserModel(Base::$userModel);
+        Spark::useTeamModel(Base::$teamModel);
     }
 }

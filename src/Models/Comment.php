@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Ferranfg\Base\Base;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -20,15 +21,22 @@ class Comment extends Model
      */
     protected $fillable = ['*'];
 
+    /**
+     * The available types values.
+     *
+     * @var array
+     */
+    public static $types = [
+        'reply' => 'Reply',
+        'review' => 'Review',
+    ];
 
+    /**
+     * Get the author of the commnent.
+     */
     public function author()
     {
-
-    }
-
-    public function post()
-    {
-
+        return $this->belongsTo(Base::$userModel, 'author_id');
     }
 
 }

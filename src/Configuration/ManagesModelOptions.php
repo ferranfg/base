@@ -5,6 +5,13 @@ namespace Ferranfg\Base\Configuration;
 trait ManagesModelOptions
 {
     /**
+     * The comment model class name.
+     *
+     * @var string
+     */
+    public static $commentModel = 'Ferranfg\Base\Models\Comment';
+
+    /**
      * The post model class name.
      *
      * @var string
@@ -24,6 +31,27 @@ trait ManagesModelOptions
      * @var string
      */
     public static $tagModel = 'Ferranfg\Base\Models\Tag';
+
+    /**
+     * Set the comment model class name.
+     *
+     * @param  string  $commentModel
+     * @return void
+     */
+    public static function useCommentModel($commentModel)
+    {
+        static::$commentModel = $commentModel;
+    }
+
+    /**
+     * Get a new comment model instance.
+     *
+     * @return \Ferranfg\Base\Models\Comment
+     */
+    public static function comment()
+    {
+        return new static::$commentModel;
+    }
 
     /**
      * Set the post model class name.

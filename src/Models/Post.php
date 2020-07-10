@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Ferranfg\Base\Base;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
@@ -59,6 +60,14 @@ class Post extends Model
      */
     public function author()
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(Base::$userModel, 'author_id');
+    }
+
+    /**
+     * Get the comments of the post.
+     */
+    public function comments()
+    {
+        return $this->morphMany(Base::$commentModel, 'commentable');
     }
 }
