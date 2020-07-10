@@ -13,10 +13,13 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('post_id')->index();
             $table->unsignedBigInteger('author_id')->index()->nullable();
+            $table->unsignedBigInteger('reply_to_id')->index()->nullable();
             $table->string('author_email')->nullable();
             $table->string('author_url')->nullable();
             $table->string('author_IP')->nullable();
             $table->text('content');
+            $table->string('rating')->nullable();
+            $table->string('type')->index();
             $table->timestamps();
         });
     }

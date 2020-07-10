@@ -24,6 +24,7 @@
         "ramsey/uuid": "^3.7",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-tags": "^2.6",
+        "spatie/nova-translatable": "^3.0",
         "superbalist/laravel-google-cloud-storage": "^2.2"
     },
     "require-dev": {

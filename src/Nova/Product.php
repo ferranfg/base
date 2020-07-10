@@ -5,25 +5,27 @@ namespace Ferranfg\Base\Nova;
 use Ferranfg\Base\Base;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
-use Ferranfg\Base\Nova\Filters\PostType;
 use Spatie\NovaTranslatable\Translatable;
-use Ferranfg\Base\Nova\Filters\PostStatus;
+use Ferranfg\Base\Nova\Filters\ProductType;
+use Ferranfg\Base\Nova\Filters\ProductStatus;
 
-class Post extends Resource
+class Product extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'Ferranfg\Base\Models\Post';
+    public static $model = 'Ferranfg\Base\Models\Product';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -62,8 +64,13 @@ class Post extends Resource
                     ->rules('required'),
             ]),
 
-            BelongsTo::make('Author', 'author', User::class)
-                ->rules('required'),
+            Number::make('Amount')
+                ->onlyOnForms(),
+
+            Select::make('Currency')
+                ->options(Base::product()::$currencies)
+                ->onlyOnForms()
+                ->displayUsingLabels(),
 
             Image::make('Photo Url')
                 ->onlyOnForms(),
@@ -71,14 +78,20 @@ class Post extends Resource
             Text::make('Video Url')
                 ->onlyOnForms(),
 
+            File::make('Attached Url')
+                ->onlyOnForms(),
+
+            BelongsTo::make('Owner', 'owner', User::class)
+                ->rules('required'),
+
             Select::make('Type')
                 ->rules('required')
-                ->options(Base::post()::$types)
+                ->options(Base::product()::$types)
                 ->displayUsingLabels(),
 
             Select::make('Status')
                 ->rules('required')
-                ->options(Base::post()::$status)
+                ->options(Base::product()::$status)
                 ->displayUsingLabels(),
 
             MorphToMany::make('Tags'),
@@ -105,8 +118,8 @@ class Post extends Resource
     public function filters(Request $request)
     {
         return [
-            new PostType,
-            new PostStatus,
+            new ProductType,
+            new ProductStatus,
         ];
     }
 

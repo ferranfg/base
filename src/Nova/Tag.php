@@ -3,11 +3,14 @@
 namespace Ferranfg\Base\Nova;
 
 use Ferranfg\Base\Base;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
 use Ferranfg\Base\Nova\Filters\TagType;
+use Spatie\NovaTranslatable\Translatable;
 
 class Tag extends Resource
 {
@@ -45,12 +48,19 @@ class Tag extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
-                ->rules('required'),
+            Translatable::make([
+                Text::make('Name')
+                    ->rules('required'),
+
+                Textarea::make('Description'),
+            ]),
+
+            Image::make('Photo Url'),
 
             Select::make('Type')
                 ->rules('required')
-                ->options(Base::tag()::$types),
+                ->options(Base::tag()::$types)
+                ->displayUsingLabels(),
         ];
     }
 

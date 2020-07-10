@@ -2,12 +2,15 @@
 
 namespace Ferranfg\Base\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\Tags\HasTags;
+use Spatie\Tags\HasSlug;
+use Ferranfg\Base\Traits\HasMetadata;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
-    use HasTags;
+    use HasTags, HasTranslations, HasSlug, HasMetadata;
 
     /**
      * The database table used by the model.
@@ -21,7 +24,14 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'slug', 'content'];
+    protected $fillable = ['name', 'slug', 'excerpt', 'content'];
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    public $translatable = ['name', 'slug', 'excerpt', 'content'];
 
     /**
      * The available status values.
@@ -39,8 +49,9 @@ class Post extends Model
      * @var array
      */
     public static $types = [
-        'post' => 'Post',
+        'entry' => 'Entry',
         'page' => 'Page',
+        'newsletter' => 'Newsletter',
     ];
 
     /**

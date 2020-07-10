@@ -10,9 +10,11 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->json('name');
-            $table->json('slug');
-            $table->string('type')->nullable();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->text('photo_url')->nullable();
+            $table->string('type')->index();
             $table->integer('order_column')->nullable();
             $table->timestamps();
         });
