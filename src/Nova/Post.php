@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
@@ -54,6 +55,7 @@ class Post extends Resource
 
             Translatable::make([
                 Text::make('Name')
+                    ->sortable()
                     ->rules('required'),
 
                 Textarea::make('Excerpt'),
@@ -63,6 +65,7 @@ class Post extends Resource
             ]),
 
             BelongsTo::make('Author', 'author', User::class)
+                ->sortable()
                 ->rules('required'),
 
             Image::make('Photo Url')
@@ -80,6 +83,11 @@ class Post extends Resource
                 ->rules('required')
                 ->options(Base::post()::$status)
                 ->displayUsingLabels(),
+
+            Number::make('Comments', function ()
+            {
+                return $this->comments()->count();
+            }),
 
             MorphToMany::make('Tags'),
         ];

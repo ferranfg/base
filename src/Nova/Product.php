@@ -56,6 +56,7 @@ class Product extends Resource
 
             Translatable::make([
                 Text::make('Name')
+                    ->sortable()
                     ->rules('required'),
 
                 Textarea::make('Excerpt'),
@@ -65,6 +66,7 @@ class Product extends Resource
             ]),
 
             Number::make('Amount')
+                ->sortable()
                 ->onlyOnForms(),
 
             Select::make('Currency')
@@ -82,6 +84,7 @@ class Product extends Resource
                 ->onlyOnForms(),
 
             BelongsTo::make('Owner', 'owner', User::class)
+                ->sortable()
                 ->rules('required'),
 
             Select::make('Type')
@@ -93,6 +96,11 @@ class Product extends Resource
                 ->rules('required')
                 ->options(Base::product()::$status)
                 ->displayUsingLabels(),
+
+            Number::make('Comments', function ()
+            {
+                return $this->comments()->count();
+            }),
 
             MorphToMany::make('Tags'),
         ];
