@@ -8,7 +8,7 @@ class PostRepository
 {
     public function whereType($type)
     {
-        return Base::post()->with('metadata')->whereType($type)->paginate();
+        return Base::post()->with('metadata')->whereType($type);
     }
 
     public function findBySlug(string $slug, string $locale = null)

@@ -19,7 +19,7 @@ class TagController extends Controller
 
     public function all(Request $request)
     {
-        return $this->tagRepository->whereType($request->type);
+        return $this->tagRepository->whereType($request->type)->paginate();
     }
 
     public function show(Request $request)

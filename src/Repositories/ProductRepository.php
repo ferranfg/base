@@ -8,7 +8,7 @@ class ProductRepository
 {
     public function whereType($type)
     {
-        return Base::product()->with('metadata')->whereType($type)->paginate();
+        return Base::product()->with('metadata')->whereType($type);
     }
 
     public function findBySlug(string $slug, string $locale = null)
