@@ -6,9 +6,9 @@ use Ferranfg\Base\Base;
 
 class PostRepository
 {
-    public function paginate()
+    public function withType($type)
     {
-        return Base::post()->with('tags')->paginate();
+        return Base::post()->with('metadata')->withType($type)->paginate();
     }
 
     public function findBySlug(string $slug, string $locale = null)
