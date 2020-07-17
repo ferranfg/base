@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base;
 
+use Laravel\Spark\Spark;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -12,5 +13,17 @@ class BaseFacade extends Facade
     protected static function getFacadeAccessor()
     {
         return 'base';
+    }
+
+    /**
+     * Get the default JavaScript variables for Spark.
+     *
+     * @return array
+     */
+    public static function scriptVariables()
+    {
+        return array_merge(Spark::scriptVariables(), [
+            'locale' => config('app.locale')
+        ]);
     }
 }
