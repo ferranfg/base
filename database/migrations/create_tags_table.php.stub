@@ -8,18 +8,21 @@ class CreateTagsTable extends Migration
 {
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->text('photo_url')->nullable();
+            $table->string('icon')->nullable();
             $table->string('type')->index();
             $table->integer('order_column')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('taggables', function (Blueprint $table) {
+        Schema::create('taggables', function (Blueprint $table)
+        {
             $table->integer('tag_id')->unsigned();
             $table->morphs('taggable');
 
