@@ -12,6 +12,13 @@ trait ManagesModelOptions
     public static $commentModel = 'Ferranfg\Base\Models\Comment';
 
     /**
+     * The event model class name.
+     *
+     * @var string
+     */
+    public static $eventModel = 'Ferranfg\Base\Models\Event';
+
+    /**
      * The post model class name.
      *
      * @var string
@@ -51,6 +58,27 @@ trait ManagesModelOptions
     public static function comment()
     {
         return new static::$commentModel;
+    }
+
+    /**
+     * Set the event model class name.
+     *
+     * @param  string  $eventModel
+     * @return void
+     */
+    public static function useEventModel($eventModel)
+    {
+        static::$eventModel = $eventModel;
+    }
+
+    /**
+     * Get a new event model instance.
+     *
+     * @return \Ferranfg\Base\Models\Event
+     */
+    public static function event()
+    {
+        return new static::$eventModel;
     }
 
     /**

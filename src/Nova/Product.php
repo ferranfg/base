@@ -59,9 +59,7 @@ class Product extends Resource
                     ->sortable()
                     ->rules('required'),
 
-                Textarea::make('Excerpt'),
-
-                Markdown::make('Content')
+                Markdown::make('Description')
                     ->rules('required'),
             ]),
 

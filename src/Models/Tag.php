@@ -15,7 +15,7 @@ class Tag extends SpatieTag
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'type', 'description', 'photo_url'];
+    protected $fillable = ['name', 'slug', 'type', 'description', 'icon', 'photo_url'];
 
     /**
      * The attributes that are translatable.

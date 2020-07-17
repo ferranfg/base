@@ -5,20 +5,21 @@ namespace Ferranfg\Base\Models;
 use Ferranfg\Base\Base;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\HasSlug;
+use Ferranfg\Base\Traits\HasUuid;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
-class Product extends Model
+class Event extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, HasUuid;
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'products';
+    protected $table = 'events';
 
     /**
      * The attributes that are mass assignable.
@@ -35,33 +36,6 @@ class Product extends Model
     public $translatable = ['name', 'slug', 'description'];
 
     /**
-     * The available status values.
-     *
-     * @var array
-     */
-    public static $status = [
-        'available' => 'Available'
-    ];
-
-    /**
-     * The available types values.
-     *
-     * @var array
-     */
-    public static $types = [
-        'download' => 'Download'
-    ];
-
-    /**
-     * The available product currencies.
-     *
-     * @var array
-     */
-    public static $currencies = [
-        'eur' => 'Euro (€)'
-    ];
-
-    /**
      * Get the owner of the product.
      */
     public function owner()
@@ -76,4 +50,5 @@ class Product extends Model
     {
         return $this->morphMany(Base::$commentModel, 'commentable');
     }
+
 }

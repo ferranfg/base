@@ -8,7 +8,7 @@ class TagRepository
 {
     public function withType($type)
     {
-        return Base::tag()->withType($type)->paginate();
+        return Base::tag()->with('metadata')->withType($type)->paginate();
     }
 
     public function findBySlug(string $slug, string $locale = null)

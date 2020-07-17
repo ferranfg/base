@@ -3,22 +3,20 @@
 namespace Ferranfg\Base\Nova;
 
 use Ferranfg\Base\Base;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\MorphTo;
+use Spatie\NovaTranslatable\Translatable;
 
-class User extends Resource
+class Metadata extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'Ferranfg\Base\Models\User';
+    public static $model = 'Ferranfg\Base\Models\Metadata';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -33,7 +31,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'name',
     ];
 
     /**
@@ -47,26 +45,21 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make(),
+            MorphTo::make('Parent')
+                ->types([
+                    User::class,
+                    Tag::class
+                ]),
 
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required'),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-            HasMany::make('Subscriptions'),
-
-            MorphMany::make('Metadata'),
+            Translatable::make([
+                Text::make('Value')
+                    ->sortable()
+                    ->rules('required'),
+            ]),
         ];
     }
 

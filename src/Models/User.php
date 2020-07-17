@@ -3,9 +3,12 @@
 namespace Ferranfg\Base\Models;
 
 use Laravel\Spark\User as SparkUser;
+use Ferranfg\Base\Traits\HasMetadata;
 
 class User extends SparkUser
 {
+    use HasMetadata;
+
     /**
      * The attributes that are mass assignable.
      *

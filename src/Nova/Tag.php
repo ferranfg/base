@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\MorphMany;
 use Ferranfg\Base\Nova\Filters\TagType;
 use Spatie\NovaTranslatable\Translatable;
 
@@ -57,10 +58,15 @@ class Tag extends Resource
 
             Image::make('Photo Url'),
 
+            Text::make('Icon')
+                ->onlyOnForms(),
+
             Select::make('Type')
                 ->rules('required')
                 ->options(Base::tag()::$types)
                 ->displayUsingLabels(),
+
+            MorphMany::make('Metadata'),
         ];
     }
 
