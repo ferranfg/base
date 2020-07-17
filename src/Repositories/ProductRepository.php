@@ -6,8 +6,15 @@ use Ferranfg\Base\Base;
 
 class ProductRepository
 {
-    public function paginate()
+    public function withType($type)
     {
-        return Base::product()->paginate();
+        return Base::product()->with('metadata')->withType($type)->paginate();
+    }
+
+    public function findBySlug(string $slug, string $locale = null)
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        return Base::product()->where("slug->{$locale}", $slug)->firstOrFail();
     }
 }

@@ -19,7 +19,7 @@ class PostController extends Controller
 
     public function all(Request $request)
     {
-        return $this->postRepository->paginate();
+        return $this->postRepository->withType($request->type);
     }
 
     public function show(Request $request)
