@@ -19,7 +19,7 @@ class PostController extends Controller
 
     public function all(Request $request)
     {
-        return $this->postRepository->withType($request->type);
+        return $this->postRepository->whereType($request->type);
     }
 
     public function show(Request $request)

@@ -6,9 +6,9 @@ use Ferranfg\Base\Base;
 
 class TagRepository
 {
-    public function withType($type)
+    public function whereType($type)
     {
-        return Base::tag()->with('metadata')->withType($type)->paginate();
+        return Base::tag()->with('metadata')->whereType($type)->paginate();
     }
 
     public function findBySlug(string $slug, string $locale = null)
