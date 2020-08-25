@@ -67,6 +67,8 @@ class BaseServiceProvider extends ServiceProvider
 
         Cashier::ignoreMigrations();
 
+        Spark::collectEuropeanVat('ES');
+
         Spark::useUserModel(Base::$userModel);
         Spark::useTeamModel(Base::$teamModel);
     }
