@@ -14,7 +14,7 @@ class Base extends Spark
      *
      * @var string
      */
-    public static $userModel = 'App\User';
+    public static $userModel = 'Ferranfg\Base\Models\User';
 
     /**
      * The team model class name.
