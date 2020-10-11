@@ -70,4 +70,20 @@ class Post extends Model
     {
         return $this->morphMany(Base::$commentModel, 'commentable');
     }
+
+    /**
+     * Get the post canonical URL.
+     */
+    public function getCanonicalUrlAttribute()
+    {
+        return url("blog/{$this->slug}");
+    }
+
+    /**
+     * Get the created at time in a human format.
+     */
+    public function getCreatedAtDiffAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
 }

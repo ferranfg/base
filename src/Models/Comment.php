@@ -15,11 +15,11 @@ class Comment extends Model
     protected $table = 'comments';
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['*'];
+    protected $guarded = ['id'];
 
     /**
      * The available types values.
@@ -39,4 +39,19 @@ class Comment extends Model
         return $this->belongsTo(Base::$userModel, 'author_id');
     }
 
+    /**
+     * Get the created at time in a human format.
+     */
+    public function getCreatedAtDiffAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    /**
+     * Get the user gravatar image attribute.
+     */
+    public function getAuthorPhotoUrlAttribute()
+    {
+        return 'https://secure.gravatar.com/avatar/' . md5($this->author_email);
+    }
 }
