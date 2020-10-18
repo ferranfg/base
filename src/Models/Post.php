@@ -80,6 +80,22 @@ class Post extends Model
     }
 
     /**
+     * Get the total words of this post.
+     */
+    public function getWordCountAttribute()
+    {
+        return str_word_count(strip_tags($this->content));
+    }
+
+    /**
+     * Get the total reading time needed for this post.
+     */
+    public function getReadingTimeAttribute()
+    {
+        return floor(bcdiv($this->word_count, 200));
+    }
+
+    /**
      * Get the created at time in a human format.
      */
     public function getCreatedAtDiffAttribute()

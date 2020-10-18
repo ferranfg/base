@@ -89,6 +89,9 @@ class Post extends Resource
                 return $this->comments()->count();
             }),
 
+            Number::make('Word Count')
+                ->onlyOnIndex(),
+
             MorphToMany::make('Tags'),
         ];
     }
