@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->text('content');
             $table->string('type')->index();
             $table->string('status')->index();
+            $table->boolean('featured')->default(false);
             $table->string('comment_status')->nullable();
             $table->timestamps();
         });

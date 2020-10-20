@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
@@ -63,6 +64,8 @@ class Post extends Resource
                 Markdown::make('Content')
                     ->rules('required'),
             ]),
+
+            Boolean::make('Featured'),
 
             BelongsTo::make('Author', 'author', User::class)
                 ->sortable()

@@ -30,6 +30,7 @@
         "superbalist/laravel-google-cloud-storage": "^2.2"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
         "friendsofphp/php-cs-fixer": "^2.16",
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^9.0",
