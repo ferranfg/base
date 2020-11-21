@@ -102,4 +102,21 @@ class Post extends Model
     {
         return $this->created_at->diffForHumans();
     }
+
+    /**
+     * Increases the _visits metadata with 1 visit
+     */
+    public function trackVisit()
+    {
+        $visits = $this->getMetadata('_visits');
+
+        if (is_null($visits)) $visits = 0;
+
+        $visits++;
+
+        $this->setMetadata('_visits', $visits);
+
+        return $this;
+    }
+
 }

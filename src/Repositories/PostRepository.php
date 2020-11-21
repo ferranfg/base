@@ -17,4 +17,25 @@ class PostRepository
 
         return Base::post()->where("slug->{$locale}", $slug)->firstOrFail();
     }
+
+    public function previousPost($post)
+    {
+        $previous_id = Base::post()
+            ->whereType($post->type)
+            ->where(Base::post()->getKeyName(), '<', $post->id)
+            ->max(Base::post()->getKeyName());
+
+        return Base::post()->find($previous_id);
+    }
+
+    public function nextPost($post)
+    {
+        $next_id = Base::post()
+            ->whereType($post->type)
+            ->where(Base::post()->getKeyName(), '>', $post->id)
+            ->min(Base::post()->getKeyName());
+
+        return Base::post()->find($next_id);
+    }
+
 }
