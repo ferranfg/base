@@ -13,7 +13,7 @@ class InstallCommand extends Command
 
     public function handle()
     {
-        Artisan::call('spark:install');
+        Artisan::call('spark:install', ['--mollie']);
 
         Artisan::call('nova:install');
 

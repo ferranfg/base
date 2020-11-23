@@ -39,6 +39,15 @@ class BaseServiceProvider extends ServiceProvider
                     __DIR__ . '/../database/migrations/create_comments_table.php.stub' => database_path("migrations/{$time}_create_comments_table.php"),
                     __DIR__ . '/../database/migrations/create_events_table.php.stub' => database_path("migrations/{$time}_create_events_table.php"),
                     __DIR__ . '/../database/migrations/create_metadata_table.php.stub' => database_path("migrations/{$time}_create_metadata_table.php"),
+                    // Mollie
+                    __DIR__ . '/../database/migrations/create_applied_coupons_table.php.stub' => database_path("migrations/{$time}_create_applied_coupons_table.php"),
+                    __DIR__ . '/../database/migrations/create_credits_table.php.stub' => database_path("migrations/{$time}_create_credits_table.php"),
+                    __DIR__ . '/../database/migrations/create_order_items_table.php.stub' => database_path("migrations/{$time}_create_order_items_table.php"),
+                    __DIR__ . '/../database/migrations/create_orders_table.php.stub' => database_path("migrations/{$time}_create_orders_table.php"),
+                    __DIR__ . '/../database/migrations/create_redeemed_coupons_table.php.stub' => database_path("migrations/{$time}_create_redeemed_coupons_table.php"),
+                    __DIR__ . '/../database/migrations/update_teams_table.php.stub' => database_path("migrations/{$time}_update_teams_table.php"),
+                    __DIR__ . '/../database/migrations/update_users_table.php.stub' => database_path("migrations/{$time}_update_users_table.php"),
+                    __DIR__ . '/../database/migrations/update_spark_subscriptions_table.php.stub' => database_path("migrations/{$time}_update_spark_subscriptions_table.php"),
                 ], 'migrations');
             }
 
@@ -68,11 +77,16 @@ class BaseServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->app->register(\Laravel\Cashier\CashierServiceProvider::class);
+
         $this->mergeConfigFrom(__DIR__.'/../config/base.php', 'base');
+        $this->mergeConfigFrom(__DIR__.'/../config/mollie.php', 'mollie');
 
         Cashier::ignoreMigrations();
 
-        Spark::collectEuropeanVat('ES');
+        Spark::useMollie()
+            ->defaultBillableCountry('ES')
+            ->collectEuropeanVat('EE');
 
         Spark::useUserModel(Base::$userModel);
         Spark::useTeamModel(Base::$teamModel);

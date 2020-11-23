@@ -1,5 +1,5 @@
 {
-    "name": "ferranfg/base",
+    "name": "ferranfg/base-dev",
     "description": "",
     "keywords": [
         "ferranfg",
@@ -15,12 +15,22 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/laravel/spark-aurelius-mollie"
+        },
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "require": {
         "php": "^7.3",
         "google/cloud-error-reporting": "^0.16.5",
         "google/cloud-logging": "^1.20",
         "laravel/nova": "^3.7",
-        "laravel/spark-aurelius": "^10.0",
+        "laravel/spark-aurelius-mollie": "^1.0",
         "livewire/livewire": "^2.0",
         "mpociot/vat-calculator": "^2.4",
         "ramsey/uuid": "^3.7",
@@ -59,9 +69,9 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ferranfg\\Base\\BaseServiceProvider",
+                "Laravel\\Cashier\\CashierServiceProvider",
                 "Laravel\\Spark\\Providers\\SparkServiceProvider",
-                "Laravel\\Cashier\\CashierServiceProvider"
+                "Ferranfg\\Base\\BaseServiceProvider"
             ],
             "aliases": {
                 "Base": "Ferranfg\\Base\\BaseFacade"
