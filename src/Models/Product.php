@@ -25,7 +25,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'slug', 'description', 'type', 'status'];
 
     /**
      * The attributes that are translatable.
