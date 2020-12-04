@@ -65,7 +65,8 @@ class Post extends Resource
                     ->rules('required'),
             ]),
 
-            Boolean::make('Featured'),
+            Boolean::make('Featured')
+                ->hideFromIndex(),
 
             BelongsTo::make('Author', 'author', User::class)
                 ->sortable()
