@@ -96,6 +96,14 @@ class Post extends Model
     }
 
     /**
+     * Get the total chars on the excerpt (Used for meta-description).
+     */
+    public function getExcerptLengthAttribute()
+    {
+        return strlen($this->excerpt);
+    }
+
+    /**
      * Get the created at time in a human format.
      */
     public function getCreatedAtDiffAttribute()

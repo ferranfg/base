@@ -93,6 +93,9 @@ class Post extends Resource
                 return $this->comments()->count();
             }),
 
+            Number::make('Excerpt Length')
+                ->onlyOnIndex(),
+
             Number::make('Word Count')
                 ->onlyOnIndex(),
 
