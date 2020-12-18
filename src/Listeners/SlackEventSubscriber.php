@@ -19,9 +19,7 @@ class SlackEventSubscriber
      */
     public function handle($name, $events)
     {
-        $users = Base::user()->whereEmail(Base::$developers)->get();
-
-        Notification::send($users, new SlackNotification($this->formatMessage($name, $events)));
+        Notification::send(Base::user(), new SlackNotification($this->formatMessage($name, $events)));
     }
 
     /**
@@ -56,7 +54,14 @@ class SlackEventSubscriber
         {
             foreach ($event as $model)
             {
-                if ($model instanceof Model) array_push($record, get_class($model) . "#{$model->id}");
+                if (method_exists($model, 'toMessage'))
+                {
+                    array_push($record, $model->toMessage());
+                }
+                else if ($model instanceof Model)
+                {
+                    array_push($record, "#{$model->id}");
+                }
             }
         }
 
