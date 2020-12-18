@@ -5,6 +5,7 @@ namespace Ferranfg\Base\Listeners;
 use Notification;
 use Carbon\Carbon;
 use Ferranfg\Base\Base;
+use Illuminate\Database\Eloquent\Model;
 use Ferranfg\Base\Events\ExceptionReported;
 use Ferranfg\Base\Notifications\SlackNotification;
 
@@ -44,7 +45,7 @@ class SlackEventSubscriber
      */
     private function formatMessage($name, $events)
     {
-        $record = ['[' . Carbon::now() . ']', $name];
+        $record = ['[' . Carbon::now() . ']', "{$name}:"];
         $event = reset($events);
 
         if ($event instanceof ExceptionReported and property_exists($event, 'exception'))
@@ -55,7 +56,7 @@ class SlackEventSubscriber
         {
             foreach ($event as $model)
             {
-                if (method_exists($model, 'toJson')) array_push($record, $model->toJson());
+                if ($model instanceof Model) array_push($record, get_class($model) . "#{$model->id}");
             }
         }
 
