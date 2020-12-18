@@ -50,6 +50,14 @@ class User extends SparkUser
     ];
 
     /**
+     * Convert the object to its Slack message representation.
+     */
+    public function toMessage()
+    {
+        return $this->email;
+    }
+
+    /**
      * Route notifications for the Slack channel.
      *
      * @param  \Illuminate\Notifications\Notification  $notification

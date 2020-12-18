@@ -76,4 +76,12 @@ class Product extends Model
     {
         return $this->morphMany(Base::$commentModel, 'commentable');
     }
+
+    /**
+     * Convert the object to its Slack message representation.
+     */
+    public function toMessage()
+    {
+        return $this->name;
+    }
 }
