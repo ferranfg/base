@@ -25,10 +25,12 @@
         "livewire/livewire": "^2.0",
         "mpociot/vat-calculator": "^2.4",
         "ramsey/uuid": "^3.7",
+        "sendinblue/api-v3-sdk": "^7.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-tags": "^2.6",
         "spatie/nova-translatable": "^3.0",
-        "superbalist/laravel-google-cloud-storage": "^2.2"
+        "superbalist/laravel-google-cloud-storage": "^2.2",
+        "unsplash/unsplash": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
