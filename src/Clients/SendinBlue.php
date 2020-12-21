@@ -13,10 +13,7 @@ class SendinBlue
 {
     private static function getConfiguration()
     {
-        return Configuration::getDefaultConfiguration()->setApiKey(
-            config('services.sendinblue.key_identifier'),
-            config('services.sendinblue.key')
-        );
+        return Configuration::getDefaultConfiguration()->setApiKey('api-key', config('services.sendinblue.key'));
     }
 
     public static function contactsApi()
