@@ -42,7 +42,7 @@ class SendinBlue
         }
         catch (ApiException $e)
         {
-            report($e);
+            //
         }
     }
 }
