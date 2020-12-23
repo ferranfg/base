@@ -2,12 +2,13 @@
 
 namespace Ferranfg\Base\Models;
 
+use Soved\Laravel\Gdpr\Portable;
 use Laravel\Spark\User as SparkUser;
 use Ferranfg\Base\Traits\HasMetadata;
 
 class User extends SparkUser
 {
-    use HasMetadata;
+    use HasMetadata, Portable;
 
     /**
      * The attributes that are mass assignable.
@@ -55,6 +56,16 @@ class User extends SparkUser
     public function toMessage()
     {
         return $this->email;
+    }
+
+    /**
+     * Get the GDPR compliant data portability array for the model.
+     *
+     * @return array
+     */
+    public function toPortableArray()
+    {
+        return $this->toArray();
     }
 
     /**
