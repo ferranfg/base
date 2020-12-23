@@ -68,7 +68,7 @@ class Post extends Model
      */
     public function comments()
     {
-        return $this->morphMany(Base::$commentModel, 'commentable');
+        return $this->morphMany(Base::$commentModel, 'commentable')->where('type', 'comment');
     }
 
     /**
