@@ -19,7 +19,15 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = ['author_email', 'author_name', 'author_IP', 'content', 'type'];
+    protected $fillable = [
+        'author_name',
+        'author_email',
+        'author_url',
+        'author_IP',
+        'content',
+        'rating',
+        'type'
+    ];
 
     /**
      * The available types values.
