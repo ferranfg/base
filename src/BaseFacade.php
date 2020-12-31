@@ -26,4 +26,14 @@ class BaseFacade extends Facade
             'locale' => config('app.locale')
         ]);
     }
+
+    /**
+     * Get the URL to the resizer image service.
+     *
+     * @return array
+     */
+    public static function image($url)
+    {
+        return "/base/images/{$url}";
+    }
 }

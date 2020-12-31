@@ -19,6 +19,7 @@
         "php": "^7.3",
         "google/cloud-error-reporting": "^0.16.5",
         "google/cloud-logging": "^1.20",
+        "gumlet/php-image-resize": "^2.0",
         "laravel/nova": "^3.7",
         "laravel/slack-notification-channel": "^2.0",
         "laravel/spark-aurelius": "^10.0",
