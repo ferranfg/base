@@ -1,0 +1,26 @@
+@import "./../template/scss/style";
+
+// Cookie consent
+.cookie-consent {
+    padding: 1rem 1rem 1.5rem;
+    background: $dark;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    margin: 0 auto;
+
+    button {
+        display: inline-block;
+        width: 100%;
+        padding: .375rem .75rem;
+        background-color: $primary;
+        margin-top: 1rem;
+        border: 0;
+        border-radius: .25rem;
+        color: #fff;
+    }
+}
