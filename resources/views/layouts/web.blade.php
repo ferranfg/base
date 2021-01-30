@@ -73,7 +73,7 @@
         @section('footer')
             <footer class="footer footer-bar">
                 <div class="container">
-                    <p class="mb-0">© {{ date('Y') }} {{ config('app.name') }} por <a href="https://ferranfigueredo.com" target="_blank" rel="noopener">ferranfigueredo.com</a> � {{__('All rights reserved.')}}</p>
+                    <p class="mb-0">© {{ date('Y') }} {{ config('app.name') }} por <a href="https://ferranfigueredo.com" target="_blank" rel="noopener">ferranfigueredo.com</a> 🚀 {{__('All rights reserved.')}}</p>
                 </div>
             </footer>
 
