@@ -11,7 +11,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Markdown;
-use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use Spatie\NovaTranslatable\Translatable;
@@ -64,6 +64,7 @@ class Product extends Resource
             ]),
 
             Number::make('Amount')
+                ->step(0.01)
                 ->sortable()
                 ->onlyOnForms(),
 
@@ -101,6 +102,8 @@ class Product extends Resource
             }),
 
             MorphToMany::make('Tags'),
+
+            MorphMany::make('Metadata'),
         ];
     }
 

@@ -1,5 +1,87 @@
 @import "./../template/scss/style";
 
+// Color
+$dark: #191919;
+
+// Overlay
+$overlay: rgba($dark, 0.7);
+
+// Hero
+.bg-overlay {
+    background-color: $overlay;
+}
+
+// Breadcrumb
+.breadcrumb .breadcrumb-item:after {
+    content: "\f054" !important;
+    font-family: "Font Awesome 5 Free";
+}
+
+// Post
+.post {
+    p {
+        line-height: 2;
+    }
+
+    h2 {
+        margin: 2em 0 1em;
+    }
+
+    img {
+        margin: 1.6em auto 0.625em;
+        max-width: 100%;
+        height: auto;
+    }
+  
+    iframe {
+        margin: 1.6em auto;
+        display: block;
+    }
+
+    .embed-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+
+        iframe,
+        object,
+        embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    table {
+        width: 100%;
+        margin: 1.6em auto;
+        vertical-align: middle;
+    
+        > tbody {
+            vertical-align: inherit;
+        }
+
+        > thead {
+            vertical-align: bottom;
+        }
+    }
+
+    blockquote {
+        border-left: 3px solid #dee2e6;
+        border-radius: 6px;
+        font-size: 16px;
+        padding: 1rem !important;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+}
+
 // Cookie consent
 .cookie-consent {
     padding: 1rem 1rem 1.5rem;

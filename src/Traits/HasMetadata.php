@@ -19,7 +19,9 @@ trait HasMetadata
      */
     public function setMetadata($name, $value)
     {
-        return $this->metadata()->updateOrCreate(['name' => $name], ['value' => $value]);
+        $this->metadata()->updateOrCreate(['name' => $name], ['value' => $value]);
+
+        return $value;
     }
 
     /**

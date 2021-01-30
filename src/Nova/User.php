@@ -2,14 +2,13 @@
 
 namespace Ferranfg\Base\Nova;
 
-use Ferranfg\Base\Base;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\MorphMany;
 
 class User extends Resource
 {
