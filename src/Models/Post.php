@@ -4,7 +4,7 @@ namespace Ferranfg\Base\Models;
 
 use Ferranfg\Base\Base;
 use Spatie\Tags\HasTags;
-use Spatie\Tags\HasSlug;
+use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;

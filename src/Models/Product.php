@@ -4,9 +4,9 @@ namespace Ferranfg\Base\Models;
 
 use Ferranfg\Base\Base;
 use Spatie\Tags\HasTags;
-use Spatie\Tags\HasSlug;
 use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
+use Ferranfg\Base\Traits\HasSlug;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +29,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'type', 'status'];
+    protected $fillable = ['name', 'slug', 'description', 'currency', 'amount', 'type', 'status'];
 
     /**
      * The attributes that are translatable.
@@ -45,7 +45,8 @@ class Product extends Model
      */
     public static $status = [
         'out_stock' => 'Out of stock',
-        'available' => 'Available'
+        'available' => 'Available',
+        'private' => 'Private'
     ];
 
     /**
@@ -128,8 +129,6 @@ class Product extends Model
      */
     public function stripeProductId()
     {
-        $product_id = $this->getMetadata('stripe_product_id');
-
         $params = [
             'name' => $this->name,
             'description' => $this->description,
@@ -138,18 +137,19 @@ class Product extends Model
             ]
         ];
 
-        if (is_null($product_id))
+        if (is_null($this->stripe_id))
         {
             $product = StripeProduct::create($params);
 
-            $product_id = $this->setMetadata('stripe_product_id', $product->id);
+            $this->stripe_id = $product->id;
+            $this->save();
         }
         else
         {
-            StripeProduct::update($product_id, $params);
+            StripeProduct::update($this->stripe_id, $params);
         }
 
-        return $product_id;
+        return $this->stripe_id;
     }
 
     /**

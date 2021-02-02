@@ -59,8 +59,7 @@ class Product extends Resource
                     ->sortable()
                     ->rules('required'),
 
-                Markdown::make('Description')
-                    ->rules('required'),
+                Markdown::make('Description'),
             ]),
 
             Number::make('Amount')
@@ -83,8 +82,7 @@ class Product extends Resource
                 ->onlyOnForms(),
 
             BelongsTo::make('Owner', 'owner', User::class)
-                ->sortable()
-                ->rules('required'),
+                ->sortable(),
 
             Select::make('Type')
                 ->rules('required')

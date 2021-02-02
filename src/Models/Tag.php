@@ -2,7 +2,6 @@
 
 namespace Ferranfg\Base\Models;
 
-use Ferranfg\Base\Base;
 use Spatie\Tags\Tag as SpatieTag;
 use Ferranfg\Base\Traits\HasMetadata;
 
