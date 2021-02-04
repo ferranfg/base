@@ -131,7 +131,7 @@ class Product extends Model
     {
         $params = [
             'name' => $this->name,
-            'description' => $this->description,
+            'description' => empty($this->description) ? $this->name : $this->description,
             'images' => [
                 Storage::url($this->photo_url)
             ]

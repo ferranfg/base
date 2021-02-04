@@ -37,6 +37,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
+        "darryldecode/cart": "^4.2",
         "friendsofphp/php-cs-fixer": "^2.16",
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^9.0",
@@ -46,7 +47,10 @@
     "autoload": {
         "psr-4": {
             "Ferranfg\\Base\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

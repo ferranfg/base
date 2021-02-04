@@ -11,6 +11,11 @@ class ProductRepository
         return Base::product()->with('metadata')->whereType($type);
     }
 
+    public function whereIn($column, $values)
+    {
+        return Base::product()->whereIn($column, $values);
+    }
+
     public function findBySlug(string $slug, string $locale = null)
     {
         $locale = $locale ?? app()->getLocale();

@@ -48,8 +48,8 @@ class Twitter
     public static function lookup($id, $params = [])
     {
         return self::get("tweets/{$id}", array_merge($params, [
-            'tweet.fields' => 'public_metrics',
-            'user.fields' => 'profile_image_url,verified',
+            'tweet.fields' => 'public_metrics,created_at',
+            'user.fields' => 'profile_image_url,description,verified',
             'expansions' => 'author_id'
         ]));
     }
