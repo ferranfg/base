@@ -38,10 +38,12 @@
             <header id="topnav" class="defaultscroll sticky">
                 <div class="container">
                     <div>
-                        <a class="logo" title="{{ config('app.name') }}" href="/">
-                            <span class="l-light text-white">{{ config('app.name') }}</span>
-                            <span class="l-dark">{{ config('app.name') }}</span>
-                        </a>
+                        @section('logo')
+                            <a class="logo" title="{{ config('app.name') }}" href="/">
+                                <span class="l-light text-white">{{ config('app.name') }}</span>
+                                <span class="l-dark">{{ config('app.name') }}</span>
+                            </a>
+                        @show
                     </div>
 
                     <div class="buy-button">

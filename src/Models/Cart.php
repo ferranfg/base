@@ -43,4 +43,23 @@ class Cart extends CartFacade
 
         return parent::getContent();
     }
+
+    /**
+     * Updates the total quantity for the given id.
+     *
+     * @var array
+     */
+    public static function updateQuantity($alias = 'cart', $id, $quantity)
+    {
+        parent::session($alias);
+
+        parent::update($id, [
+            'quantity' => [
+                'relative' => false,
+                'value' => $quantity
+            ]
+        ]);
+
+        return parent::getContent();
+    }
 }

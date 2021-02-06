@@ -18,24 +18,26 @@ class PostRepository
         return Base::post()->where("slug->{$locale}", $slug)->firstOrFail();
     }
 
-    public function previousPost($post, $status = 'published')
+    public function previousPost($post)
     {
+        $key_name = Base::post()->getKeyName();
         $previous_id = Base::post()
             ->whereType($post->type)
-            ->whereStatus($status)
-            ->where(Base::post()->getKeyName(), '<', $post->id)
-            ->max(Base::post()->getKeyName());
+            ->whereStatus($post->status)
+            ->where($key_name, '<', $post->$key_name)
+            ->max($key_name);
 
         return Base::post()->find($previous_id);
     }
 
-    public function nextPost($post, $status = 'published')
+    public function nextPost($post)
     {
+        $key_name = Base::post()->getKeyName();
         $next_id = Base::post()
             ->whereType($post->type)
-            ->whereStatus($status)
-            ->where(Base::post()->getKeyName(), '>', $post->id)
-            ->min(Base::post()->getKeyName());
+            ->whereStatus($post->status)
+            ->where($key_name, '>', $post->$key_name)
+            ->min($key_name);
 
         return Base::post()->find($next_id);
     }

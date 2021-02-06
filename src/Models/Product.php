@@ -7,6 +7,7 @@ use Spatie\Tags\HasTags;
 use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
+use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +30,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'currency', 'amount', 'type', 'status'];
+    protected $fillable = ['name', 'slug', 'description', 'photo_url', 'video_url', 'attached_url', 'currency', 'amount', 'type', 'status'];
 
     /**
      * The attributes that are translatable.
@@ -98,6 +99,39 @@ class Product extends Model
     public function getCheckoutUrlAttribute()
     {
         return url("checkout/{$this->slug}");
+    }
+
+    /**
+     * Get the avg rating from the attached comments
+     *
+     * @var string
+     */
+    public function avgRating($type = 'review')
+    {
+        return $this->comments()->where('type', $type)->avg('rating');
+    }
+
+    /**
+     * Renders the HTML starts for the avg rating
+     *
+     * @var string
+     */
+    public function renderAvgRating($type = 'review')
+    {
+        $rating = $this->avgRating($type);
+        $render = ['<ul class="list-unstyled mb-0">'];
+
+        for ($i = 1; $i <= 5; $i++):
+            if ($i <= $rating):
+                array_push($render, '<li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>');
+            else:
+                array_push($render, '<li class="list-inline-item"><i class="fa fa-star text-muted"></i></li>');
+            endif;
+        endfor;
+
+        array_push($render, '</ul>');
+
+        return implode('', $render);
     }
 
     /**
@@ -185,5 +219,28 @@ class Product extends Model
         }
 
         return $price_id;
+    }
+
+    /**
+     * Get the product tax id on Stripe.
+     */
+    public function stripeTaxId()
+    {
+        $tax_id = $this->getMetadata('stripe_tax_id');
+
+        if (is_null($tax_id))
+        {
+            $tax = StripeTaxRate::create([
+                'display_name' => 'IVA',
+                'inclusive' => true,
+                'percentage' => 21,
+                'country' => 'ES',
+                'description' => $this->name
+            ]);
+
+            $tax_id = $this->setMetadata('stripe_tax_id', $tax->id);
+        }
+
+        return $tax_id;
     }
 }

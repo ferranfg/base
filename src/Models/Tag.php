@@ -2,12 +2,14 @@
 
 namespace Ferranfg\Base\Models;
 
-use Spatie\Tags\Tag as SpatieTag;
+use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
+use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Model;
 
-class Tag extends SpatieTag
+class Tag extends Model
 {
-    use HasMetadata;
+    use HasTranslations, HasSlug, HasMetadata;
 
     /**
      * The attributes that are mass assignable.
