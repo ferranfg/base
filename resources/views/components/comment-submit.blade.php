@@ -6,52 +6,16 @@
 
     @if (isset($rating) and $rating == true)
         <div class="mt-4 mb-4">
-            <h6 class="small font-weight-bold">Tu valoración</h6>
-            <a href="javascript:void(0)" class="d-inline-block mr-3">
+            <h6 class="small font-weight-bold">Valoración</h6>
+            <div class="d-inline-block">
                 <ul class="list-unstyled mb-0 small">
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
                 </ul>
-            </a>
-            <a href="javascript:void(0)" class="d-inline-block mr-3">
-                <ul class="list-unstyled mb-0 small">
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                </ul>
-            </a>
-            <a href="javascript:void(0)" class="d-inline-block mr-3">
-                <ul class="list-unstyled mb-0 small">
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                </ul>
-            </a>
-            <a href="javascript:void(0)" class="d-inline-block mr-3">
-                <ul class="list-unstyled mb-0 small">
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-outline text-warning"></i></li>
-                </ul>
-            </a>
-            <a href="javascript:void(0)" class="d-inline-block">
-                <ul class="list-unstyled mb-0 small">
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>
-                </ul>
-            </a>
+            </div>
         </div>
     @endif
 

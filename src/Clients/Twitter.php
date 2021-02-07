@@ -53,7 +53,7 @@ class Twitter
         return json_decode((string) $request->getBody());
     }
 
-    public static function lookup($tweet_id, $params = [])
+    public static function lookup($tweet_id)
     {
         if ( ! is_numeric($tweet_id))
         {
@@ -64,12 +64,15 @@ class Twitter
 
         if (is_null($tweet_id)) throw new ModelNotFoundException;
 
-        $response = self::get("tweets/{$tweet_id}", array_merge($params, [
-            'tweet.fields' => 'public_metrics,referenced_tweets,in_reply_to_user_id,attachments,created_at',
-            'user.fields' => 'profile_image_url,description,verified',
-            'media.fields' => 'height,width,url',
-            'expansions' => 'author_id,attachments.media_keys,in_reply_to_user_id'
-        ]));
+        $response = cache()->remember("tweet-{$tweet_id}", 3600, function () use ($tweet_id)
+        {
+            return self::get("tweets/{$tweet_id}", [
+                'tweet.fields' => 'public_metrics,referenced_tweets,in_reply_to_user_id,attachments,created_at',
+                'user.fields' => 'profile_image_url,description,verified',
+                'media.fields' => 'height,width,url',
+                'expansions' => 'author_id,attachments.media_keys,in_reply_to_user_id'
+            ]);
+        });
 
         if (property_exists($response, 'errors')) throw new ModelNotFoundException;
 
@@ -80,5 +83,16 @@ class Twitter
         $media = property_exists($includes, 'media') ? collect($includes->media)->firstWhere('type', 'photo') : null;
 
         return [$tweet, $author, $media];
+    }
+
+    public static function mentions($user_id)
+    {
+        $response = self::get("users/{$user_id}/mentions", [
+            'tweet.fields' => 'referenced_tweets'
+        ]);
+
+        if (property_exists($response, 'errors')) throw new ModelNotFoundException;
+
+        return $response;
     }
 }

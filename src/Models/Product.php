@@ -125,7 +125,7 @@ class Product extends Model
             if ($i <= $rating):
                 array_push($render, '<li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>');
             else:
-                array_push($render, '<li class="list-inline-item"><i class="fa fa-star text-muted"></i></li>');
+                array_push($render, '<li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>');
             endif;
         endfor;
 

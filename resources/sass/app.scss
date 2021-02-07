@@ -1,0 +1,56 @@
+// Fonts
+$font-family-sans-serif: 'Nunito', sans-serif;
+
+// Colors
+$blue: #2f55d4 !default;
+
+// Buttons
+$btn-font-weight: 600 !default;
+
+@import "./../../../../laravel/spark-aurelius/resources/assets/sass/spark";
+
+h2 {
+  font-weight: 300;
+}
+
+// Utilities
+// -------------------------------------------------------------------------- */
+.w-30 {
+  width: 30% !important;
+}
+
+// Buttons
+// -------------------------------------------------------------------------- */
+.btn {
+  box-shadow: none;
+}
+
+.btn-group-sm > .btn,
+.btn-sm {
+  padding-bottom: 0.1rem;
+}
+
+// Nav
+// -------------------------------------------------------------------------- */
+.navbar-spark {
+  padding: 0 1rem;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 68px;
+  padding: 0 0 6px;
+}
+
+// Card
+// -------------------------------------------------------------------------- */
+.card-header {
+  line-height: 29px;
+
+  .btn-group {
+    line-height: normal;
+    padding-top: 0 !important;
+  }
+}
