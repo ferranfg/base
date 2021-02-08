@@ -40,7 +40,7 @@ class Product extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name',
+        'id', 'name', 'stripe_id'
     ];
 
     /**
@@ -61,6 +61,9 @@ class Product extends Resource
 
                 Markdown::make('Description'),
             ]),
+
+            Text::make('Stripe Id')
+                ->onlyOnDetail(),
 
             Number::make('Amount')
                 ->step(0.01)
