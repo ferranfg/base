@@ -15,9 +15,9 @@ class AppEngineMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->server->has('X-Appengine-User-IP'))
+        if ($request->server->has('HTTP_CF_CONNECTING_IP'))
         {
-            $request->server->set('REMOTE_ADDR', $request->server->get('X-Appengine-User-IP'));
+            $request->server->set('REMOTE_ADDR', $request->server->get('HTTP_CF_CONNECTING_IP'));
         }
 
         return $next($request);
