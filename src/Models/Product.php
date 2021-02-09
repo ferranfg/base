@@ -3,10 +3,10 @@
 namespace Ferranfg\Base\Models;
 
 use Ferranfg\Base\Base;
-use Spatie\Tags\HasTags;
 use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
+use Ferranfg\Base\Traits\HasTags;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;

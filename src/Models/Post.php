@@ -3,7 +3,7 @@
 namespace Ferranfg\Base\Models;
 
 use Ferranfg\Base\Base;
-use Spatie\Tags\HasTags;
+use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
