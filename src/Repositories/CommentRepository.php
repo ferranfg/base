@@ -28,6 +28,7 @@ class CommentRepository
             'author_email' => $request->email,
             'author_IP' => $request->ip(),
             'content' => $request->content,
+            'rating' => $request->has('rating') ? (int) $request->rating : null,
             'type' => $is_spam ? 'spam' : $comment_type
         ]);
     }

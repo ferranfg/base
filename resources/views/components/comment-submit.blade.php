@@ -5,16 +5,33 @@
     @endif
 
     @if (isset($rating) and $rating == true)
-        <div class="mt-4 mb-4">
-            <h6 class="small font-weight-bold">Valoración</h6>
-            <div class="d-inline-block">
-                <ul class="list-unstyled mb-0 small">
-                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
-                    <li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>
-                </ul>
+        <div class="my-3 rating">
+            <div class="stars">
+                <label class="rate">
+                    <input type="radio" name="rating" value="1">
+                    <div class="face"></div>
+                    <i class="far fa-star star one-star"></i>
+                </label>
+                <label class="rate">
+                    <input type="radio" name="rating" value="2">
+                    <div class="face"></div>
+                    <i class="far fa-star star two-star"></i>
+                </label>
+                <label class="rate">
+                    <input type="radio" name="rating" value="3">
+                    <div class="face"></div>
+                    <i class="far fa-star star three-star"></i>
+                </label>
+                <label class="rate">
+                    <input type="radio" name="rating" value="4">
+                    <div class="face"></div>
+                    <i class="far fa-star star four-star"></i>
+                </label>
+                <label class="rate">
+                    <input type="radio" name="rating" value="5">
+                    <div class="face"></div>
+                    <i class="far fa-star star five-star"></i>
+                </label>
             </div>
         </div>
     @endif

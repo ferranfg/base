@@ -47,8 +47,9 @@ class Metadata extends Resource
 
             MorphTo::make('Parent')
                 ->types([
-                    User::class,
-                    Tag::class
+                    Product::class,
+                    Tag::class,
+                    User::class
                 ]),
 
             Text::make('Name')

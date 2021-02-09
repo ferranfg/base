@@ -8,7 +8,7 @@ class ProductRepository
 {
     public function whereType($type)
     {
-        return Base::product()->with('metadata')->whereType($type);
+        return Base::product()->with('comments', 'metadata')->whereType($type);
     }
 
     public function whereIn($column, $values)
