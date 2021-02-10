@@ -45,11 +45,9 @@
                             </a>
                         @show
                     </div>
-
                     <div class="buy-button">
                         @yield('button')
                     </div>
-
                     <div class="menu-extras">
                         <div class="menu-item">
                             <a class="navbar-toggle">
@@ -61,16 +59,25 @@
                             </a>
                         </div>
                     </div>
-
                     <div id="navigation">
                         @yield('navigation')
                     </div>
-
                 </div>
             </header>
         @show
 
         @yield('main')
+
+        @if (session('info'))
+            <div class="fixed-bottom">
+                <div class="container">
+                    <div class="alert alert-info alert-dismissible fade show">
+                        {!! session('info') !!}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         @section('footer')
             <footer class="footer footer-bar">
