@@ -20,6 +20,10 @@
 
     @stack('head')
 
+    <script>
+        window.Spark = {!! json_encode(Spark::scriptVariables()) !!}
+    </script>
+
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://storage.googleapis.com">
 </head>
