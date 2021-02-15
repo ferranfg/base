@@ -5,17 +5,18 @@ namespace Ferranfg\Base\Clients;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use GuzzleHttp\RequestOptions;
+use Abraham\TwitterOAuth\TwitterOAuth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Twitter
 {
     const BASE_URL = 'https://api.twitter.com/';
 
-    private static $token;
+    private static $bearer_token;
 
-    public static function token()
+    public static function bearerToken()
     {
-        if ( ! is_null(self::$token)) return self::$token;
+        if ( ! is_null(self::$bearer_token)) return self::$bearer_token;
 
         $request = (new Client)->post(self::BASE_URL . 'oauth2/token', [
             RequestOptions::HEADERS => [
@@ -30,25 +31,20 @@ class Twitter
             ]
         ]);
 
-        self::$token = json_decode((string) $request->getBody());
+        self::$bearer_token = json_decode((string) $request->getBody());
 
-        return self::$token;
-    }
-
-    private static function options()
-    {
-        return [
-            RequestOptions::HEADERS => [
-                'Authorization' => 'Bearer ' . self::token()->access_token
-            ]
-        ];
+        return self::$bearer_token;
     }
 
     public static function get($uri, $params = [])
     {
         if (count($params)) $uri .= '?' . http_build_query($params);
 
-        $request = (new Client)->get(self::BASE_URL . "2/{$uri}", self::options());
+        $request = (new Client)->get(self::BASE_URL . "2/{$uri}", [
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . self::bearerToken()->access_token
+            ]
+        ]);
 
         return json_decode((string) $request->getBody());
     }
@@ -92,6 +88,20 @@ class Twitter
         ]);
 
         if (property_exists($response, 'errors')) throw new ModelNotFoundException;
+
+        return $response;
+    }
+
+    public static function update($oauth_token, $oauth_secret, $params)
+    {
+        $twitter = new TwitterOAuth(
+            config('services.twitter.client_id'),
+            config('services.twitter.client_secret'),
+            $oauth_token,
+            $oauth_secret
+        );
+
+        $response = $twitter->post('statuses/update', $params);
 
         return $response;
     }
