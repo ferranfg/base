@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Stripe\Customer;
 use Soved\Laravel\Gdpr\Portable;
 use Laravel\Spark\User as SparkUser;
 use Ferranfg\Base\Traits\HasMetadata;
@@ -77,5 +78,23 @@ class User extends SparkUser
     public function routeNotificationForSlack($notification)
     {
         return config('base.slack_webhook');
+    }
+
+    /**
+     * Get the customer id on Stripe.
+     */
+    public function stripeCustomerId()
+    {
+        if ( ! is_null($this->stripe_id)) return $this->stripe_id;
+
+        $customer = Customer::create([
+            'name' => $this->name,
+            'email' => $this->email
+        ]);
+
+        $this->stripe_id = $customer->id;
+        $this->save();
+
+        return $this->stripe_id;
     }
 }

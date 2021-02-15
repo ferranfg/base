@@ -22,8 +22,8 @@ class Twitter
                 'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
             ],
             RequestOptions::AUTH => [
-                config('services.twitter.key'),
-                config('services.twitter.secret')
+                config('services.twitter.client_id'),
+                config('services.twitter.client_secret')
             ],
             RequestOptions::FORM_PARAMS => [
                 'grant_type' => 'client_credentials'
