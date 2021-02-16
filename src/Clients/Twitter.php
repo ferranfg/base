@@ -84,7 +84,8 @@ class Twitter
     public static function mentions($user_id)
     {
         $response = self::get("users/{$user_id}/mentions", [
-            'tweet.fields' => 'referenced_tweets'
+            'tweet.fields' => 'referenced_tweets',
+            'expansions' => 'author_id'
         ]);
 
         if (property_exists($response, 'errors')) throw new ModelNotFoundException;
