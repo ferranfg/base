@@ -35,7 +35,8 @@
         "spatie/laravel-tags": "^2.6",
         "spatie/nova-translatable": "^3.0",
         "superbalist/laravel-google-cloud-storage": "^2.2",
-        "unsplash/unsplash": "^2.5"
+        "unsplash/unsplash": "^2.5",
+        "venturecraft/revisionable": "^1.36"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

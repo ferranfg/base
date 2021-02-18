@@ -27,12 +27,14 @@ class BaseServiceProvider extends ServiceProvider
 
             if ( ! class_exists('CreatePackageTable'))
             {
-                $time = date('Y_m_d_His', time());
+                $time = '2021_01_01_000000';
 
                 $this->publishes([
                     // Spatie
                     __DIR__ . '/../database/migrations/create_tags_table.php.stub' => database_path("migrations/{$time}_create_tags_table.php"),
                     __DIR__ . '/../database/migrations/create_activity_log_table.php.stub' => database_path("migrations/{$time}_create_activity_log_table.php"),
+                    // Revisionable
+                    __DIR__ . '/../database/migrations/create_revisions_table.php.stub' => database_path("migrations/{$time}_create_revisions_table.php"),
                     // Base
                     __DIR__ . '/../database/migrations/create_products_table.php.stub' => database_path("migrations/{$time}_create_products_table.php"),
                     __DIR__ . '/../database/migrations/create_posts_table.php.stub' => database_path("migrations/{$time}_create_posts_table.php"),
