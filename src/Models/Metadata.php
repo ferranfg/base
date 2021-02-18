@@ -4,10 +4,11 @@ namespace Ferranfg\Base\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 class Metadata extends Model
 {
-    use HasTranslations;
+    use HasTranslations, RevisionableTrait;
 
     /**
      * The database table used by the model.

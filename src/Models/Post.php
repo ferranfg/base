@@ -8,10 +8,11 @@ use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 class Post extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, RevisionableTrait;
 
     /**
      * The database table used by the model.

@@ -13,10 +13,11 @@ use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 class Product extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, RevisionableTrait;
 
     /**
      * The database table used by the model.

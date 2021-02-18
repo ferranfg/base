@@ -5,10 +5,11 @@ namespace Ferranfg\Base\Models;
 use Spatie\Tags\Tag as SpatieTag;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 class Tag extends SpatieTag
 {
-    use HasMetadata, HasSlug;
+    use HasMetadata, HasSlug, RevisionableTrait;
 
     /**
      * The attributes that are mass assignable.
