@@ -5,12 +5,19 @@ window.feather = {
 };
 
 // Inits owlCarousel
-if (typeof $.fn.owlCarousel == 'function') require('./../../template/js/owl.init.js');
+if (typeof $.fn.owlCarousel == 'function') {
+    require('./../../template/js/owl.init.js');
+}
 
 // Inits Lazyload
-if (typeof LazyLoad == 'function') new LazyLoad({
-    elements_selector: ".lazy"
-});
+if (typeof LazyLoad == 'function') {
+    new LazyLoad({
+        elements_selector: ".lazy"
+    });
+}
+
+// Inits twemoji
+twemoji.parse(document);
 
 require("./../../template/js/app");
 
