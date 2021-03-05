@@ -93,17 +93,15 @@ class Twitter
         return $response;
     }
 
-    public static function update($oauth_token, $oauth_secret, $params)
+    public static function update($params)
     {
         $twitter = new TwitterOAuth(
             config('services.twitter.client_id'),
             config('services.twitter.client_secret'),
-            $oauth_token,
-            $oauth_secret
+            config('services.twitter.consumer_key'),
+            config('services.twitter.consumer_secret')
         );
 
-        $response = $twitter->post('statuses/update', $params);
-
-        return $response;
+        return $twitter->post('statuses/update', $params);
     }
 }
