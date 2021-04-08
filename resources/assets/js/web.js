@@ -9,6 +9,11 @@ if (typeof $.fn.owlCarousel == 'function') {
     require('./../../template/js/owl.init.js');
 }
 
+// Inits counter
+if ($('#counter').length) {
+    require("./../../template/js/counter.init");
+}
+
 // Inits Lazyload
 if (typeof LazyLoad == 'function') {
     new LazyLoad({

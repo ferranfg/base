@@ -144,19 +144,11 @@ class Product extends Model
     }
 
     /**
-     * Get the product price on the min divisable.
-     */
-    public function rawAmount()
-    {
-        return bcmul($this->amount, 100);
-    }
-
-    /**
      * Get the product price formated with currency.
      */
     public function formatAmount()
     {
-        return Cashier::formatAmount($this->rawAmount(), $this->currency);
+        return Cashier::formatAmount($this->amount, $this->currency);
     }
 
     /**
@@ -202,7 +194,7 @@ class Product extends Model
             $price = StripePrice::retrieve($price_id);
 
             // If the price hasn't changed, no need to create a new one
-            if ($price->product == $product_id and $price->unit_amount == $this->rawAmount())
+            if ($price->product == $product_id and $price->unit_amount == $this->amount)
             {
                 $create_price = false;
             }
@@ -212,7 +204,7 @@ class Product extends Model
         {
             $price = StripePrice::create([
                 'product' => $product_id,
-                'unit_amount' => $this->rawAmount(),
+                'unit_amount' => $this->amount,
                 'currency' => $this->currency,
             ]);
 
