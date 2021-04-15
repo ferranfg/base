@@ -11,6 +11,6 @@
             @endfor
         </ul>
         <p class="text-muted mt-2">{{ $review->content }}</p>
-        <h6 class="text-primary">{{ $review->author_name }} <small class="text-muted">- Barcelona</small></h6>
+        <h6 class="text-primary">{{ $review->author_name }}</h6>
     </div>
 </div>

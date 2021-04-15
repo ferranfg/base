@@ -196,16 +196,21 @@ img.emoji {
 }
 
 // Cookie consent
+@media (min-width: 768px) {
+    .cookie-consent {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
 .cookie-consent {
     padding: 1rem 1rem 1.5rem;
     background: $dark;
     color: #fff;
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
+    left: 15px;
+    right: 15px;
     margin: 0 auto;
     z-index: 9;
 
