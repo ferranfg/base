@@ -22,7 +22,9 @@ if (typeof LazyLoad == 'function') {
 }
 
 // Inits twemoji
-twemoji.parse(document);
+if (typeof twemoji == 'object') {
+    twemoji.parse(document);
+}
 
 require("./../../template/js/app");
 

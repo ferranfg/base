@@ -1,3 +1,6 @@
+// Nunito
+@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
+
 // Fonts
 $font-family-sans-serif: 'Nunito', sans-serif;
 
@@ -8,6 +11,14 @@ $blue: #2f55d4 !default;
 $btn-font-weight: 600 !default;
 
 @import "./../../../../laravel/spark-aurelius/resources/assets/sass/spark";
+
+// Twemoji
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}
 
 h2 {
   font-weight: 300;
