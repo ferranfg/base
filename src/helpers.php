@@ -32,13 +32,22 @@ if ( ! function_exists('img_tag'))
             ]
         ]);
 
+        $url2x = $img->url([
+            'path' => $path,
+            'transformation' => [
+                ['width' => bcmul($width, 2), 'height' => bcmul($height, 2)]
+            ]
+        ]);
+
         if ($lazy)
         {
             array_push($tag, "src=\"\" data-src=\"{$url}\"");
+            array_push($tag, "srcset=\"\" data-srcset=\"{$url} 1x, {$url2x} 2x\"");
         }
         else
         {
             array_push($tag, "src=\"{$url}\"");
+            array_push($tag, "srcset=\"{$url} 1x, {$url2x} 2x\"");
         }
 
         if ( ! is_null($class)) array_push($tag, "class=\"{$class}\"");
