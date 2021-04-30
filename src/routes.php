@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('base/images/{url}', '\Ferranfg\Base\Http\Controllers\ImageController@resize');
-
 Route::group(['prefix' => 'base/{locale}'], function ()
 {
     // Posts

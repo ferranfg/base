@@ -27,13 +27,4 @@ class BaseFacade extends Facade
         ]);
     }
 
-    /**
-     * Get the URL to the resizer image service.
-     *
-     * @return array
-     */
-    public static function image($url)
-    {
-        return "/base/images/{$url}";
-    }
 }

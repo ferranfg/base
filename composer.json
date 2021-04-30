@@ -20,7 +20,7 @@
         "darryldecode/cart": "^4.2",
         "google/cloud-error-reporting": "^0.16.5",
         "google/cloud-logging": "^1.20",
-        "gumlet/php-image-resize": "^2.0",
+        "imagekit/imagekit": "^1.2",
         "intervention/image": "^2.5",
         "laravel/nova": "^3.7",
         "laravel/slack-notification-channel": "^2.0",
