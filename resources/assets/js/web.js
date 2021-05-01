@@ -44,13 +44,22 @@ $(document).on({
     }
 }, '.rate');
 
-
 $(document).on('click', '.rate', function() {
-    if ( !$(this).find('.star').hasClass('rate-active') ) {
+    if ( ! $(this).find('.star').hasClass('rate-active') ) {
         $(this).siblings().find('.star').addClass('far').removeClass('fas rate-active');
         $(this).find('.star').addClass('rate-active fas').removeClass('far star-over');
         $(this).prevAll().find('.star').addClass('fas').removeClass('far star-over');
-    } else {
-        console.log('has');
     }
 });
+
+jQuery.event.special.touchstart = {
+    setup: function( _, ns, handle ) {
+        this.addEventListener("touchstart", handle, { passive: !ns.includes("noPreventDefault") });
+    }
+};
+
+jQuery.event.special.touchmove = {
+    setup: function( _, ns, handle ) {
+        this.addEventListener("touchmove", handle, { passive: !ns.includes("noPreventDefault") });
+    }
+};

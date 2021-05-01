@@ -1,5 +1,5 @@
 <div class="media customer-testi m-2">
-    <img src="{{ $review->author_photo_url }}" class="avatar avatar-small mr-3 rounded-circle shadow" alt="{{ $review->author_name }}">
+    <img src="{{ $review->author_photo_url }}" class="avatar avatar-small mr-3 rounded-circle shadow lazy" alt="{{ $review->author_name }}" width="65" height="65">
     <div class="media-body content p-3 shadow rounded bg-white position-relative">
         <ul class="list-unstyled mb-0">
             @for ($i = 1; $i <= 5; $i++)
