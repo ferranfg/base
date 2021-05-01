@@ -18,11 +18,20 @@ if ( ! function_exists('format_amount'))
  *
  * @return string
  */
-if ( ! function_exists('img_tag'))
+if ( ! function_exists('img'))
 {
-    function img_tag($path, $width, $height, $lazy = true, $class = null, $alt = null)
+    function img(
+        $path,
+        $width,
+        $height,
+        $lazy = true,
+        $class = null,
+        $alt = null,
+        $img_width = null,
+        $img_height = null
+    )
     {
-        $tag = ['<img', "width=\"{$width}\"", "height=\"{$height}\""];
+        $tag = ['<img'];
         $img = ImageKit::init();
 
         $url = $img->url([
@@ -52,6 +61,8 @@ if ( ! function_exists('img_tag'))
 
         if ( ! is_null($class)) array_push($tag, "class=\"{$class}\"");
         if ( ! is_null($alt)) array_push($tag, "alt=\"{$alt}\"");
+        if ( ! is_null($img_width)) array_push($tag, "width=\"{$img_width}\"");
+        if ( ! is_null($img_height)) array_push($tag, "height=\"{$img_height}\"");
 
         array_push($tag, '/>');
 
