@@ -17,6 +17,12 @@ img.emoji {
     vertical-align: -0.1em;
 }
 
+// Logo
+.logo {
+    padding: 0;
+    line-height: 74px;
+}
+
 // Hero
 .bg-overlay {
     background-color: $overlay;
@@ -143,7 +149,7 @@ img.emoji {
         margin: 2em 0 1em;
     }
 
-    img {
+    img:not(.emoji) {
         margin: 1.6em auto 0.625em;
         max-width: 100%;
         height: auto;

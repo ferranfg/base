@@ -23,7 +23,10 @@ if (typeof LazyLoad == 'function') {
 
 // Inits twemoji
 if (typeof twemoji == 'object') {
-    twemoji.parse(document);
+    twemoji.parse(document, {
+        folder: 'svg',
+        ext: '.svg'
+    });
 }
 
 require("./../../template/js/app");
