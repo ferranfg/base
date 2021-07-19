@@ -7,12 +7,24 @@ use Crew\Unsplash\HttpClient;
 
 class Unsplash
 {
-    public static function random($params)
+    private static function init()
     {
         HttpClient::init([
             'applicationId' => config('services.unsplash.key'),
             'utmSource' => config('app.name')
         ]);
+    }
+
+    public static function get($id)
+    {
+        self::init();
+
+        return Photo::find($id);
+    }
+
+    public static function random($params)
+    {
+        self::init();
 
         return Photo::random($params);
     }
