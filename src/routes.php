@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::feeds('feed');
+
 Route::group(['prefix' => 'base/{locale}'], function ()
 {
     // Posts

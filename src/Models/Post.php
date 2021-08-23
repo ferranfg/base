@@ -3,6 +3,8 @@
 namespace Ferranfg\Base\Models;
 
 use Ferranfg\Base\Base;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Venturecraft\Revisionable\RevisionableTrait;
 
-class Post extends Model
+class Post extends Model implements Feedable
 {
     use HasTags, HasTranslations, HasSlug, HasMetadata, RevisionableTrait;
 
@@ -110,6 +112,29 @@ class Post extends Model
     public function getCreatedAtDiffAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+
+    /**
+     * Used to display the post content as a feed item.
+     */
+    public function toFeedItem(): FeedItem
+    {
+        return FeedItem::create([
+            'id' => "?guid={$this->id}",
+            'title' => $this->name,
+            'summary' => $this->content,
+            'updated' => $this->updated_at,
+            'link' => $this->canonical_url,
+            'author' => $this->author->name
+        ]);
+    }
+
+    /**
+     * Returns all the items that will be used to generate the feed.
+     */
+    public static function getAllFeedItems()
+    {
+        return self::all();
     }
 
     /**
