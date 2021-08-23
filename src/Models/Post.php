@@ -122,7 +122,8 @@ class Post extends Model implements Feedable
         return FeedItem::create([
             'id' => "?guid={$this->id}",
             'title' => $this->name,
-            'summary' => $this->content,
+            'summary' => $this->excerpt,
+            'content' => $this->content,
             'updated' => $this->updated_at,
             'link' => $this->canonical_url,
             'author' => $this->author->name
