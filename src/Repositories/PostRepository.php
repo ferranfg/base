@@ -6,9 +6,9 @@ use Ferranfg\Base\Base;
 
 class PostRepository
 {
-    public function whereType($type)
+    public function findById(int $id)
     {
-        return Base::post()->with('metadata')->whereType($type);
+        return Base::post()->findOrFail($id);
     }
 
     public function findBySlug(string $slug, string $locale = null)
@@ -16,6 +16,11 @@ class PostRepository
         $locale = $locale ?? app()->getLocale();
 
         return Base::post()->where("slug->{$locale}", $slug)->firstOrFail();
+    }
+
+    public function whereType($type)
+    {
+        return Base::post()->with('metadata')->whereType($type);
     }
 
     public function previousPost($post)
