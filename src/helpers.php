@@ -69,3 +69,18 @@ if ( ! function_exists('img'))
         return implode(' ', $tag);
     }
 }
+
+/**
+ * Returns if the string is RTL o LTR.
+ *
+ * @return boolean
+ */
+if ( ! function_exists('is_rtl'))
+{
+    function is_rtl($value)
+    {
+        $rtl_char = '/[\x{0590}-\x{083F}]|[\x{08A0}-\x{08FF}]|[\x{FB1D}-\x{FDFF}]|[\x{FE70}-\x{FEFF}]/u';
+
+        return preg_match($rtl_char, $value) != 0;
+    }
+}

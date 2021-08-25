@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::feeds('feed');
 
+Route::group(['middleware' => 'web'], function ()
+{
+    Route::get('/cookies', '\Ferranfg\Base\Http\Controllers\LegalController@cookies')->name('cookies');
+    Route::get('/privacy', '\Ferranfg\Base\Http\Controllers\LegalController@privacy')->name('privacy');
+    Route::get('/terms', '\Ferranfg\Base\Http\Controllers\LegalController@terms')->name('terms');
+});
+
 Route::group(['prefix' => 'base/{locale}'], function ()
 {
     // Posts

@@ -81,9 +81,9 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ferranfg\\Base\\BaseServiceProvider",
                 "Laravel\\Spark\\Providers\\SparkServiceProvider",
-                "Laravel\\Cashier\\CashierServiceProvider"
+                "Laravel\\Cashier\\CashierServiceProvider",
+                "Ferranfg\\Base\\BaseServiceProvider"
             ],
             "aliases": {
                 "Base": "Ferranfg\\Base\\BaseFacade"
