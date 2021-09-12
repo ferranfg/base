@@ -135,7 +135,9 @@ class Post extends Model implements Feedable
      */
     public static function getAllFeedItems()
     {
-        return self::where('status', self::$status['published'])->orderBy('updated_at', 'desc')->get();
+        $feed = self::where('status', 'published')->orderBy('updated_at', 'desc')->paginate(null, ['*'], 'paged');
+
+        return collect($feed->items());
     }
 
     /**
