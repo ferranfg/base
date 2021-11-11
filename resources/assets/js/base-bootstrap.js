@@ -7,3 +7,6 @@ Vue.filter('translate', function (value, path) {
 if (typeof twemoji == 'object') {
     twemoji.parse(document);
 }
+
+// Plausible events
+window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
