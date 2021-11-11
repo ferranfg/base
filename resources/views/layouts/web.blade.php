@@ -117,6 +117,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/12.3.0/lazyload.min.js" integrity="sha512-z+ZJBKAzuh8g8lp/QTwk1EKLoeQlJoDm9Ur+5/FEi2DX5FsnAtoAv33fqOWtn5OUeBnp1j8T0uOK5gGb7xzJyQ==" crossorigin="anonymous"></script>
     @stack('scripts')
     <script src="{{ mix('js/web.js') }}"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 
 </body>
 </html>
