@@ -4,9 +4,19 @@ namespace Ferranfg\Base\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Ferranfg\Base\Clients\ImageKit;
+use Illuminate\Routing\Controller;
+use Ferranfg\Base\Repositories\PostRepository;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class BlogController extends BaseController
+class BlogController extends Controller
 {
+    use ValidatesRequests;
+
+    public function __construct(PostRepository $postRepository)
+    {
+        $this->postRepository = $postRepository;
+    }
+
     /**
      * Lista y pagina las entradas del blog
      *
