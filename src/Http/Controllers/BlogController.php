@@ -3,17 +3,22 @@
 namespace Ferranfg\Base\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Ferranfg\Base\Clients\ImageKit;
 use Illuminate\Routing\Controller;
+use Ferranfg\Base\Clients\ImageKit;
 use Ferranfg\Base\Repositories\PostRepository;
+use Ferranfg\Base\Repositories\CommentRepository;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class BlogController extends Controller
 {
     use ValidatesRequests;
 
-    public function __construct(PostRepository $postRepository)
+    public function __construct(
+        CommentRepository $commentRepository,
+        PostRepository $postRepository
+    )
     {
+        $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
     }
 
