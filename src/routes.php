@@ -20,6 +20,10 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/cookies', '\Ferranfg\Base\Http\Controllers\LegalController@cookies')->name('cookies');
     Route::get('/privacy', '\Ferranfg\Base\Http\Controllers\LegalController@privacy')->name('privacy');
     Route::get('/terms', '\Ferranfg\Base\Http\Controllers\LegalController@terms')->name('terms');
+
+    Route::get('/blog', '\Ferranfg\Base\Http\Controllers\BlogController@list');
+    Route::get('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@post');
+    Route::post('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@comment');
 });
 
 Route::group(['prefix' => 'base/{locale}'], function ()
