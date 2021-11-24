@@ -44,6 +44,8 @@ class BlogController extends Controller
 
         $posts->setPath('/blog');
 
+        abort_unless($posts->count(), 404);
+
         return view('base::blog.list', [
             'posts' => $posts
         ]);
