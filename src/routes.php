@@ -17,6 +17,8 @@ Route::feeds('feed');
 
 Route::group(['middleware' => 'web'], function ()
 {
+    Route::post('/newsletter-subscribe', '\Ferranfg\Base\Http\Controllers\NewsletterController@subscribe');
+
     Route::get('/cookies', '\Ferranfg\Base\Http\Controllers\LegalController@cookies')->name('cookies');
     Route::get('/privacy', '\Ferranfg\Base\Http\Controllers\LegalController@privacy')->name('privacy');
     Route::get('/terms', '\Ferranfg\Base\Http\Controllers\LegalController@terms')->name('terms');
