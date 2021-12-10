@@ -120,7 +120,7 @@ class Post extends Model implements Feedable
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create([
-            'id' => "?guid={$this->id}",
+            'id' => "/blog?guid={$this->id}",
             'title' => $this->name,
             'summary' => $this->excerpt,
             'content' => $this->content,
