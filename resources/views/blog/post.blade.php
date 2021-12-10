@@ -16,7 +16,7 @@
                                 <ul class="breadcrumb bg-white rounded shadow mb-0">
                                     <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
                                     <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->created_at_diff }}</li>
-                                    <li class="breadcrumb-item"><i class="fa fa-clock"></i> {{ $post->reading_time }} minutos de lectura</li>
+                                    <li class="breadcrumb-item"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</li>
                                 </ul>
                                 <time class="updated" datetime="{{ $post->updated_at }}"></time>
                             </nav>
@@ -46,7 +46,7 @@
 
                     <div id="comments">
                         @if ($post->comments->count())
-                            <h5 class="mt-4">Comentarios:</h5>
+                            <h5 class="mt-4">Comments:</h5>
                             <ul class="media-list list-unstyled mb-0">
                                 @foreach ($post->comments as $comment)
                                     @include('base::components.comment', ['comment' => $comment])
@@ -55,7 +55,7 @@
                         @endif
                     </div>
 
-                    <h5 class="mt-4" id="comment-submit">Deja un comentario:</h5>
+                    <h5 class="mt-4" id="comment-submit">Leave a comment:</h5>
 
                     @include('base::components.comment-submit', [
                         'action' => "{$post->canonical_url}#comment-submit",

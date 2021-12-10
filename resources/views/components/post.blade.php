@@ -20,7 +20,7 @@
                             <a href="{{ $post->canonical_url }}#comments" class="text-muted comments"><i class="fa fa-comments mr-1"></i> {{ $post->comments()->count() }}</a>
                         </li>
                     </ul>
-                    <a href="{{ $post->canonical_url }}" class="text-muted readmore">Seguir leyendo <i class="fa fa-chevron-right"></i></a>
+                    <a href="{{ $post->canonical_url }}" class="text-muted readmore">Read more <i class="fa fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>

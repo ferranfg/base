@@ -46,6 +46,12 @@ class BlogController extends Controller
 
         abort_unless($posts->count(), 404);
 
+        view()->share([
+            'meta_title' => config('base.blog_title'),
+            'meta_description' => config('base.blog_description'),
+            'meta_image' => config('base.blog_image')
+        ]);
+
         return view('base::blog.list', [
             'posts' => $posts
         ]);
@@ -67,6 +73,12 @@ class BlogController extends Controller
             'transformation' => [
                 ['width' => 1920, 'height' => 1280]
             ]
+        ]);
+
+        view()->share([
+            'meta_title' => $post->name,
+            'meta_description' => $post->excerpt,
+            'meta_image' => $photo_url
         ]);
 
         return view('base::blog.post', [

@@ -141,6 +141,11 @@ img.emoji {
 }
 
 // Post
+.post h2, .blog h2.h5 {
+    font-size: 1.25rem !important;
+    line-height: 1.2;
+}
+
 .post {
     p {
         line-height: 2;

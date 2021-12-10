@@ -39,10 +39,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label>Comentario</label>
+                <label>Comment</label>
                 <div class="position-relative">
                     <i class="fa fa-comment icons"></i>
-                    <textarea class="form-control pl-5 {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" placeholder="Comentario" rows="4">{{ old('content') }}</textarea>
+                    <textarea class="form-control pl-5 {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" placeholder="Comment" rows="4">{{ old('content') }}</textarea>
                     @if ($errors->has('content'))
                         <div class="invalid-feedback">{{ $errors->first('content') }}</div>
                     @endif
@@ -78,7 +78,7 @@
 
         <div class="col-md-12">
             <div class="send">
-                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                <button type="submit" class="btn btn-primary btn-block">Comment</button>
             </div>
         </div>
     </div>
