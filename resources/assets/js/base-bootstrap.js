@@ -1,4 +1,5 @@
 require('./components/request-access');
+require('./components/newsletter-subscribe');
 
 Vue.filter('translate', function (value, path) {
     let translation = value[Spark.locale];
