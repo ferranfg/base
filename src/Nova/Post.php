@@ -147,6 +147,8 @@ class Post extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new Actions\SendPostNewsletter,
+        ];
     }
 }

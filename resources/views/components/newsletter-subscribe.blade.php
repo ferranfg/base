@@ -14,6 +14,13 @@
                         <span class="invalid-feedback" v-show="subscribeForm.errors.has('email')">
                             @{{ subscribeForm.errors.get('email') }}
                         </span>
+                        <div class="custom-control custom-checkbox mt-2 mb-0">
+                            <input class="custom-control-input" :class="{'is-invalid': subscribeForm.errors.has('terms')}" type="checkbox" value="checked" id="terms" v-model="subscribeForm.terms" :disabled="subscribeForm.busy">
+                            <label class="custom-control-label font-weight-normal" for="terms">I understand and agree to the <a href="/terms" target="_blank">Terms of Service</a> and <a href="/privacy" target="_blank">Privacy Policy</a>.</label>
+                            <span class="invalid-feedback" v-show="subscribeForm.errors.has('terms')">
+                                @{{ subscribeForm.errors.get('terms') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12">

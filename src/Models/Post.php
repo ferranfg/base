@@ -10,6 +10,7 @@ use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Ferranfg\Base\Notifications\PostNewsletter;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 class Post extends Model implements Feedable
@@ -154,6 +155,19 @@ class Post extends Model implements Feedable
         $this->setMetadata('_visits', $visits);
 
         return $this;
+    }
+
+    /**
+     * Sends the post as a newsletter to all users.
+     */
+    public function sendNewsletter()
+    {
+        $users = Base::user()->whereNull('unsubscribed_newsletter_at')->get();
+
+        foreach ($users as $user)
+        {
+            $user->notify(new PostNewsletter($this));
+        }
     }
 
 }
