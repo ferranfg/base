@@ -8,14 +8,15 @@ use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
+use Spatie\Activitylog\Models\Activity;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Ferranfg\Base\Notifications\PostNewsletter;
-use Venturecraft\Revisionable\RevisionableTrait;
 
 class Post extends Model implements Feedable
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, RevisionableTrait;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, LogsActivity;
 
     /**
      * The database table used by the model.
@@ -45,7 +46,9 @@ class Post extends Model implements Feedable
      */
     public static $status = [
         'draft' => 'Draft',
+        'scheduled' => 'Scheduled',
         'published' => 'Published',
+        'private' => 'Private'
     ];
 
     /**
@@ -162,12 +165,28 @@ class Post extends Model implements Feedable
      */
     public function sendNewsletter()
     {
-        $users = Base::user()->whereNull('unsubscribed_newsletter_at')->get();
+        $exclude = Activity::whereDescription('unsubscribed')->get();
+        $users = Base::user()->whereNotIn('id', $exclude->pluck('subject_id')->toArray())->get();
+
+        activity()->performedOn($this)->log('sent_newsletter');
 
         foreach ($users as $user)
         {
             $user->notify(new PostNewsletter($this));
         }
+    }
+
+    /**
+     * Publishes an scheduled post.
+     */
+    public function publish()
+    {
+        $this->status = 'published';
+        $this->save();
+
+        activity()->performedOn($this)->log('published');
+
+        $this->sendNewsletter();
     }
 
 }

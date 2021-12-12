@@ -3,9 +3,9 @@
 namespace Ferranfg\Base\Models;
 
 use Laravel\Spark\Team as SparkTeam;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Team extends SparkTeam
 {
-    use RevisionableTrait;
+    use LogsActivity;
 }

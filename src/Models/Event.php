@@ -9,11 +9,11 @@ use Ferranfg\Base\Traits\HasUuid;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Event extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, HasUuid, RevisionableTrait;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, HasUuid, LogsActivity;
 
     /**
      * The database table used by the model.

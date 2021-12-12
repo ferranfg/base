@@ -23,6 +23,11 @@ class PostRepository
         return Base::post()->with('metadata')->whereType($type);
     }
 
+    public function whereStatus($status)
+    {
+        return Base::post()->with('metadata')->whereStatus($status);
+    }
+
     public function previousPost($post)
     {
         $key_name = Base::post()->getKeyName();

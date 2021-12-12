@@ -29,11 +29,13 @@ class NewsletterController extends Controller
             'terms' => 'accepted'
         ]);
 
-        $this->userRepository->create([
+        $user = $this->userRepository->create([
             'email' => $request->email,
             'name' => (string) null,
             'password' => (string) null
         ]);
+
+        activity()->performedOn($user)->log('subscribed');
 
         return response()->json([
             'success' => true
@@ -53,9 +55,7 @@ class NewsletterController extends Controller
 
         if (is_null($user)) return redirect('cancel');
 
-        $user->forceFill([
-            'unsubscribed_newsletter_at' => Carbon::now()
-        ])->save();
+        activity()->performedOn($user)->log('unsubscribed');
 
         return redirect('/')->with('info', '
             <p class="mb-0">You have been unsubscribed from our newsletter 😥</p>

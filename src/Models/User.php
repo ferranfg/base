@@ -6,11 +6,11 @@ use Stripe\Customer;
 use Soved\Laravel\Gdpr\Portable;
 use Laravel\Spark\User as SparkUser;
 use Ferranfg\Base\Traits\HasMetadata;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends SparkUser
 {
-    use HasMetadata, Portable, RevisionableTrait;
+    use HasMetadata, Portable, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
