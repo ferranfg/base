@@ -87,6 +87,14 @@ class Product extends Model
     }
 
     /**
+     * Get the categories of the product.
+     */
+    public function categories()
+    {
+        return $this->tags()->where('type', 'category');
+    }
+
+    /**
      * Get the product canonical URL.
      */
     public function getCanonicalUrlAttribute()
@@ -235,5 +243,15 @@ class Product extends Model
         }
 
         return $tax_id;
+    }
+
+    /**
+     * Determines if a product must remain hidden
+     *
+     * @var boolean
+     */
+    public function isPrivate()
+    {
+        return $this->status == 'private';
     }
 }
