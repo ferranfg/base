@@ -21,6 +21,31 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Site Information
+    |--------------------------------------------------------------------------
+    |
+    | Información que se servirá para la plantilla del site genérico
+    |
+    */
+
+    'hero_image' => env('BASE_HERO_IMAGE'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Information
+    |--------------------------------------------------------------------------
+    |
+    | Información que se incluirá en la plantilla del blog, en concreto "blog.list"
+    |
+    */
+
+    'blog_title' => env('BASE_BLOG_TITLE'),
+
+    'blog_description' => env('BASE_BLOG_DESCRIPTION'),
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Footer Information
     |--------------------------------------------------------------------------
     |

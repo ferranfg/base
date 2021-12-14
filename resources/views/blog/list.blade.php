@@ -1,7 +1,7 @@
 @extends(config('base.blog_template', 'template'))
 
 @section('content')
-    <section class="bg-half d-table w-100 lazy" data-bg="url({{ config('base.blog_image') }})">
+    <section class="bg-half d-table w-100 lazy" data-bg="url({{ hero_image() }})">
         <div class="bg-overlay"></div>
         <div class="container">
             <div class="row justify-content-center">

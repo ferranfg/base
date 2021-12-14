@@ -48,8 +48,7 @@ class BlogController extends Controller
 
         view()->share([
             'meta_title' => config('base.blog_title'),
-            'meta_description' => config('base.blog_description'),
-            'meta_image' => config('base.blog_image')
+            'meta_description' => config('base.blog_description')
         ]);
 
         return view('base::blog.list', [

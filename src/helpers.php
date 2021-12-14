@@ -2,6 +2,7 @@
 
 use Laravel\Cashier\Cashier;
 use Ferranfg\Base\Clients\ImageKit;
+use Ferranfg\Base\Clients\Unsplash;
 
 if ( ! function_exists('format_amount'))
 {
@@ -67,6 +68,21 @@ if ( ! function_exists('img'))
         array_push($tag, '/>');
 
         return implode(' ', $tag);
+    }
+}
+
+/**
+ * Get the URL to the header image service.
+ *
+ * @return string
+ */
+if ( ! function_exists('hero_image'))
+{
+    function hero_image()
+    {
+        if (is_null(config('services.unsplash.collections'))) return config('base.hero_image');
+
+        return Unsplash::randomFromCollections()->pluck('urls.regular')->random();
     }
 }
 
