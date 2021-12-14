@@ -160,6 +160,10 @@ img.emoji {
         color: #777;
     }
 
+    li {
+        line-height: 2;
+    }
+
     img:not(.emoji) {
         margin: 1.6em auto 0.625em;
         max-width: 100%;

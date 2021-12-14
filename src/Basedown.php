@@ -15,6 +15,7 @@ class Basedown extends Parsedown
     {
         $output = $this->text($expression);
         $output = preg_replace('/\[youtube id=&quot;(.+)&quot;]/m', '<div class="embed-container"><iframe src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe></div>', $output, 1);
+        $output = str_replace('href="/', 'href="' . url('/') . '/', $output); // relative links
 
         return $output;
     }
