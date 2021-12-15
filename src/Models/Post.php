@@ -163,12 +163,19 @@ class Post extends Model implements Feedable
     /**
      * Sends the post as a newsletter to all users.
      */
-    public function sendNewsletter()
+    public function sendNewsletter($test = false)
     {
-        $exclude = Activity::whereDescription('unsubscribed')->get();
-        $users = Base::user()->whereNotIn('id', $exclude->pluck('subject_id')->toArray())->get();
+        if ($test)
+        {
+            $users = Base::user()->whereIn('email', Base::$developers)->get();
+        }
+        else
+        {
+            $exclude = Activity::whereDescription('unsubscribed')->get();
+            $users = Base::user()->whereNotIn('id', $exclude->pluck('subject_id')->toArray())->get();
 
-        activity()->performedOn($this)->log('sent_newsletter');
+            activity()->performedOn($this)->log('sent_newsletter');
+        }
 
         foreach ($users as $user)
         {
