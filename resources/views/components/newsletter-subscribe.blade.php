@@ -1,5 +1,5 @@
 <newsletter-subscribe inline-template>
-    <section class="section bg-primary lazy" data-bg="url('https://ik.imagekit.io/ferranfigueredo/home-shape__5LbPJ8lyU.png?updatedAt=1639247286245')">
+    <section id="newsletter-subscribe" class="section bg-primary lazy" data-bg="url('https://ik.imagekit.io/ferranfigueredo/home-shape__5LbPJ8lyU.png?updatedAt=1639247286245')">
         <div class="bg-overlay"></div>
         <div class="container position-relative">
             <div class="row">
