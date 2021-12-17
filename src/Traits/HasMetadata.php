@@ -29,7 +29,7 @@ trait HasMetadata
      */
     public function getMetadata($name)
     {
-        $result = $this->metadata()->select('value')->whereName($name)->first();
+        $result = $this->metadata->where('name', $name)->first();
 
         return $result instanceof Metadata ? $result->value : null;
     }

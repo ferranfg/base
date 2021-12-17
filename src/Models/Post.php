@@ -7,6 +7,7 @@ use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
+use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use Ferranfg\Base\Notifications\PostNewsletter;
 
 class Post extends Model implements Feedable
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, LogsActivity;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, LogsActivity;
 
     /**
      * The database table used by the model.
@@ -142,22 +143,6 @@ class Post extends Model implements Feedable
         $feed = self::where('status', 'published')->orderBy('updated_at', 'desc')->paginate(null, ['*'], 'paged');
 
         return collect($feed->items());
-    }
-
-    /**
-     * Increases the _visits metadata with 1 visit
-     */
-    public function trackVisit()
-    {
-        $visits = $this->getMetadata('_visits');
-
-        if (is_null($visits)) $visits = 0;
-
-        $visits++;
-
-        $this->setMetadata('_visits', $visits);
-
-        return $this;
     }
 
     /**

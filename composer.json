@@ -27,6 +27,7 @@
     ],
     "require": {
         "php": "^7.3",
+        "barryvdh/laravel-debugbar": "^3.5",
         "darryldecode/cart": "^4.2",
         "google/cloud-error-reporting": "^0.16.5",
         "google/cloud-logging": "^1.20",
@@ -48,7 +49,6 @@
         "unsplash/unsplash": "^2.5"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
         "friendsofphp/php-cs-fixer": "^2.16",
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^9.0",

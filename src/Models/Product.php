@@ -7,6 +7,7 @@ use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasTags;
+use Ferranfg\Base\Traits\HasVisits;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
@@ -17,7 +18,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Product extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, LogsActivity;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, LogsActivity;
 
     /**
      * The database table used by the model.
@@ -117,7 +118,7 @@ class Product extends Model
      */
     public function avgRating($type = 'review')
     {
-        return $this->comments()->where('type', $type)->avg('rating');
+        return $this->comments->where('type', $type)->avg('rating');
     }
 
     /**
