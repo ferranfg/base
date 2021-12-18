@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Traits;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 trait HasVisits
@@ -40,6 +41,10 @@ trait HasVisits
      */
     public function trackVisit()
     {
+        $crawlers = ['bot', 'crawl', 'slurp', 'spider', 'mediapartners'];
+
+        if (Str::contains(request()->userAgent(), $crawlers)) return $this;
+
         $visits = $this->getMetadata('_visits');
 
         if (is_null($visits)) $visits = 0;
