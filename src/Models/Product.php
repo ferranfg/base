@@ -59,6 +59,7 @@ class Product extends Model
      */
     public static $types = [
         'simple' => 'Simple',
+        'bundle' => 'Bundle',
         'downloadable' => 'Downloadable'
     ];
 

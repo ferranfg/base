@@ -16,6 +16,16 @@ class ProductRepository
         return Base::product()->whereIn($column, $values);
     }
 
+    public function whereAvailable()
+    {
+        return Base::product()->with('comments', 'metadata')->whereStatus('available')->orderBy('id', 'desc');
+    }
+
+    public function whereAvailableByVisits()
+    {
+        return Base::product()->with('comments', 'metadata')->whereStatus('available')->orderByVisits();
+    }
+
     public function findById($id)
     {
         return Base::product()->findOrFail($id);
