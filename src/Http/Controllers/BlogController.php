@@ -67,6 +67,8 @@ class BlogController extends Controller
 
         abort_unless($post->type == 'entry' and $post->status == 'published', 404);
 
+        $post->trackVisit();
+
         $photo_url = ImageKit::init()->url([
             'path' => $post->photo_url,
             'transformation' => [
