@@ -1,5 +1,9 @@
 @extends(config('base.blog_template', 'template'))
 
+@push('head')
+    {{ $posts->links('base::blog.pagination-meta') }}
+@endpush
+
 @section('content')
     <section class="bg-half d-table w-100 lazy" data-bg="url({{ hero_image() }})">
         <div class="bg-overlay"></div>

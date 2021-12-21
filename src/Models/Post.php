@@ -120,6 +120,14 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Get the updated at time in a human format.
+     */
+    public function getUpdatedAtDiffAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
+
+    /**
      * Used to display the post content as a feed item.
      */
     public function toFeedItem(): FeedItem

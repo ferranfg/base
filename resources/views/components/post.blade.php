@@ -5,7 +5,8 @@
             <div class="overlay bg-dark"></div>
             <div class="author">
                 <small class="text-light user d-block"><i class="fa fa-user"></i> {{ $post->author->name }}</small>
-                <small class="text-light date"><i class="fa fa-calendar"></i> {{ $post->created_at_diff }}</small>
+                <small class="text-light date"><i class="fa fa-calendar"></i> Updated {{ $post->updated_at_diff }}</small>
+                <time class="updated" datetime="{{ $post->updated_at }}"></time>
             </div>
         </div>
         <div class="col-lg-8">

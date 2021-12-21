@@ -1,5 +1,52 @@
 @extends(config('base.blog_template', 'template'))
 
+@push('head')
+    <meta property="article:published_time" content="{{ $post->created_at->toISOString() }}" />
+    <meta property="article:modified_time" content="{{ $post->updated_at->toISOString() }}" />
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "publisher": {
+            "@type": "Organization",
+            "name": "{{ config('app.name') }}",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{{ config('base.meta_image') }}",
+                "width": 1920,
+                "height": 1280
+            }
+        },
+        "author": {
+            "@type": "Person",
+            "name": "{{ $post->author->name }}",
+            "image": {
+                "@type": "ImageObject",
+                "url": "{{ $post->author->photo_url }}",
+                "width": 200,
+                "height": 200
+            }
+        },
+        "headline": "{{ $post->name }}",
+        "url": "{{ $post->canonical_url }}",
+        "datePublished": "{{ $post->created_at->toISOString() }}",
+        "dateModified": "{{ $post->updated_at->toISOString() }}",
+        "image": {
+            "@type": "ImageObject",
+            "url": "{{ $photo_url }}",
+            "width": 1920,
+            "height": 1280
+        },
+        "description": "{{ $post->excerpt }}",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{{ config('app.url') }}"
+        }
+    }
+    </script>
+@endpush
+
 @section('content')
     <section class="bg-half d-table w-100 lazy" data-bg="url({{ $photo_url }})">
         <div class="bg-overlay"></div>
@@ -15,7 +62,7 @@
                             <nav class="d-inline-block">
                                 <ul class="breadcrumb bg-white rounded shadow mb-0">
                                     <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
-                                    <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->created_at_diff }}</li>
+                                    <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at_diff }}</li>
                                     <li class="breadcrumb-item"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</li>
                                 </ul>
                                 <time class="updated" datetime="{{ $post->updated_at }}"></time>

@@ -39,7 +39,7 @@ class BlogController extends Controller
         $posts = $this->postRepository
             ->whereType('entry')
             ->whereStatus('published')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->simplePaginate(5);
 
         $posts->setPath('/blog');
