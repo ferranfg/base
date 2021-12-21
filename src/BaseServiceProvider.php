@@ -49,6 +49,7 @@ class BaseServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'base');
+        $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang', 'base');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         Translatable::defaultLocales([
