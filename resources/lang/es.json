@@ -1,5 +1,15 @@
 {
     "Subscribe to our newsletter": "Sucríbete a nuestra newsletter",
     "Sign up and receive the latest tips via email.": "Regístrate y recibe las últimas novedades por correo electrónico.",
-    "I understand and agree to the :termsOpen Terms of Service :termsClose and :privacyOpen Privacy Policy :privacyClose.": "Entiendo y acepto los :termsOpen Términos de Servicio :termsClose y la :privacyOpen Política de Privacidad :privacyClose."
+    "I understand and agree to the :termsOpen Terms of Service :termsClose and :privacyOpen Privacy Policy :privacyClose.": "Entiendo y acepto los :termsOpen Términos de Servicio :termsClose y la :privacyOpen Política de Privacidad :privacyClose.",
+
+    "Welcome to :app_name": "Bienvenido a :app_name",
+    "You're all set.": "Ya está todo listo.",
+    "Your email is now confirmed and now you're the newest member of the community. Check your email for future messages from me.": "Tu correo electrónico está confirmado y ahora eres el miembro más reciente de la comunidad. Revisa tu correo electrónico para futuros mensajes míos.",
+    "In the meantime, go ahead and follow me on Twitter.": "Mientras tanto, puedes seguirme en Twitter.",
+    "Follow @ferranfigueredo": "Seguir a @ferranfigueredo",
+    "With that, welcome to the community.": "Y nada más, bienvenido a la comunidad.",
+    "Now that you're signed up, you'll start to receive our insanely valuable content right in your inbox.": "Ahora que estás registrado, empezarás a recibir nuestro contenido directamente en tu buzón de correo.",
+    "Talk soon.": "Hasta pronto."
+
 }

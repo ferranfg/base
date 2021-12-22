@@ -2,10 +2,10 @@
 
 namespace Ferranfg\Base\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Repositories\UserRepository;
+use Ferranfg\Base\Notifications\WelcomeNewsletter;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
@@ -34,6 +34,8 @@ class NewsletterController extends Controller
             'name' => (string) null,
             'password' => (string) null
         ]);
+
+        $user->notify(new WelcomeNewsletter);
 
         activity()->performedOn($user)->log('subscribed');
 
