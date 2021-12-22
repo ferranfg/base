@@ -2,10 +2,10 @@
 
 namespace Ferranfg\Base\Notifications;
 
+use Ferranfg\Base\Base;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class WelcomeNewsletter extends Notification
 {
@@ -31,6 +31,7 @@ class WelcomeNewsletter extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->bcc(Base::$developers)
             ->subject(__('Welcome to :app_name', ['app_name' => config('app.name')]))
             ->line(__("You're all set."))
             ->line(__("Your email is now confirmed and now you're the newest member of the community. Check your email for future messages from me."))
