@@ -3,13 +3,12 @@
 namespace Ferranfg\Base\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\InteractsWithQueue;
 
-class SendPostNewsletter extends Action
+class PostTestNewsletter extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -27,7 +26,7 @@ class SendPostNewsletter extends Action
             return Action::danger('Please run this on only one user resource.');
         }
 
-        $models->first()->sendNewsletter();
+        $models->first()->sendNewsletter(true);
     }
 
     /**

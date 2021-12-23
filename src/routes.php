@@ -17,6 +17,7 @@ Route::feeds('feed');
 
 Route::group(['middleware' => 'web'], function ()
 {
+    Route::get('/scheduler/weekly', 'Ferranfg\Base\Http\Controllers\SchedulerController@weekly');
     Route::get('/scheduler/daily', 'Ferranfg\Base\Http\Controllers\SchedulerController@daily');
 
     Route::post('/newsletter/subscribe', '\Ferranfg\Base\Http\Controllers\NewsletterController@subscribe');

@@ -22,6 +22,11 @@ class NewsletterController extends Controller
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * Endpoint del formulario de registro.
+     *
+     * @return Response
+     */
     public function subscribe(Request $request)
     {
         $this->validate($request, [
@@ -44,6 +49,11 @@ class NewsletterController extends Controller
         ]);
     }
 
+    /**
+     * Página destino para darse de baja de la newsletter.
+     *
+     * @return Response
+     */
     public function unsubscribe(Request $request)
     {
         try

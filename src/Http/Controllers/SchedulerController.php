@@ -18,7 +18,36 @@ class SchedulerController extends Controller
     }
 
     /**
-     * Endpoint para las tareas diarias. Recibirá una petición de app engine
+     * Endpoint para las tareas semanales. Recibirá una petición de Integromat
+     *
+     * @return Response
+     */
+    public function weekly()
+    {
+        $this->newsletterPublishedPosts();
+
+        return response()->json([]);
+    }
+
+    /**
+     * Newsletter las entradas que no han sido enviadas todavía.
+     *
+     * @return Response
+     */
+    public function newsletterPublishedPosts()
+    {
+        $posts = $this->postRepository->whereStatus('published')->orderBy('id', 'asc')->get();
+
+        $post = $posts->first(function ($post)
+        {
+            return $post->getMetadata('newslettered_at') == null;
+        });
+
+        if ( ! is_null($post)) $post->sendNewsletter();
+    }
+
+    /**
+     * Endpoint para las tareas diarias. Recibirá una petición de Integromat
      *
      * @return Response
      */
@@ -29,6 +58,11 @@ class SchedulerController extends Controller
         return response()->json([]);
     }
 
+    /**
+     * Publica las entradas que están programadas a un horario superario al actual.
+     *
+     * @return Response
+     */
     private function publishScheduledPosts()
     {
         $posts = $this->postRepository->whereStatus('scheduled')->get();

@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Carbon\Carbon;
 use Ferranfg\Base\Base;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
@@ -167,6 +168,8 @@ class Post extends Model implements Feedable
             $exclude = Activity::whereDescription('unsubscribed')->get();
             $users = Base::user()->whereNotIn('id', $exclude->pluck('subject_id')->toArray())->get();
 
+            $this->setMetadata('newslettered_at', Carbon::now());
+
             activity()->performedOn($this)->log('sent_newsletter');
         }
 
@@ -174,19 +177,23 @@ class Post extends Model implements Feedable
         {
             $user->notify(new PostNewsletter($this));
         }
+
+        return $this;
     }
 
     /**
-     * Publishes an scheduled post.
+     * Publishes a post.
      */
     public function publish()
     {
+        $this->setMetadata('published_at', Carbon::now());
+
         $this->status = 'published';
         $this->save();
 
         activity()->performedOn($this)->log('published');
 
-        $this->sendNewsletter();
+        return $this;
     }
 
 }
