@@ -6,7 +6,23 @@
     }
 </style>
 
-# {{ $post->name }}
+<h1 style="font-size:24px"><a href="{{ $post->canonical_url }}" style="text-decoration:none;color:#3d4852">{{ $post->name }}</a></h1>
+
+@if ($post->author)
+<table style="margin:1em 0">
+    <tr>
+        <td><img src="{{ $post->author->photo_url }}" style="border:none!important;border-radius:50%;display:block;height:45px;vertical-align:middle;width:45px" /></td>
+        <td>
+            <div style="line-height:1em;margin-left:12px">
+                <div style="font-size:14px;line-height:17px;height:17px;margin-bottom:4px">{{ $post->author->name }}</div>
+                <div style="font-size:12px;color:rgb(118,118,118)">
+                    <time datetime="{{ $post->updated_at }}">{{ $post->updated_at->format('M d') }}</time>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+@endif
 
 *{{ $post->excerpt }}*
 
