@@ -4,6 +4,11 @@ use Laravel\Cashier\Cashier;
 use Ferranfg\Base\Clients\ImageKit;
 use Ferranfg\Base\Clients\Unsplash;
 
+/**
+ * Formatea una moneda que llega en bruto al correspondiente de currency.
+ *
+ * @return string
+ */
 if ( ! function_exists('format_amount'))
 {
     function format_amount($raw_amount, $currency = null)
@@ -83,6 +88,19 @@ if ( ! function_exists('hero_image'))
         if (is_null(config('services.unsplash.collections'))) return config('base.hero_image');
 
         return Unsplash::randomFromCollections()->pluck('urls.regular')->random();
+    }
+}
+
+/**
+ * Construye un meta_title con el formato de {pagina} | {nombre}.
+ *
+ * @return string
+ */
+if ( ! function_exists('meta_title'))
+{
+    function meta_title(string $title)
+    {
+        return "{$title} | " . config('app.name');
     }
 }
 

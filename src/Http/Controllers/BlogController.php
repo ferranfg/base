@@ -47,7 +47,7 @@ class BlogController extends Controller
         abort_unless($posts->count(), 404);
 
         view()->share([
-            'meta_title' => config('base.blog_title'),
+            'meta_title' => meta_title(config('base.blog_title')),
             'meta_description' => config('base.blog_description')
         ]);
 
@@ -77,7 +77,7 @@ class BlogController extends Controller
         ]);
 
         view()->share([
-            'meta_title' => $post->name,
+            'meta_title' => meta_title($post->name),
             'meta_description' => $post->excerpt,
             'meta_image' => $photo_url
         ]);
