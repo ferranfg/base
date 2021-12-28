@@ -8,6 +8,7 @@ use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
+use Ferranfg\Base\Clients\ImageKit;
 use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
 use Spatie\Activitylog\Models\Activity;
@@ -33,6 +34,13 @@ class Post extends Model implements Feedable
      * @var array
      */
     protected $fillable = ['name', 'slug', 'excerpt', 'content'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['canonical_url', 'imagekit_url'];
 
     /**
      * The attributes that are translatable.
@@ -126,6 +134,18 @@ class Post extends Model implements Feedable
     public function getUpdatedAtDiffAttribute()
     {
         return $this->updated_at->diffForHumans();
+    }
+
+    /**
+     * Get the imagekit URL for the product.
+     */
+    public function getImagekitUrlAttribute()
+    {
+        if (config('services.imagekit.key')) return ImageKit::init()->url([
+            'path' => $this->photo_url
+        ]);
+
+        return $this->photo_url;
     }
 
     /**

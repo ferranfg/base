@@ -8,6 +8,7 @@ use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasVisits;
+use Ferranfg\Base\Clients\ImageKit;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
@@ -33,6 +34,13 @@ class Product extends Model
      * @var array
      */
     protected $fillable = ['name', 'slug', 'description', 'photo_url', 'video_url', 'attached_url', 'currency', 'amount', 'type', 'status'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['canonical_url', 'imagekit_url'];
 
     /**
      * The attributes that are translatable.
@@ -110,6 +118,18 @@ class Product extends Model
     public function getCheckoutUrlAttribute()
     {
         return url("checkout/{$this->slug}");
+    }
+
+    /**
+     * Get the imagekit URL for the product.
+     */
+    public function getImagekitUrlAttribute()
+    {
+        if (config('services.imagekit.key')) return ImageKit::init()->url([
+            'path' => $this->attached_url ?: $this->photo_url
+        ]);
+
+        return $this->attached_url ?: $this->photo_url;
     }
 
     /**
