@@ -3,6 +3,7 @@
 namespace Ferranfg\Base\Clients;
 
 use Crew\Unsplash\Photo;
+use Crew\Unsplash\Exception;
 use Crew\Unsplash\HttpClient;
 
 class Unsplash
@@ -31,14 +32,23 @@ class Unsplash
 
     public static function randomFromCollections()
     {
-        $photos = cache()->remember('photos/random', 24 * 60 * 60, function ()
+        try
         {
-            return self::random([
-                'collections' => config('services.unsplash.collections'),
-                'count' => 30
-            ]);
-        });
+            $photos = cache()->remember('photos/random', 24 * 60 * 60, function ()
+            {
+                return self::random([
+                    'collections' => config('services.unsplash.collections'),
+                    'count' => 30
+                ]);
+            });
 
-        return collect($photos->toArray());
+            return collect($photos->toArray());
+        }
+        catch (Exception $e)
+        {
+            return collect([
+                ['urls' => ['regular' => config('base.hero_image')]]
+            ]);
+        }
     }
 }
