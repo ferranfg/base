@@ -142,7 +142,10 @@ class Post extends Model implements Feedable
     public function getImagekitUrlAttribute()
     {
         if (config('services.imagekit.key')) return ImageKit::init()->url([
-            'path' => $this->photo_url
+            'path' => $this->photo_url,
+            'transformation' => [
+                ['width' => 1200, 'height' => 630]
+            ]
         ]);
 
         return $this->photo_url;
