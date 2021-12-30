@@ -8,7 +8,6 @@ use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
-use Ferranfg\Base\Clients\ImageKit;
 use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
 use Spatie\Activitylog\Models\Activity;
@@ -40,7 +39,7 @@ class Post extends Model implements Feedable
      *
      * @var array
      */
-    protected $appends = ['canonical_url', 'imagekit_url'];
+    protected $appends = ['canonical_url', 'horizontal_photo_url'];
 
     /**
      * The attributes that are translatable.
@@ -137,18 +136,13 @@ class Post extends Model implements Feedable
     }
 
     /**
-     * Get the imagekit URL for the product.
+     * Get the Horizontal Photo URL for the product.
      */
-    public function getImagekitUrlAttribute()
+    public function getHorizontalPhotoUrlAttribute()
     {
-        if (config('services.imagekit.key')) return ImageKit::init()->url([
-            'path' => $this->photo_url,
-            'transformation' => [
-                ['width' => 1200, 'height' => 630]
-            ]
+        return img_url($this->attached_url ?: $this->photo_url, [
+            ['width' => 1200, 'height' => 630]
         ]);
-
-        return $this->photo_url;
     }
 
     /**

@@ -24,6 +24,24 @@ if ( ! function_exists('format_amount'))
  *
  * @return string
  */
+if ( ! function_exists('img_url'))
+{
+    function img_url($path, $transformation = [])
+    {
+        if (config('services.imagekit.key')) return ImageKit::init()->url([
+            'path' => $path,
+            'transformation' => $transformation
+        ]);
+
+        return $path;
+    }
+}
+
+/**
+ * Get the URL to the resizer image service.
+ *
+ * @return string
+ */
 if ( ! function_exists('img'))
 {
     function img(
@@ -38,20 +56,13 @@ if ( ! function_exists('img'))
     )
     {
         $tag = ['<img'];
-        $img = ImageKit::init();
 
-        $url = $img->url([
-            'path' => $path,
-            'transformation' => [
-                ['width' => $width, 'height' => $height]
-            ]
+        $url = img_url($path, [
+            ['width' => $width, 'height' => $height]
         ]);
 
-        $url2x = $img->url([
-            'path' => $path,
-            'transformation' => [
-                ['width' => bcmul($width, 2), 'height' => bcmul($height, 2)]
-            ]
+        $url2x = img_url($path, [
+            ['width' => bcmul($width, 2), 'height' => bcmul($height, 2)]
         ]);
 
         if ($lazy)

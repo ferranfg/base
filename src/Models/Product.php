@@ -8,7 +8,6 @@ use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasVisits;
-use Ferranfg\Base\Clients\ImageKit;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
@@ -40,7 +39,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $appends = ['canonical_url', 'imagekit_url'];
+    protected $appends = ['canonical_url', 'horizontal_photo_url', 'square_photo_url'];
 
     /**
      * The attributes that are translatable.
@@ -121,18 +120,23 @@ class Product extends Model
     }
 
     /**
-     * Get the imagekit URL for the product.
+     * Get the Horizontal Photo URL for the product.
      */
-    public function getImagekitUrlAttribute()
+    public function getHorizontalPhotoUrlAttribute()
     {
-        if (config('services.imagekit.key')) return ImageKit::init()->url([
-            'path' => $this->attached_url ?: $this->photo_url,
-            'transformation' => [
-                ['width' => 1200, 'height' => 630]
-            ]
+        return img_url($this->attached_url ?: $this->photo_url, [
+            ['width' => 1200, 'height' => 630]
         ]);
+    }
 
-        return $this->attached_url ?: $this->photo_url;
+    /**
+     * Get the Instagram Photo URL for the product.
+     */
+    public function getSquarePhotoUrlAttribute()
+    {
+        return img_url($this->attached_url ?: $this->photo_url, [
+            ['width' => 1080, 'height' => 1080]
+        ]);
     }
 
     /**
