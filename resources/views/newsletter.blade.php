@@ -26,8 +26,8 @@
 
 *{{ $post->excerpt }}*
 
-@if ($post->imagekit_url)
-<img src="{{ $post->imagekit_url }}" alt="{{ $post->name }}" />
+@if ($post->horizontal_photo_url)
+<img src="{{ $post->horizontal_photo_url }}" alt="{{ $post->name }}" />
 @endif
 
 <hr style="background: rgba(204, 204, 204, 0.6); border: none; height: 1px; margin: 24px 0px; padding: 0px;" />
