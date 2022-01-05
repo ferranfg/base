@@ -65,9 +65,14 @@ class BlogController extends Controller
     {
         $post = $this->postRepository->findBySlug($request->slug);
 
-        abort_unless($post->type == 'entry' and $post->status == 'published', 404);
+        abort_unless($post->type == 'entry', 404);
 
-        $post->trackVisit();
+        if (is_null($request->preview))
+        {
+            abort_unless($post->status == 'published', 404);
+
+            $post->trackVisit();
+        }
 
         $photo_url = ImageKit::init()->url([
             'path' => $post->photo_url,
