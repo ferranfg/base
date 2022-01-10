@@ -1,5 +1,11 @@
 @component('mail::message')
 <style>
+    hr {
+        margin: 25px 0;
+        border: 0;
+        background: #e8e5ef;
+        height: 1px;
+    }
     li {
         font-size: 16px;
         line-height: 1.5em;
@@ -35,6 +41,8 @@
 @basedown($post->content)
 
 @component('mail::subcopy')
-[Unsubscribe]({{ url("newsletter/unsubscribe/{$token}") }})
+<div style="text-align:center">
+You are subscribed to the {{ config('app.name') }} mailing list. <a href="{{ url("newsletter/unsubscribe/{$token}") }}">Unsubscribe</a>.
+</div>
 @endcomponent
 @endcomponent
