@@ -1,7 +1,9 @@
 @extends(config('base.blog_template', 'template'))
 
 @push('head')
-    {{ $posts->links('base::blog.pagination-meta') }}
+
+    @include('base::blog.list-meta')
+
 @endpush
 
 @section('content')
@@ -10,7 +12,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-7 title-heading text-center">
-                    <h1 class="text-white title-dark mb-3">{{ config('base.blog_title') }}</h1>
+                    <h1 class="text-white title-dark mb-3">{{ config('base.blog_title') ? config('base.blog_title') : config('app.name') }}</h1>
                     <p class="para-desc mx-auto text-white-50 mb-0 text-balance">{{ config('base.blog_description') }}</p>
                 </div>
             </div>
@@ -33,6 +35,25 @@
                             @include('base::components.post', ['post' => $post])
                         @endforeach
                         {{ $posts->links('base::components.simple-pagination') }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    @if ($featured)
+        <section class="bg-half pt-5 pb-5 d-table w-100 lazy" data-bg="url({{ $featured_photo_url }})">
+            <div class="bg-overlay"></div>
+            <div class="container">
+                <div class="row position-relative align-items-center pt-4">
+                    <div class="col-lg-7 offset-lg-5">
+                        <div class="title-heading studio-home rounded bg-white shadow">
+                            <h3 class="heading mb-3">{{ $featured->name }}</h3>
+                            <p class="para-desc text-muted">{{ $featured->excerpt }}</p>
+                            <div class="mt-4">
+                                <a href="{{ $featured->canonical_url }}" class="btn btn-primary mt-2 mr-2">Seguir leyendo</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -109,9 +109,16 @@ if ( ! function_exists('hero_image'))
  */
 if ( ! function_exists('meta_title'))
 {
-    function meta_title(string $title)
+    function meta_title($title)
     {
-        return "{$title} | " . config('app.name');
+        $meta_title = [];
+
+        if ($page = request()->page and $page > 1) $meta_title[] = "Page {$page}";
+        if ($title) $meta_title[] = $title;
+
+        $meta_title[] = config('app.name');
+
+        return implode(' | ', $meta_title);
     }
 }
 

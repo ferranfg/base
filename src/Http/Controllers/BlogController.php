@@ -36,13 +36,15 @@ class BlogController extends Controller
             return redirect($post->canonical_url, 302);
         }
 
-        $posts = $this->postRepository
+        $query = $this->postRepository
             ->whereType('entry')
             ->whereStatus('published')
-            ->orderBy('updated_at', 'desc')
-            ->simplePaginate(5);
+            ->orderBy('updated_at', 'desc');
 
-        $posts->setPath('/blog');
+        $featured = (clone $query)->whereFeatured(true)->first();
+        $posts = (clone $query)->whereFeatured(false)->simplePaginate(5);
+
+        $posts->setPath(config('base.blog_path'));
 
         abort_unless($posts->count(), 404);
 
@@ -52,7 +54,14 @@ class BlogController extends Controller
         ]);
 
         return view('base::blog.list', [
-            'posts' => $posts
+            'posts' => $posts,
+            'featured' => $featured,
+            'featured_photo_url' => ($featured and $featured->photo_url) ? ImageKit::init()->url([
+                'path' => $featured->photo_url,
+                'transformation' => [
+                    ['width' => 1920, 'height' => 1280]
+                ]
+            ]) : hero_image(),
         ]);
     }
 

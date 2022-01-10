@@ -43,6 +43,7 @@ return [
 
     'blog_description' => env('BASE_BLOG_DESCRIPTION'),
 
+    'blog_path' => '/blog',
 
     /*
     |--------------------------------------------------------------------------

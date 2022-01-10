@@ -1,50 +1,9 @@
 @extends(config('base.blog_template', 'template'))
 
 @push('head')
-    <meta property="article:published_time" content="{{ $post->created_at->toISOString() }}" />
-    <meta property="article:modified_time" content="{{ $post->updated_at->toISOString() }}" />
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "publisher": {
-            "@type": "Organization",
-            "name": "{{ config('app.name') }}",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "{{ config('base.meta_image') }}",
-                "width": 1920,
-                "height": 1280
-            }
-        },
-        "author": {
-            "@type": "Person",
-            "name": "{{ $post->author->name }}",
-            "image": {
-                "@type": "ImageObject",
-                "url": "{{ $post->author->photo_url }}",
-                "width": 200,
-                "height": 200
-            }
-        },
-        "headline": "{{ $post->name }}",
-        "url": "{{ $post->canonical_url }}",
-        "datePublished": "{{ $post->created_at->toISOString() }}",
-        "dateModified": "{{ $post->updated_at->toISOString() }}",
-        "image": {
-            "@type": "ImageObject",
-            "url": "{{ $photo_url }}",
-            "width": 1920,
-            "height": 1280
-        },
-        "description": "{{ $post->excerpt }}",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "{{ config('app.url') }}"
-        }
-    }
-    </script>
+    @include('base::blog.post-meta')
+
 @endpush
 
 @section('content')
