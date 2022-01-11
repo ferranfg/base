@@ -17,6 +17,6 @@
 <meta name="twitter:description" content="{{ $meta_description }}" />
 <meta name="twitter:url" content="{{ $meta_url }}" />
 <meta name="twitter:image" content="{{ $meta_image }}" />
-<meta name="twitter:site" content="{{ config('pistol.twitter_username') }}" />
+<meta name="twitter:site" content="{{ config('base.twitter_username') }}" />
 <meta property="og:image:width" content="{{ $og_width }}" />
 <meta property="og:image:height" content="{{ $og_height }}" />

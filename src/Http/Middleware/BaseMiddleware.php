@@ -23,7 +23,7 @@ class BaseMiddleware
         view()->share([
             'meta_title' => config('base.meta_title'),
             'meta_description' => config('base.meta_description'),
-            'meta_url' => url()->current(),
+            'meta_url' => meta_url(),
             'meta_image' => config('base.meta_image'),
             'og_width' => 1200,
             'og_height' => 628

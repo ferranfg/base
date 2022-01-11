@@ -103,6 +103,19 @@ if ( ! function_exists('hero_image'))
 }
 
 /**
+ * Construye un canonical_url.
+ *
+ * @return string
+ */
+if ( ! function_exists('meta_url'))
+{
+    function meta_url()
+    {
+        return url()->current();
+    }
+}
+
+/**
  * Construye un meta_title con el formato de {pagina} | {nombre}.
  *
  * @return string

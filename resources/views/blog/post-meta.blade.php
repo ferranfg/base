@@ -12,12 +12,14 @@
 
 <meta property="fb:app_id" content="{{ config('services.facebook.client_id') }}" />
 
+<meta name="theme-color" content="#2f55d4" />
+
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{ $post->name }}" />
 <meta name="twitter:description" content="{{ $post->excerpt }}" />
 <meta name="twitter:url" content="{{ $post->canonical_url }}" />
 <meta name="twitter:image" content="{{ $photo_url }}" />
-<meta name="twitter:label1" content="Por" />
+<meta name="twitter:label1" content="By" />
 <meta name="twitter:data1" content="{{ $post->author->name }}" />
 <meta name="twitter:site" content="{{ config('base.twitter_username') }}" />
 <meta property="og:image:width" content="1920" />
