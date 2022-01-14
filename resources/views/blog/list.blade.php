@@ -59,4 +59,7 @@
             </div>
         </section>
     @endif
+
+    @include('base::components.newsletter-modal')
+
 @endsection

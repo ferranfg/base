@@ -45,6 +45,8 @@ return [
 
     'blog_path' => '/blog',
 
+    'blog_substack_mode' => false,
+
     /*
     |--------------------------------------------------------------------------
     | Footer Information

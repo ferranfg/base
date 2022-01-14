@@ -254,3 +254,27 @@ img.emoji {
         color: #fff;
     }
 }
+
+// Subscribe Modal
+#subscribe-modal.modal {
+    padding: 0 !important; // override inline padding-right added from js
+
+    .modal-dialog {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        margin: 0;
+    }
+
+    .modal-content {
+        max-width: 550px;
+        margin: 0 auto;
+        border: 0;
+        border-radius: 0;
+        background: none;
+    }
+
+    .modal-body {
+        overflow-y: auto;
+    }
+}

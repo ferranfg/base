@@ -1,4 +1,4 @@
-Vue.component('newsletter-subscribe', {
+Vue.component('newsletter-form', {
 
     data() {
         return {
