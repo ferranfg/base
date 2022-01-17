@@ -60,6 +60,6 @@
         </section>
     @endif
 
-    @include('base::components.newsletter-modal')
+    @includeWhen(config('base.blog_substack_mode'), 'base::components.newsletter-modal')
 
 @endsection
