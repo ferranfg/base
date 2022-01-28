@@ -1,4 +1,6 @@
 <link rel="canonical" href="{{ $meta_url }}">
+<link rel="alternate" href="{{ $meta_url }}" hreflang="{{ config('app.locale') }}" />
+<link rel="alternate" href="{{ $meta_url }}" hreflang="x-default" />
 
 <meta name="description" content="{{ $meta_description }}">
 
