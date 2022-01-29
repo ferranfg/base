@@ -1,4 +1,6 @@
 <link rel="canonical" href="{{ $post->canonical_url }}">
+<link rel="alternate" href="{{ $post->canonical_url }}" hreflang="{{ config('app.locale') }}" />
+<link rel="alternate" href="{{ $post->canonical_url }}" hreflang="x-default" />
 
 <meta name="description" content="{{ $post->excerpt }}">
 
