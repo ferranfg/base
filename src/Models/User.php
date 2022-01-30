@@ -53,7 +53,7 @@ class User extends SparkUser
     ];
 
     /**
-     * Convert the object to its Slack message representation.
+     * Convert the object to its Discord message representation.
      */
     public function toMessage()
     {
@@ -71,14 +71,14 @@ class User extends SparkUser
     }
 
     /**
-     * Route notifications for the Slack channel.
+     * Route notifications for the Discord channel.
      *
      * @param  \Illuminate\Notifications\Notification  $notification
      * @return string
      */
-    public function routeNotificationForSlack($notification)
+    public function routeNotificationForDiscord($notification)
     {
-        return config('base.slack_webhook');
+        return config('base.discord_webhook');
     }
 
     /**

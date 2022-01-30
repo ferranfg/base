@@ -7,9 +7,9 @@ use Carbon\Carbon;
 use Ferranfg\Base\Base;
 use Illuminate\Database\Eloquent\Model;
 use Ferranfg\Base\Events\ExceptionReported;
-use Ferranfg\Base\Notifications\SlackNotification;
+use Ferranfg\Base\Notifications\DiscordNotification;
 
-class SlackEventSubscriber
+class DiscordEventSubscriber
 {
     /**
      * Handle the event.
@@ -19,7 +19,7 @@ class SlackEventSubscriber
      */
     public function handle($name, $events)
     {
-        Notification::send(Base::user(), new SlackNotification($this->formatMessage($name, $events)));
+        Notification::send(Base::user(), new DiscordNotification($this->formatMessage($name, $events)));
     }
 
     /**
@@ -29,9 +29,9 @@ class SlackEventSubscriber
      */
     public function subscribe($events)
     {
-        $events->listen('Laravel\Spark\*', 'Ferranfg\Base\Listeners\SlackEventSubscriber@handle');
-        $events->listen('Ferranfg\Base\*', 'Ferranfg\Base\Listeners\SlackEventSubscriber@handle');
-        $events->listen('App\Events\*', 'Ferranfg\Base\Listeners\SlackEventSubscriber@handle');
+        $events->listen('Laravel\Spark\*', 'Ferranfg\Base\Listeners\DiscordEventSubscriber@handle');
+        $events->listen('Ferranfg\Base\*', 'Ferranfg\Base\Listeners\DiscordEventSubscriber@handle');
+        $events->listen('App\Events\*', 'Ferranfg\Base\Listeners\DiscordEventSubscriber@handle');
     }
 
     /**

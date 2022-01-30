@@ -173,7 +173,7 @@ class Product extends Model
     }
 
     /**
-     * Convert the object to its Slack message representation.
+     * Convert the object to its Discord message representation.
      */
     public function toMessage()
     {

@@ -5,9 +5,10 @@ namespace Ferranfg\Base\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\SlackMessage;
+use SnoerenDevelopment\DiscordWebhook\DiscordMessage;
+use SnoerenDevelopment\DiscordWebhook\DiscordWebhookChannel;
 
-class SlackNotification extends Notification
+class DiscordNotification extends Notification
 {
     use Queueable;
 
@@ -26,18 +27,18 @@ class SlackNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return [DiscordWebhookChannel::class];
     }
 
     /**
-     * Get the Slack representation of the notification.
+     * Get the Discord representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return SlackMessage
+     * @return DiscordMessage
      */
-    public function toSlack($notifiable)
+    public function toDiscord($notifiable)
     {
-        return (new SlackMessage)->content($this->content);
+        return (new DiscordMessage)->content($this->content);
     }
 
 }
