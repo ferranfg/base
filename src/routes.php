@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::feeds('feed');
+if (config('feed.feeds.main.items')) Route::feeds('feed');
 
 Route::group(['middleware' => 'web'], function ()
 {
