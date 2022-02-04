@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Repositories;
 
 use Ferranfg\Base\Base;
 use Ferranfg\Base\Clients\Akismet;
+use Ferranfg\Base\Events\CommentCreated;
 
 class CommentRepository
 {
@@ -23,7 +24,7 @@ class CommentRepository
             $request->content
         );
 
-        return $commentable->comments()->create([
+        $comment = $commentable->comments()->create([
             'author_name' => $request->name,
             'author_email' => $request->email,
             'author_IP' => $request->ip(),
@@ -31,6 +32,10 @@ class CommentRepository
             'rating' => $request->has('rating') ? (int) $request->rating : null,
             'type' => $is_spam ? 'spam' : $comment_type
         ]);
+
+        event(new CommentCreated($comment));
+
+        return $comment;
     }
 
 }
