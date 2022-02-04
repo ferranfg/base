@@ -5,7 +5,7 @@ namespace Ferranfg\Base\Listeners;
 use Notification;
 use Carbon\Carbon;
 use Ferranfg\Base\Base;
-use Illuminate\Database\Eloquent\Model;
+use Ferranfg\Base\Events\DiscordMessage;
 use Ferranfg\Base\Events\ExceptionReported;
 use Ferranfg\Base\Notifications\DiscordNotification;
 
@@ -19,7 +19,7 @@ class DiscordEventSubscriber
      */
     public function handle($name, $events)
     {
-        Notification::send(Base::user(), new DiscordNotification($this->formatMessage($name, $events)));
+        Notification::send(Base::user(), new DiscordNotification($this->formatMessage($events)));
     }
 
     /**
@@ -41,31 +41,30 @@ class DiscordEventSubscriber
      * @param  object  $events
      * @return string
      */
-    private function formatMessage($name, $events)
+    private function formatMessage($events)
     {
-        $record = ['[' . Carbon::now() . ']', "{$name}:"];
+        $record = ['`' . Carbon::now() . '`'];
         $event = reset($events);
 
         if ($event instanceof ExceptionReported and property_exists($event, 'exception'))
         {
-            array_push($record, $event->exception->getMessage());
-        }
-        else
-        {
-            foreach ($event as $model)
+            $exception = $event->exception;
+
+            array_push($record, '**' . get_class($exception) . '**');
+            array_push($record, '`' . $exception->getMessage() . '`');
+
+            if (method_exists($exception, 'getFile') and method_exists($exception, 'getLine'))
             {
-                if (method_exists($model, 'toMessage'))
-                {
-                    array_push($record, $model->toMessage());
-                }
-                else if ($model instanceof Model)
-                {
-                    array_push($record, "#{$model->id}");
-                }
+                array_push($record, '`' . $exception->getFile() . ':' . $exception->getLine() . '`');
             }
         }
+        else if ($event instanceof DiscordMessage)
+        {
+            array_push($record, '**' . $event->name . '**');
+            array_push($record, '`' . json_encode($event->attr) . '`');
+        }
 
-        return implode(' ', $record);
+        return implode(' - ', $record);
     }
 
 }

@@ -53,14 +53,6 @@ class User extends SparkUser
     ];
 
     /**
-     * Convert the object to its Discord message representation.
-     */
-    public function toMessage()
-    {
-        return $this->email;
-    }
-
-    /**
      * Get the GDPR compliant data portability array for the model.
      *
      * @return array

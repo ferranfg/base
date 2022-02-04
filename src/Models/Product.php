@@ -173,14 +173,6 @@ class Product extends Model
     }
 
     /**
-     * Convert the object to its Discord message representation.
-     */
-    public function toMessage()
-    {
-        return $this->name;
-    }
-
-    /**
      * Get the product price formated with currency.
      */
     public function formatAmount()
