@@ -63,6 +63,10 @@ class DiscordEventSubscriber
             array_push($record, '**' . $event->name . '**');
             array_push($record, '`' . json_encode($event->attr) . '`');
         }
+        else
+        {
+            array_push($record, '**' . get_class($event) . '**');
+        }
 
         return implode(' - ', $record);
     }
