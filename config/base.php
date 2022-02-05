@@ -28,6 +28,8 @@ return [
     |
     */
 
+    'cache_max_age' => env('BASE_CACHE_MAX_AGE', 3600),
+
     'hero_image' => env('BASE_HERO_IMAGE'),
 
     /*
@@ -46,6 +48,8 @@ return [
     'blog_path' => '/blog',
 
     'blog_substack_mode' => false,
+
+    'blog_comments' => true,
 
     /*
     |--------------------------------------------------------------------------
