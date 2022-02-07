@@ -36,11 +36,14 @@ class BaseMiddleware
         // "null" para decir que desactivamos el cache
         if (is_null($max_age)) return $response;
 
-        if (auth()->check() or $this->hasForms($response) or ! $request->isMethodCacheable() or ! $response->getContent())
-        {
-            $response->setCache(['private' => true, 'max_age' => 0, 's_maxage' => 0, 'no_store' => true]);
-        }
-        else
+        if (
+            $request->isMethodCacheable() and // GET or HEAD
+            $this->isGoodRequest($response) and // Status code is 2xx
+            $response->getContent() and // Response has content
+            ! auth()->check() and // Not logged in
+            ! Str::contains($request->url(), 'logout') and // Not logout
+            ! $this->hasForms($response) // Not a form
+        )
         {
             $response->setCache(['public' => true, 'max_age' => $max_age, 's_maxage' => $max_age]);
 
@@ -49,8 +52,17 @@ class BaseMiddleware
                 $response->headers->removeCookie($cookie->getName());
             }
         }
+        else
+        {
+            $response->setCache(['private' => true, 'max_age' => 0, 's_maxage' => 0, 'no_store' => true]);
+        }
 
         return $response;
+    }
+
+    private static function isGoodRequest($response)
+    {
+        return $response->getstatusCode() >= 200 && $response->getstatusCode() < 300;
     }
 
     protected function hasForms($response): bool
