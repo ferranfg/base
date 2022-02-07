@@ -36,7 +36,7 @@ class BaseMiddleware
         // "null" para decir que desactivamos el cache
         if (is_null($max_age)) return $response;
 
-        if (auth()->check() or $this->hasForms($response) or $request->method() != 'GET')
+        if (auth()->check() or $this->hasForms($response) or ! $request->isMethodCacheable() or ! $response->getContent())
         {
             $response->setCache(['private' => true, 'max_age' => 0, 's_maxage' => 0, 'no_store' => true]);
         }
