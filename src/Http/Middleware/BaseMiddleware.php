@@ -38,7 +38,6 @@ class BaseMiddleware
 
         if (
             $request->isMethodCacheable() and // GET or HEAD
-            $this->isGoodRequest($response) and // Status code is 2xx
             $response->getContent() and // Response has content
             ! auth()->check() and // Not logged in
             ! Str::contains($request->url(), 'nova') and // Not Admin routes
@@ -58,11 +57,6 @@ class BaseMiddleware
         }
 
         return $response;
-    }
-
-    private static function isGoodRequest($response)
-    {
-        return $response->getstatusCode() >= 200 && $response->getstatusCode() < 300;
     }
 
     protected function hasForms($response): bool
