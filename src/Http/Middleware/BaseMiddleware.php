@@ -41,7 +41,7 @@ class BaseMiddleware
             $this->isGoodRequest($response) and // Status code is 2xx
             $response->getContent() and // Response has content
             ! auth()->check() and // Not logged in
-            ! Str::contains($request->url(), 'logout') and // Not logout
+            ! Str::contains($request->url(), 'nova') and // Not Admin routes
             ! $this->hasForms($response) // Not a form
         )
         {
