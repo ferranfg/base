@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Ferranfg\Base\Http\Middleware\SetCloudflareHeaders;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +15,7 @@ use Ferranfg\Base\Http\Middleware\SetCloudflareHeaders;
 
 if (config('feed.feeds.main.items')) Route::feeds('feed');
 
-Route::group(['middleware' => [SetCloudflareHeaders::class, 'web']], function ()
+Route::group(['middleware' => 'web'], function ()
 {
     Route::get('/scheduler/weekly', 'Ferranfg\Base\Http\Controllers\SchedulerController@weekly');
     Route::get('/scheduler/daily', 'Ferranfg\Base\Http\Controllers\SchedulerController@daily');
