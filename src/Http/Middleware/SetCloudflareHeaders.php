@@ -25,6 +25,11 @@ class SetCloudflareHeaders
         if ($request->isMethodCacheable() and $response->getContent() and ! auth()->check() and ! $this->hasForms($response))
         {
             $response->setCache(['public' => true, 'max_age' => $max_age, 's_maxage' => $max_age]);
+
+            foreach ($response->headers->getCookies() as $cookie)
+            {
+                $response->headers->removeCookie($cookie->getName());
+            }
         }
         else
         {
