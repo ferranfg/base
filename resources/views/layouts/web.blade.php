@@ -124,6 +124,7 @@
     @stack('scripts')
     <script src="{{ mix('js/web.js') }}"></script>
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    @include('base::components.tracking')
 
 </body>
 </html>
