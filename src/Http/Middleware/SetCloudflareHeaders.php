@@ -17,32 +17,41 @@ class SetCloudflareHeaders
     public function handle($request, Closure $next)
     {
         $response = $next($request);
+        $content = $response->getContent();
+
         $max_age = config('base.cache_max_age');
+        $options = [];
 
         // "null" para decir que desactivamos el cache
-        if (is_null($max_age)) return $response;
-
-        if ($request->isMethodCacheable() and $response->getContent() and ! auth()->check() and ! $this->hasForms($response))
+        if (is_null($max_age) or ! $request->isMethodCacheable() or ! $content)
         {
-            $response->setCache(['public' => true, 'max_age' => $max_age, 's_maxage' => $max_age]);
+            return $response;
+        }
+
+        if (auth()->check() or $this->hasForms($content))
+        {
+            $options = ['private' => true, 'max_age' => 0, 's_maxage' => 0, 'no_store' => true];
+        }
+        else
+        {
+            $options = ['public' => true, 'max_age' => $max_age, 's_maxage' => $max_age];
 
             foreach ($response->headers->getCookies() as $cookie)
             {
                 $response->headers->removeCookie($cookie->getName());
             }
         }
-        else
-        {
-            $response->setCache(['private' => true, 'max_age' => 0, 's_maxage' => 0, 'no_store' => true]);
-        }
+
+        $options['etag'] = md5($content);
+
+        $response->setCache($options);
+        $response->isNotModified($request);
 
         return $response;
     }
 
-    protected function hasForms($response): bool
+    protected function hasForms($content): bool
     {
-        $content = strtolower($response->getContent());
-
-        return Str::of($content)->contains('<input type="hidden" name="_token"');
+        return Str::of(strtolower($content))->contains('<input type="hidden" name="_token"');
     }
 }
