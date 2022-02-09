@@ -3,7 +3,6 @@
 namespace Ferranfg\Base\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Str;
 
 class BaseMiddleware
 {
@@ -30,39 +29,6 @@ class BaseMiddleware
             'og_height' => 628
         ]);
 
-        $response = $next($request);
-        $max_age = config('base.cache_max_age');
-
-        // "null" para decir que desactivamos el cache
-        if (is_null($max_age)) return $response;
-
-        if (
-            $request->isMethodCacheable() and // GET or HEAD
-            $response->getContent() and // Response has content
-            ! auth()->check() and // Not logged in
-            ! Str::contains($request->url(), 'nova') and // Not Admin routes
-            ! $this->hasForms($response) // Not a form
-        )
-        {
-            $response->setCache(['public' => true, 'max_age' => $max_age, 's_maxage' => $max_age]);
-
-            foreach ($response->headers->getCookies() as $cookie)
-            {
-                $response->headers->removeCookie($cookie->getName());
-            }
-        }
-        else
-        {
-            $response->setCache(['private' => true, 'max_age' => 0, 's_maxage' => 0, 'no_store' => true]);
-        }
-
-        return $response;
-    }
-
-    protected function hasForms($response): bool
-    {
-        $content = strtolower($response->getContent());
-
-        return Str::of($content)->contains('<input type="hidden" name="_token"');
+        return $next($request);
     }
 }

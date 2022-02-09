@@ -112,7 +112,8 @@ an entity that buys, or to which we transfer all or substantially all of our ass
 
 Third parties we currently use include:
 
-- Plausible
+- ImageKit
+- Unsplash
 - Stripe
 
 **Your Rights and Controlling Your Personal Information**
