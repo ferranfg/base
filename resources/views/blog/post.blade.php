@@ -50,25 +50,23 @@
 
                     @include('base::components.previous-next')
 
-                    @if (config('base.blog_comments')):
-                        <div id="comments">
-                            @if ($post->comments->count())
-                                <h5 class="mt-4">Comments:</h5>
-                                <ul class="media-list list-unstyled mb-0">
-                                    @foreach ($post->comments as $comment)
-                                        @include('base::components.comment', ['comment' => $comment])
-                                    @endforeach
-                                </ul>
-                            @endif
-                        </div>
+                    <div id="comments">
+                        @if ($post->comments->count())
+                            <h5 class="mt-4">Comments:</h5>
+                            <ul class="media-list list-unstyled mb-0">
+                                @foreach ($post->comments as $comment)
+                                    @include('base::components.comment', ['comment' => $comment])
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
 
-                        <h5 class="mt-4" id="comment-submit">Leave a comment:</h5>
+                    <h5 class="mt-4" id="comment-submit">Leave a comment:</h5>
 
-                        @include('base::components.comment-submit', [
-                            'action' => "{$post->canonical_url}#comment-submit",
-                            'errors' => $errors
-                        ])
-                    @endif
+                    @include('base::components.comment-submit', [
+                        'action' => "{$post->canonical_url}#comment-submit",
+                        'errors' => $errors
+                    ])
                 </div>
             </div>
         </div>

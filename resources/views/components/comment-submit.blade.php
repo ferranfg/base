@@ -1,5 +1,9 @@
 <form action="{{ $action }}" method="POST">
-    @csrf
+
+    @if ( ! config('base.disable_csrf_token'))
+        @csrf
+    @endif
+
     @if (session('success'))
         <div class="alert alert-success">{{session('success')}}</div>
     @endif
