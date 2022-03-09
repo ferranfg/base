@@ -4,7 +4,7 @@ namespace Ferranfg\Base\Repositories;
 
 use Ferranfg\Base\Base;
 use Ferranfg\Base\Clients\Akismet;
-use Ferranfg\Base\Events\CommentCreated;
+use Ferranfg\Base\Events\DiscordMessage;
 
 class CommentRepository
 {
@@ -33,7 +33,7 @@ class CommentRepository
             'type' => $is_spam ? 'spam' : $comment_type
         ]);
 
-        event(new CommentCreated($comment));
+        event(new DiscordMessage('CommentCreated', $comment->toArray()));
 
         return $comment;
     }
