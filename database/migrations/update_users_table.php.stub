@@ -10,7 +10,7 @@ class UpdateUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table)
         {
-            $this->timestamp('unsubscribed_at', 0)->nullable();
+            $table->timestamp('unsubscribed_at')->after('last_read_announcements_at')->nullable();
         });
     }
 
