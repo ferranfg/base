@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Events\DiscordMessage;
@@ -41,6 +42,9 @@ class NewsletterController extends Controller
             'password' => (string) null
         ]);
 
+        $user->unsubscribed_at = null;
+        $user->save();
+
         $user->notify(new WelcomeNewsletter);
 
         activity()->performedOn($user)->log('subscribed');
@@ -69,6 +73,9 @@ class NewsletterController extends Controller
         }
 
         if (is_null($user)) return redirect('cancel');
+
+        $user->unsubscribed_at = Carbon::now();
+        $user->save();
 
         activity()->performedOn($user)->log('unsubscribed');
 

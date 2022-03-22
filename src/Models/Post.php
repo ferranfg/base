@@ -10,7 +10,6 @@ use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
-use Spatie\Activitylog\Models\Activity;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -182,8 +181,7 @@ class Post extends Model implements Feedable
         }
         else
         {
-            $exclude = Activity::whereDescription('unsubscribed')->get();
-            $users = Base::user()->whereNotIn('id', $exclude->pluck('subject_id')->toArray())->get();
+            $users = Base::user()->whereNull('unsubscribed_at')->get();
 
             $this->setMetadata('newslettered_at', Carbon::now());
 
