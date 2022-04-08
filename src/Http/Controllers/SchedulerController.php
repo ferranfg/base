@@ -74,4 +74,14 @@ class SchedulerController extends Controller
             if ($scheduled_at > Carbon::now()) $post->publish();
         }
     }
+
+    /**
+     * Recibe las peticiones que se envian desde App Engine con el start/stop de la instancia.
+     *
+     * @return Response
+     */
+    public function engine()
+    {
+        return response()->json();
+    }
 }

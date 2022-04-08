@@ -17,6 +17,7 @@ if (config('feed.feeds.main.items')) Route::feeds('feed');
 
 Route::group(['middleware' => 'web'], function ()
 {
+    Route::get('/_ah/{action}', 'Ferranfg\Base\Http\Controllers\SchedulerController@engine');
     Route::get('/scheduler/weekly', 'Ferranfg\Base\Http\Controllers\SchedulerController@weekly');
     Route::get('/scheduler/daily', 'Ferranfg\Base\Http\Controllers\SchedulerController@daily');
 
