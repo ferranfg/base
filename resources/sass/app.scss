@@ -10,7 +10,7 @@ $blue: #2f55d4 !default;
 // Buttons
 $btn-font-weight: 600 !default;
 
-@import "./../../../../laravel/spark-aurelius/resources/assets/sass/spark";
+@import "vendor/laravel/spark-aurelius/resources/assets/sass/spark";
 
 // Twemoji
 img.emoji {

@@ -5,6 +5,7 @@ namespace Ferranfg\Base\Models;
 use Ferranfg\Base\Base;
 use Spatie\Tags\Tag as SpatieTag;
 use Ferranfg\Base\Traits\HasSlug;
+use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasMetadata;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -24,7 +25,7 @@ class Tag extends SpatieTag
      *
      * @var array
      */
-    public $translatable = ['name', 'slug', 'description'];
+    public array $translatable = ['name', 'slug', 'description'];
 
     /**
      * The available types values.
@@ -42,6 +43,14 @@ class Tag extends SpatieTag
     public function products()
     {
         return $this->morphedByMany(Base::product(), 'taggable')->orderBy('id', 'desc');
+    }
+
+    /**
+     * Configure the model activity logger.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 
     /**

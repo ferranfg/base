@@ -8,6 +8,7 @@ use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
+use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
@@ -84,6 +85,14 @@ class Post extends Model implements Feedable
     public function comments()
     {
         return $this->morphMany(Base::$commentModel, 'commentable')->where('type', 'comment');
+    }
+
+    /**
+     * Configure the model activity logger.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 
     /**

@@ -6,6 +6,7 @@ use Ferranfg\Base\Base;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasUuid;
+use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -50,6 +51,14 @@ class Event extends Model
     public function comments()
     {
         return $this->morphMany(Base::$commentModel, 'commentable');
+    }
+
+    /**
+     * Configure the model activity logger.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 
 }

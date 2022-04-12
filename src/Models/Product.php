@@ -7,6 +7,7 @@ use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasTags;
+use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasVisits;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
@@ -101,6 +102,14 @@ class Product extends Model
     public function categories()
     {
         return $this->tags()->where('type', 'category');
+    }
+
+    /**
+     * Configure the model activity logger.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 
     /**

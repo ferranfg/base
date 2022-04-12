@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    @include('cookieConsent::index')
+    @include('cookie-consent::index')
 
     <script src="https://kit.fontawesome.com/ba5226906a.js" crossorigin="anonymous"></script>
     <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>

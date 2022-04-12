@@ -11,7 +11,7 @@ class Cart extends CartFacade
      *
      * @var array
      */
-    public static function init($alias = 'cart')
+    public static function init($alias)
     {
         parent::session($alias);
 
@@ -23,7 +23,7 @@ class Cart extends CartFacade
      *
      * @var array
      */
-    public static function add($alias = 'cart', $data)
+    public static function add($alias, $data)
     {
         parent::session($alias);
         parent::add($data);
@@ -36,7 +36,7 @@ class Cart extends CartFacade
      *
      * @var array
      */
-    public static function remove($alias = 'cart', $id)
+    public static function remove($alias, $id)
     {
         parent::session($alias);
         parent::remove($id);
@@ -49,7 +49,7 @@ class Cart extends CartFacade
      *
      * @var array
      */
-    public static function updateQuantity($alias = 'cart', $id, $quantity)
+    public static function updateQuantity($alias, $id, $quantity)
     {
         parent::session($alias);
 

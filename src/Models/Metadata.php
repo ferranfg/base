@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -37,5 +38,13 @@ class Metadata extends Model
     public function parent()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Configure the model activity logger.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 }
