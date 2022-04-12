@@ -2,9 +2,9 @@
 
 namespace Ferranfg\Base\Clients;
 
-use Crew\Unsplash\Photo;
-use Crew\Unsplash\Exception;
-use Crew\Unsplash\HttpClient;
+use Unsplash\Photo;
+use Unsplash\Exception;
+use Unsplash\HttpClient;
 
 class Unsplash
 {

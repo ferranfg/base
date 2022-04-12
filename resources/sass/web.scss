@@ -233,7 +233,7 @@ img.emoji {
 }
 
 .cookie-consent {
-    padding: 1rem 1rem 1.5rem;
+    padding: 1rem 1rem 1.5rem !important;
     background: $dark;
     color: #fff;
     position: fixed;
@@ -243,15 +243,28 @@ img.emoji {
     margin: 0 auto;
     z-index: 9;
 
-    button {
+    .p-2 {
+        padding: 0 !important;
+    }
+
+    .ml-3, .mt-2 {
+        margin: 0 !important;
+    }
+
+    .cookie-consent__message {
+        line-height: 1.5;
+    }
+
+    .cookie-consent__agree {
         display: inline-block;
         width: 100%;
-        padding: .375rem .75rem;
+        padding: .375rem .75rem !important;
         background-color: $primary;
         margin-top: 1rem;
         border: 0;
-        border-radius: .25rem;
+        border-radius: .25rem !important;
         color: #fff;
+        text-align: center;
     }
 }
 
