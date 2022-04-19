@@ -40,13 +40,18 @@ class Twitter
     {
         if (count($params)) $uri .= '?' . http_build_query($params);
 
-        $request = (new Client)->get(self::BASE_URL . "2/{$uri}", [
+        $request = (new Client)->get(self::BASE_URL . $uri, [
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . self::bearerToken()->access_token
             ]
         ]);
 
         return json_decode((string) $request->getBody());
+    }
+
+    public static function author($screen_name)
+    {
+        return self::get("1.1/users/show.json?screen_name={$screen_name}");
     }
 
     public static function lookup($tweet_id)
@@ -62,7 +67,7 @@ class Twitter
 
         $response = cache()->remember("tweet-{$tweet_id}", 3600, function () use ($tweet_id)
         {
-            return self::get("tweets/{$tweet_id}", [
+            return self::get("2/tweets/{$tweet_id}", [
                 'tweet.fields' => 'public_metrics,referenced_tweets,in_reply_to_user_id,attachments,created_at',
                 'user.fields' => 'profile_image_url,description,verified',
                 'media.fields' => 'height,width,url',
@@ -83,7 +88,7 @@ class Twitter
 
     public static function mentions($user_id)
     {
-        $response = self::get("users/{$user_id}/mentions", [
+        $response = self::get("2/users/{$user_id}/mentions", [
             'tweet.fields' => 'referenced_tweets',
             'expansions' => 'author_id'
         ]);
