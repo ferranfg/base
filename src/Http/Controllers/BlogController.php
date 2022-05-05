@@ -74,8 +74,6 @@ class BlogController extends Controller
     {
         $post = $this->postRepository->findBySlug($request->slug);
 
-        abort_unless($post->type == 'entry', 404);
-
         if (is_null($request->preview))
         {
             abort_unless($post->status == 'published', 404);
