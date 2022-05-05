@@ -33,7 +33,7 @@ class CommentRepository
             'type' => $is_spam ? 'spam' : $comment_type
         ]);
 
-        event(new DiscordMessage('CommentCreated', $comment->toArray()));
+        if ( ! $is_spam) event(new DiscordMessage('CommentCreated', $comment->toArray()));
 
         return $comment;
     }
