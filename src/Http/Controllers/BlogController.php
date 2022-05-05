@@ -37,7 +37,6 @@ class BlogController extends Controller
         }
 
         $query = $this->postRepository
-            ->whereType('entry')
             ->whereStatus('published')
             ->orderBy('updated_at', 'desc');
 
