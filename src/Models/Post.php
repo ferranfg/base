@@ -172,9 +172,10 @@ class Post extends Model implements Feedable
     /**
      * Returns all the items that will be used to generate the feed.
      */
-    public static function getAllFeedItems()
+    public static function getAllFeedItems($include_private = false)
     {
-        $feed = self::where('status', 'published')->orderBy('updated_at', 'desc')->paginate(null, ['*'], 'paged');
+        $status = $include_private ? ['published', 'private'] : ['published'];
+        $feed = self::whereIn('status', $status)->orderBy('updated_at', 'desc')->paginate(null, ['*'], 'paged');
 
         return collect($feed->items());
     }
