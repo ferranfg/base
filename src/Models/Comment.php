@@ -35,9 +35,18 @@ class Comment extends Model
      * @var array
      */
     public static $types = [
-        'reply' => 'Reply',
+        'spam' => 'Spam',
+        'comment' => 'Comment',
         'review' => 'Review',
     ];
+
+    /**
+     * Get the commentable object.
+     */
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 
     /**
      * Get the author of the commnent.

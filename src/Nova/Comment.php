@@ -2,8 +2,13 @@
 
 namespace Ferranfg\Base\Nova;
 
-use Illuminate\Http\Request;
+use Ferranfg\Base\Base;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\MorphTo;
+use Ferranfg\Base\Nova\Filters\CommentType;
 
 class Comment extends Resource
 {
@@ -27,7 +32,7 @@ class Comment extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'author_name', 'author_email'
     ];
 
     /**
@@ -40,6 +45,22 @@ class Comment extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            MorphTo::make('Commentable')->types([
+                Post::class,
+                Product::class,
+            ]),
+
+            Text::make('Author Name'),
+
+            Text::make('Author Email'),
+
+            Text::make('Content')
+                ->onlyOnDetail(),
+
+            Select::make('Type')
+                ->options(Base::comment()::$types)
+                ->displayUsingLabels(),
         ];
     }
 
@@ -62,7 +83,9 @@ class Comment extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new CommentType
+        ];
     }
 
     /**
