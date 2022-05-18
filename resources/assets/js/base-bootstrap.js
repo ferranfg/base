@@ -1,6 +1,6 @@
 require('./components/request-access');
 require('./components/newsletter-form');
-require('./components/newsletter-modal');
+require('./components/startup-modal');
 
 Vue.filter('translate', function (value, path) {
     let translation = value[Spark.locale];
