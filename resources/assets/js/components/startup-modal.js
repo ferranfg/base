@@ -6,7 +6,7 @@ Vue.component('startup-modal', {
 
     data() {
         return {
-            dismissedAt: localStorage.getItem(`${this.modalId}_dismissed_at`)
+            dismissedAt: localStorage.getItem(`${this.modalId}-dismissed-at`)
         }
     },
 
@@ -24,7 +24,7 @@ Vue.component('startup-modal', {
 
     methods: {
         dismiss() {
-            localStorage.setItem(`${this.modalId}_dismissed_at`, moment().format('YYYY-MM-DD HH:mm:ss'));
+            localStorage.setItem(`${this.modalId}-dismissed-at`, moment().format('YYYY-MM-DD HH:mm:ss'));
         }
     }
 });

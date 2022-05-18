@@ -268,8 +268,8 @@ img.emoji {
     }
 }
 
-// Subscribe Modal
-#subscribe-modal.modal {
+// Fullscreen Modal
+.fullscreen-modal.modal {
     padding: 0 !important; // override inline padding-right added from js
 
     .modal-dialog {
