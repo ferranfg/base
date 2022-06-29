@@ -20,7 +20,6 @@
                         <div class="page-next text-center">
                             <nav class="d-inline-block">
                                 <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                    <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
                                     <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at_diff }}</li>
                                     <li class="breadcrumb-item"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</li>
                                 </ul>
