@@ -23,6 +23,7 @@ class BaseFacade extends Facade
     public static function scriptVariables()
     {
         return array_merge(Spark::scriptVariables(), [
+            'csrfToken' => base_csrf_token(),
             'locale' => config('app.locale')
         ]);
     }

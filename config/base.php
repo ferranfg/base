@@ -30,6 +30,8 @@ return [
 
     'hero_image' => env('BASE_HERO_IMAGE'),
 
+    'csrf_disabled' => false,
+
     /*
     |--------------------------------------------------------------------------
     | Blog Information

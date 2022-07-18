@@ -1,5 +1,5 @@
 <form action="{{ $action }}" method="POST">
-    @csrf
+    <input type="hidden" name="_token" value="{{ base_csrf_token() }}">
 
     @if (session('success'))
         <div class="alert alert-success">{{session('success')}}</div>
