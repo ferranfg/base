@@ -5,19 +5,6 @@ use Ferranfg\Base\Clients\ImageKit;
 use Ferranfg\Base\Clients\Unsplash;
 
 /**
- * Sobreescribe la función de csrf_token en función de si está activo o no.
- *
- * @return string
- */
-if ( ! function_exists('base_csrf_token'))
-{
-    function base_csrf_token()
-    {
-        return config('base.csrf_disabled') ? (string) null : csrf_token();
-    }
-}
-
-/**
  * Formatea una moneda que llega en bruto al correspondiente de currency.
  *
  * @return string
