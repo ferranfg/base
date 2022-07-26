@@ -20,8 +20,8 @@
                         <div class="page-next text-center">
                             <nav class="d-inline-block">
                                 <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                    <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at_diff }}</li>
-                                    <li class="breadcrumb-item"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</li>
+                                    <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
+                                    <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at->toFormattedDateString() }}</li>
                                 </ul>
                                 <time class="updated" datetime="{{ $post->updated_at }}"></time>
                             </nav>
@@ -43,6 +43,12 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-7">
+                    <div class="alert alert-light text-center border-0">
+                        <span class="mr-4"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</span>
+                        <span class="d-none d-md-inline mr-4"><i class="fa fa-comment"></i> <a href="#comments" class="alert-link">{{ $post->comments->count() }} comments</a></span>
+                        <span><i class="fa fa-twitter"></i> Share on <a href="https://twitter.com/intent/tweet?text={{ urlencode($post->name) }}&url={{ urlencode($post->canonical_url) }}" class="alert-link">Twitter</a></span>
+                    </div>
+
                     <div class="post">
                         @basedown($post->content)
                     </div>
