@@ -20,7 +20,11 @@
                         <div class="page-next text-center">
                             <nav class="d-inline-block">
                                 <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                    <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
+                                    @if ($post->author->name == 'Ferran Figueredo')
+                                        <li class="breadcrumb-item"><i class="fa fa-user"></i> <a href="https://www.amazon.es/Ferran-Figueredo/e/B0B1F9WF5M" target="_blank" rel="noopener nofollow">Ferran Figueredo</a></li>
+                                    @else
+                                        <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
+                                    @endif
                                     <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at->toFormattedDateString() }}</li>
                                 </ul>
                                 <time class="updated" datetime="{{ $post->updated_at }}"></time>
