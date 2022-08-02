@@ -28,28 +28,24 @@ class PostRepository
         return Base::post()->with('metadata')->whereStatus($status);
     }
 
-    public function previousPost($post)
+    public function closePost($post, $comparison, $sort)
     {
-        $key_name = Base::post()->getKeyName();
-        $previous_id = Base::post()
+        return Base::post()
             ->whereType($post->type)
             ->whereStatus($post->status)
-            ->where($key_name, '<', $post->$key_name)
-            ->max($key_name);
+            ->where('updated_at', $comparison, $post->updated_at)
+            ->orderBy('updated_at', $sort)
+            ->first();
+    }
 
-        return Base::post()->find($previous_id);
+    public function previousPost($post)
+    {
+        return $this->closePost($post, '<', 'desc');
     }
 
     public function nextPost($post)
     {
-        $key_name = Base::post()->getKeyName();
-        $next_id = Base::post()
-            ->whereType($post->type)
-            ->whereStatus($post->status)
-            ->where($key_name, '>', $post->$key_name)
-            ->min($key_name);
-
-        return Base::post()->find($next_id);
+        return $this->closePost($post, '>', 'asc');
     }
 
 }
