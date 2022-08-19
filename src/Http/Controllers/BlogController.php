@@ -97,7 +97,8 @@ class BlogController extends Controller
             'post' => $post,
             'photo_url' => $photo_url,
             'previous' => $this->postRepository->previousPost($post),
-            'next' => $this->postRepository->nextPost($post)
+            'next' => $this->postRepository->nextPost($post),
+            'random' => $this->postRepository->randomPost($post)
         ]);
     }
 

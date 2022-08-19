@@ -48,4 +48,14 @@ class PostRepository
         return $this->closePost($post, '>', 'asc');
     }
 
+    public function randomPost($post, $seed = '')
+    {
+        return Base::post()
+            ->whereType($post->type)
+            ->whereStatus($post->status)
+            ->where('id', '!=', $post->id)
+            ->inRandomOrder($seed)
+            ->first();
+    }
+
 }
