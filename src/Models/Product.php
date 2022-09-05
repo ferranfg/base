@@ -166,15 +166,32 @@ class Product extends Model
     public function renderAvgRating($type = 'review')
     {
         $rating = $this->avgRating($type);
-        $render = ['<ul class="list-unstyled mb-0">'];
+        $render = [];
+
+        // NORMAL
+        array_push($render, '<ul class="list-unstyled text-warning mb-0 d-none d-sm-block">');
 
         for ($i = 1; $i <= 5; $i++):
             if ($i <= $rating):
-                array_push($render, '<li class="list-inline-item"><i class="fa fa-star text-warning"></i></li>');
+                array_push($render, '<li class="list-inline-item"><i class="fa fa-star"></i></li>');
             else:
-                array_push($render, '<li class="list-inline-item"><i class="fa fa-star-o text-warning"></i></li>');
+                array_push($render, '<li class="list-inline-item"><i class="fa fa-star-o"></i></li>');
             endif;
         endfor;
+
+        array_push($render, '</ul>');
+
+        // RESPONSIVE
+        array_push($render, '<ul class="list-unstyled text-warning mb-0 d-block d-sm-none">');
+
+        if ($rating)
+        {
+            array_push($render, '<li class="list-inline-item">' . $rating . ' <i class="fa fa-star"></i></li>');
+        }
+        else
+        {
+            array_push($render, '<li class="list-inline-item"><i class="fa fa-star-o"></i></li>');
+        }
 
         array_push($render, '</ul>');
 
