@@ -113,10 +113,8 @@ class Twitter
         return self::clientOAuth()->post('statuses/update', $params);
     }
 
-    public static function upload($media_path)
+    public static function upload($params)
     {
-        return self::clientOAuth()->upload('media/upload', [
-            'media' => $media_path
-        ]);
+        return self::clientOAuth()->upload($params);
     }
 }
