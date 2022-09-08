@@ -115,6 +115,6 @@ class Twitter
 
     public static function upload($params)
     {
-        return self::clientOAuth()->upload($params);
+        return self::clientOAuth()->upload('media/upload', $params);
     }
 }
