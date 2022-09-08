@@ -14,7 +14,17 @@ class Twitter
 
     private static $bearer_token;
 
-    public static function bearerToken()
+    private static function clientOAuth()
+    {
+        return new TwitterOAuth(
+            config('services.twitter.client_id'),
+            config('services.twitter.client_secret'),
+            config('services.twitter.consumer_key'),
+            config('services.twitter.consumer_secret')
+        );
+    }
+
+    private static function getBearerToken()
     {
         if ( ! is_null(self::$bearer_token)) return self::$bearer_token;
 
@@ -36,13 +46,13 @@ class Twitter
         return self::$bearer_token;
     }
 
-    public static function get($uri, $params = [])
+    private static function get($uri, $params = [])
     {
         if (count($params)) $uri .= '?' . http_build_query($params);
 
         $request = (new Client)->get(self::BASE_URL . $uri, [
             RequestOptions::HEADERS => [
-                'Authorization' => 'Bearer ' . self::bearerToken()->access_token
+                'Authorization' => 'Bearer ' . self::getBearerToken()->access_token
             ]
         ]);
 
@@ -100,13 +110,13 @@ class Twitter
 
     public static function update($params)
     {
-        $twitter = new TwitterOAuth(
-            config('services.twitter.client_id'),
-            config('services.twitter.client_secret'),
-            config('services.twitter.consumer_key'),
-            config('services.twitter.consumer_secret')
-        );
+        return self::clientOAuth()->post('statuses/update', $params);
+    }
 
-        return $twitter->post('statuses/update', $params);
+    public static function upload($media_path)
+    {
+        return self::clientOAuth()->upload('media/upload', [
+            'media' => $media_path
+        ]);
     }
 }
