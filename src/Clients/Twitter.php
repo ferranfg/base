@@ -117,4 +117,9 @@ class Twitter
     {
         return self::clientOAuth()->upload('media/upload', $params);
     }
+
+    public static function recent($params = [])
+    {
+        return self::get("2/tweets/search/recent?" . http_build_query($params));
+    }
 }
