@@ -31,6 +31,8 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/blog', '\Ferranfg\Base\Http\Controllers\BlogController@list');
     Route::get('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@post');
     Route::post('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@comment');
+
+    Route::get('/notes/{page_id?}', '\Ferranfg\Base\Http\Controllers\NotionController@index');
 });
 
 Route::group(['prefix' => 'base/{locale}'], function ()

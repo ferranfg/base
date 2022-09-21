@@ -49,7 +49,9 @@
                 <div class="col-lg-7">
                     <div class="alert alert-light text-center border-0">
                         <span class="mr-4"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</span>
-                        <span class="d-none d-md-inline mr-4"><i class="fa fa-comment"></i> <a href="#comments" class="alert-link">{{ $post->comments->count() }} comments</a></span>
+                        @if ( ! $post->comments_disabled)
+                            <span class="d-none d-md-inline mr-4"><i class="fa fa-comment"></i> <a href="#comments" class="alert-link">{{ $post->comments->count() }} comments</a></span>
+                        @endif
                         <span><i class="fa fa-twitter"></i> Share on <a href="https://twitter.com/intent/tweet?text={{ urlencode($post->name) }}&url={{ urlencode($post->canonical_url) }}" class="alert-link">Twitter</a></span>
                     </div>
 
@@ -59,23 +61,25 @@
 
                     @include('base::components.previous-next')
 
-                    <div id="comments">
-                        @if ($post->comments->count())
-                            <h5 class="mt-4">Comments:</h5>
-                            <ul class="media-list list-unstyled mb-0">
-                                @foreach ($post->comments as $comment)
-                                    @include('base::components.comment', ['comment' => $comment])
-                                @endforeach
-                            </ul>
-                        @endif
-                    </div>
+                    @if ( ! $post->comments_disabled)
+                        <div id="comments">
+                            @if ($post->comments->count())
+                                <h5 class="mt-4">Comments:</h5>
+                                <ul class="media-list list-unstyled mb-0">
+                                    @foreach ($post->comments as $comment)
+                                        @include('base::components.comment', ['comment' => $comment])
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
 
-                    <h5 class="mt-4" id="comment-submit">Leave a comment:</h5>
+                        <h5 class="mt-4" id="comment-submit">Leave a comment:</h5>
 
-                    @include('base::components.comment-submit', [
-                        'action' => "{$post->canonical_url}#comment-submit",
-                        'errors' => $errors
-                    ])
+                        @include('base::components.comment-submit', [
+                            'action' => "{$post->canonical_url}#comment-submit",
+                            'errors' => $errors
+                        ])
+                    @endif
                 </div>
             </div>
         </div>
