@@ -62,7 +62,10 @@ class NotionPost
 
         foreach ($blocks as $block)
         {
-            $content = preg_replace('/]\(([a-zA-Z0-9])(?<![http])/', '](/notes/$1', $block->parent);
+            $content = $block->parent;
+
+            $content = preg_replace('/]\(([a-zA-Z0-9])(?<![http])/', '](/notes/$1', $content);
+            $content = preg_replace('/]\(\/([a-zA-Z0-9])/', '](/notes/$1', $content);
 
             $this->content .= $content . "\n\n";
         }
@@ -71,7 +74,7 @@ class NotionPost
         $this->exists = true;
         $this->name = $page->getTitle();
         $this->canonical_url = url("notes/{$page_id}");
-        $this->excerpt = '';
+        $this->excerpt = $page->getProperty('Excerpt') ? $page->getProperty('Excerpt')->getPlainText() : '';
         $this->word_count = str_word_count(strip_tags($this->content));
         $this->reading_time = floor(bcdiv($this->word_count, 200));
         $this->photo_url = $page->getCover();
