@@ -62,12 +62,15 @@ class NotionPost
 
         foreach ($blocks as $block)
         {
-            $content = $block->parent;
+            if ( ! in_array($block->type, ['child_database']))
+            {
+                $content = $block->parent;
 
-            $content = preg_replace('/]\(([a-zA-Z0-9])(?<![http])/', '](/notes/$1', $content);
-            $content = preg_replace('/]\(\/([a-zA-Z0-9])/', '](/notes/$1', $content);
+                $content = preg_replace('/]\(([a-zA-Z0-9])(?<![http])/', '](/notes/$1', $content);
+                $content = preg_replace('/]\(\/([a-zA-Z0-9])/', '](/notes/$1', $content);
 
-            $this->content .= $content . "\n\n";
+                $this->content .= $content . "\n\n";
+            }
         }
 
         // SUPPORTED
