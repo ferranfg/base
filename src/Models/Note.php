@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Models;
 
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use FiveamCode\LaravelNotionApi\Notion;
 
@@ -39,12 +40,14 @@ class Note
 
     public function __construct($slug = null)
     {
+        $default_page_id = config('services.notion.page_id');
+
         $note = is_null($slug) ? null : DB::table('notes')
             ->where('slug', $slug)
             ->orWhere('page_id', $slug)
             ->first();
 
-        $page_id = $note ? $note->page_id : $slug ?? config('services.notion.page_id');
+        $page_id = $note ? $note->page_id : $slug ?? $default_page_id;
 
         $this->secret = config('services.notion.secret');
 
@@ -85,6 +88,15 @@ class Note
 
                 $this->content .= $content . "\n\n";
             }
+        }
+
+        // DYNAMIC URLS
+        if (is_null($note) and $page_id != $default_page_id)
+        {
+            $insert = ['page_id' => $page_id, 'slug' => Str::slug($page->getTitle())];
+            $note = (object) $insert;
+
+            DB::table('notes')->insert($insert);
         }
 
         // SUPPORTED
