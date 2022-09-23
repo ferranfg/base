@@ -2,10 +2,12 @@
 
 namespace Ferranfg\Base\Models;
 
+use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use FiveamCode\LaravelNotionApi\Notion;
 
-class NotionPost
+class Note
 {
     private $secret;
 
@@ -35,18 +37,30 @@ class NotionPost
 
     public $comments;
 
-    public function __construct($page_id = null)
+    public function __construct($slug = null)
     {
-        $page_id = $page_id ?? config('services.notion.page_id');
+        $note = is_null($slug) ? null : DB::table('notes')
+            ->where('slug', $slug)
+            ->orWhere('page_id', $slug)
+            ->first();
+
+        $page_id = $note ? $note->page_id : $slug ?? config('services.notion.page_id');
 
         $this->secret = config('services.notion.secret');
 
         if (is_null($page_id) or is_null($this->secret)) return $this;
 
-        $page = cache()->remember("notion-page-{$page_id}", 60 * 60, function () use ($page_id)
+        try
         {
-            return (new Notion($this->secret))->pages()->find($page_id);
-        });
+            $page = cache()->remember("notion-page-{$page_id}", 60 * 60, function () use ($page_id)
+            {
+                return (new Notion($this->secret))->pages()->find($page_id);
+            });
+        }
+        catch (Exception $e)
+        {
+            return $this;
+        }
 
         $blocks = cache()->remember("notion-blocks-{$page_id}", 60 * 10, function () use ($page_id)
         {
@@ -76,7 +90,7 @@ class NotionPost
         // SUPPORTED
         $this->exists = true;
         $this->name = $page->getTitle();
-        $this->canonical_url = url("notes/{$page_id}");
+        $this->canonical_url = $note ? url("notes/{$note->slug}") : url("notes/{$page_id}");
         $this->excerpt = $page->getProperty('Excerpt') ? $page->getProperty('Excerpt')->getPlainText() : '';
         $this->word_count = str_word_count(strip_tags($this->content));
         $this->reading_time = floor(bcdiv($this->word_count, 200));

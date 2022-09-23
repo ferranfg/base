@@ -3,10 +3,10 @@
 namespace Ferranfg\Base\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Ferranfg\Base\Models\Note;
 use Illuminate\Routing\Controller;
-use Ferranfg\Base\Models\NotionPost;
 
-class NotionController extends Controller
+class NoteController extends Controller
 {
     /**
      * Muestra la entrada correspondiente al page_id en Notion
@@ -15,7 +15,7 @@ class NotionController extends Controller
      */
     public function index(Request $request)
     {
-        $post = new NotionPost($request->page_id);
+        $post = new Note($request->slug);
 
         abort_unless($post->exists, 404);
 
