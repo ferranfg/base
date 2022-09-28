@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use GuzzleHttp\RequestOptions;
 use Abraham\TwitterOAuth\TwitterOAuth;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Twitter
@@ -50,18 +51,29 @@ class Twitter
     {
         if (count($params)) $uri .= '?' . http_build_query($params);
 
-        $request = (new Client)->get(self::BASE_URL . $uri, [
-            RequestOptions::HEADERS => [
-                'Authorization' => 'Bearer ' . self::getBearerToken()->access_token
-            ]
-        ]);
+        try
+        {
+            $request = (new Client)->get(self::BASE_URL . $uri, [
+                RequestOptions::HEADERS => [
+                    'Authorization' => 'Bearer ' . self::getBearerToken()->access_token
+                ]
+            ]);
 
-        return json_decode((string) $request->getBody());
+            return json_decode((string) $request->getBody());
+        }
+        catch (ClientException $e)
+        {
+            return json_decode((string) $e->getResponse()->getBody());
+        }
     }
 
     public static function author($screen_name)
     {
-        return self::get("1.1/users/show.json?screen_name={$screen_name}");
+        $response = self::get("1.1/users/show.json?screen_name={$screen_name}");
+
+        if (property_exists($response, 'errors')) throw new ModelNotFoundException;
+
+        return $response;
     }
 
     public static function lookup($tweet_id)
