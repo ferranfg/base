@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Laravel\Cashier\Cashier;
 use Ferranfg\Base\Clients\ImageKit;
 use Ferranfg\Base\Clients\Unsplash;
@@ -28,6 +29,8 @@ if ( ! function_exists('img_url'))
 {
     function img_url($path, $transformation = [])
     {
+        if (Str::startsWith($path, 'http')) return $path;
+
         if (config('services.imagekit.key')) return ImageKit::init()->url([
             'path' => $path,
             'transformation' => $transformation

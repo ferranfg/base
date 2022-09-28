@@ -108,6 +108,13 @@ class Twitter
         return $response;
     }
 
+    public static function following($user_id)
+    {
+        return self::get("2/users/{$user_id}/following", [
+            'user.fields' => 'profile_image_url,description,verified'
+        ]);
+    }
+
     public static function update($params)
     {
         return self::clientOAuth()->post('statuses/update', $params);
