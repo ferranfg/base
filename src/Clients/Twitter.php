@@ -75,15 +75,12 @@ class Twitter
 
         if (is_null($tweet_id)) throw new ModelNotFoundException;
 
-        $response = cache()->remember("tweet-{$tweet_id}", 60 * 60 * 24, function () use ($tweet_id)
-        {
-            return self::get("2/tweets/{$tweet_id}", [
-                'tweet.fields' => 'public_metrics,referenced_tweets,in_reply_to_user_id,attachments,created_at',
-                'user.fields' => 'profile_image_url,description,verified',
-                'media.fields' => 'height,width,url',
-                'expansions' => 'author_id,attachments.media_keys,in_reply_to_user_id'
-            ]);
-        });
+        $response = self::get("2/tweets/{$tweet_id}", [
+            'tweet.fields' => 'public_metrics,referenced_tweets,in_reply_to_user_id,attachments,created_at',
+            'user.fields' => 'profile_image_url,description,verified',
+            'media.fields' => 'height,width,url',
+            'expansions' => 'author_id,attachments.media_keys,in_reply_to_user_id'
+        ]);
 
         if (property_exists($response, 'errors')) throw new ModelNotFoundException;
 
