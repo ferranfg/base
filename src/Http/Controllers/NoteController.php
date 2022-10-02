@@ -19,13 +19,15 @@ class NoteController extends Controller
 
         abort_unless($post->exists, 404);
 
+        if ($request->slug == $post->page_id) return redirect($post->canonical_url, 301);
+
         view()->share([
             'meta_title' => meta_title($post->name),
             'meta_description' => $post->excerpt,
             'meta_image' => $post->photo_url
         ]);
 
-        return view('base::blog.post', [
+        return view(config('base.notes_view', 'base::blog.post'), [
             'post' => $post,
             'photo_url' => $post->photo_url,
             'previous' => null,

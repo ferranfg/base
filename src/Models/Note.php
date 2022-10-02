@@ -12,6 +12,8 @@ class Note
 {
     private $secret;
 
+    public $page_id;
+
     public $exists;
 
     public $name;
@@ -40,30 +42,71 @@ class Note
 
     public function __construct($slug = null)
     {
-        $default_page_id = config('services.notion.page_id');
+        if (is_null($slug)) $slug = config('services.notion.page_id');
 
-        $note = is_null($slug) ? null : DB::table('notes')
+        $note = DB::table('notes')
             ->where('slug', $slug)
             ->orWhere('page_id', $slug)
             ->first();
 
-        $page_id = $note ? $note->page_id : $slug ?? $default_page_id;
-
         $this->secret = config('services.notion.secret');
+        $this->page_id = $note ? $note->page_id : $slug;
 
-        if (is_null($page_id) or is_null($this->secret)) return $this;
+        if (is_null($this->page_id) or is_null($this->secret)) return $this;
 
         try
         {
-            $page = cache()->remember("notion-page-{$page_id}", 60 * 60, function () use ($page_id)
+            $page = cache()->remember("notion-page-{$this->page_id}", 60 * 60, function ()
             {
-                return (new Notion($this->secret))->pages()->find($page_id);
+                return (new Notion($this->secret))->pages()->find($this->page_id);
             });
         }
         catch (Exception $e)
         {
             return $this;
         }
+
+        // DYNAMIC URLS
+        if (is_null($note)) $note = $this->createDynamicNote($page);
+
+        // SUPPORTED
+        $this->exists = true;
+        $this->name = $page->getTitle();
+        $this->canonical_url = $this->getCanonicalUrl($note);
+        $this->excerpt = $page->getProperty('Excerpt') ? $page->getProperty('Excerpt')->getPlainText() : '';
+        $this->content = $this->getContent($note);
+        $this->word_count = str_word_count(strip_tags($this->content));
+        $this->reading_time = floor(bcdiv($this->word_count, 200));
+        $this->photo_url = $page->getCover();
+        $this->created_at = $page->getCreatedTime();
+        $this->updated_at = $page->getLastEditedTime();
+
+        $this->author = (object) [
+            'name' => 'Ferran Figueredo',
+            'photo_url' => ''
+        ];
+
+        // UNSUPPORTED
+        $this->comments_disabled = true;
+        $this->comments = collect();
+
+        return $this;
+    }
+
+    private function createDynamicNote($page)
+    {
+        $insert = ['page_id' => $page->getId(), 'slug' => Str::slug($page->getTitle())];
+        $note = (object) $insert;
+
+        DB::table('notes')->insert($insert);
+
+        return $note;
+    }
+
+    private function getContent($note)
+    {
+        $page_id = $note->page_id;
+        $page_content = '';
 
         $blocks = cache()->remember("notion-blocks-{$page_id}", 60 * 10, function () use ($page_id)
         {
@@ -86,39 +129,15 @@ class Note
                 $content = preg_replace('/]\(([a-zA-Z0-9])(?<![http])/', '](/notes/$1', $content);
                 $content = preg_replace('/]\(\/([a-zA-Z0-9])/', '](/notes/$1', $content);
 
-                $this->content .= $content . "\n\n";
+                $page_content .= $content . "\n\n";
             }
         }
 
-        // DYNAMIC URLS
-        if (is_null($note) and $page_id != $default_page_id)
-        {
-            $insert = ['page_id' => $page_id, 'slug' => Str::slug($page->getTitle())];
-            $note = (object) $insert;
+        return $page_content;
+    }
 
-            DB::table('notes')->insert($insert);
-        }
-
-        // SUPPORTED
-        $this->exists = true;
-        $this->name = $page->getTitle();
-        $this->canonical_url = $note ? url("notes/{$note->slug}") : url("notes/{$page_id}");
-        $this->excerpt = $page->getProperty('Excerpt') ? $page->getProperty('Excerpt')->getPlainText() : '';
-        $this->word_count = str_word_count(strip_tags($this->content));
-        $this->reading_time = floor(bcdiv($this->word_count, 200));
-        $this->photo_url = $page->getCover();
-        $this->created_at = $page->getCreatedTime();
-        $this->updated_at = $page->getLastEditedTime();
-
-        $this->author = (object) [
-            'name' => 'Ferran Figueredo',
-            'photo_url' => ''
-        ];
-
-        // UNSUPPORTED
-        $this->comments_disabled = true;
-        $this->comments = collect();
-
-        return $this;
+    private function getCanonicalUrl($note)
+    {
+        return $note->page_id == config('services.notion.page_id') ? url("notes") : url("notes/{$note->slug}");
     }
 }
