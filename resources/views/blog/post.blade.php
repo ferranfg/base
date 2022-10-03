@@ -52,7 +52,7 @@
                         @if ( ! $post->comments_disabled)
                             <span class="d-none d-md-inline mr-4"><i class="fa fa-comment"></i> <a href="#comments" class="alert-link">{{ $post->comments->count() }} comments</a></span>
                         @endif
-                        <span><i class="fa fa-twitter"></i> Share on <a href="https://twitter.com/intent/tweet?text={{ urlencode($post->name) }}&url={{ urlencode($post->canonical_url) }}" class="alert-link">Twitter</a></span>
+                        <span><i class="fa fa-twitter"></i> Share on <a href="https://twitter.com/intent/tweet?text={{ urlencode($post->name) }}&url={{ urlencode($post->canonical_url) }}" class="alert-link" target="_blank" rel="noreferrer nofollow">Twitter</a></span>
                     </div>
 
                     <div class="post">
