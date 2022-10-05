@@ -27,7 +27,9 @@
     </script>
 
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://storage.googleapis.com">
+    <link rel="preconnect" href="https://ik.imagekit.io">
+    <link rel="preconnect" href="https://kit.fontawesome.com">
+    <link rel="preconnect" href="https://twemoji.maxcdn.com">
 </head>
 <body>
     <div id="spark-app" v-cloak>
