@@ -13,13 +13,13 @@ class NoteController extends Controller
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index($slug = null, $base_path = "notes")
     {
-        $post = new Note($request->slug);
+        $post = new Note($slug, $base_path);
 
         abort_unless($post->exists, 404);
 
-        if ($request->slug == $post->page_id) return redirect($post->canonical_url, 301);
+        if ($slug == $post->page_id) return redirect($post->canonical_url, 301);
 
         view()->share([
             'meta_title' => meta_title($post->name),

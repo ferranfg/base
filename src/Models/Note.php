@@ -15,6 +15,8 @@ class Note
 
     public $page_id;
 
+    public $base_path;
+
     public $exists;
 
     public $name;
@@ -41,7 +43,7 @@ class Note
 
     public $comments;
 
-    public function __construct($slug = null)
+    public function __construct($slug = null, $base_path = "notes")
     {
         if (is_null($slug)) $slug = config('services.notion.page_id');
 
@@ -52,6 +54,7 @@ class Note
 
         $this->secret = config('services.notion.secret');
         $this->page_id = $note ? $note->page_id : $slug;
+        $this->base_path = $base_path;
 
         if (is_null($this->page_id) or is_null($this->secret)) return $this;
 
@@ -143,6 +146,8 @@ class Note
 
     private function getCanonicalUrl($note)
     {
-        return $note->page_id == config('services.notion.page_id') ? url("notes") : url("notes/{$note->slug}");
+        return $note->page_id == config('services.notion.page_id') ?
+            url($this->base_path) :
+            url($this->base_path . '/' . $note->slug);
     }
 }
