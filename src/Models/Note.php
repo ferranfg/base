@@ -97,7 +97,7 @@ class Note
     private function createDynamicNote($page)
     {
         $note = [
-            'page_id' => $page->getId(),
+            'page_id' => str_replace('-', '', (string) $page->getId()),
             'slug' => Str::slug($page->getTitle()),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
