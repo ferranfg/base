@@ -19,7 +19,7 @@ class NoteController extends Controller
 
         abort_unless($post->exists, 404);
 
-        if ($slug == $post->page_id) return redirect($post->canonical_url, 301);
+        if ($slug == $post->page_id) return redirect($post->canonical_url, 302);
 
         view()->share([
             'meta_title' => meta_title($post->name),
