@@ -3,6 +3,7 @@
 namespace Ferranfg\Base\Models;
 
 use Exception;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -95,12 +96,16 @@ class Note
 
     private function createDynamicNote($page)
     {
-        $insert = ['page_id' => $page->getId(), 'slug' => Str::slug($page->getTitle())];
-        $note = (object) $insert;
+        $note = [
+            'page_id' => $page->getId(),
+            'slug' => Str::slug($page->getTitle()),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ];
 
-        DB::table('notes')->insert($insert);
+        DB::table('notes')->insert($note);
 
-        return $note;
+        return (object) $note;
     }
 
     private function getContent($note)
