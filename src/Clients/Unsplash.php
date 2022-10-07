@@ -3,6 +3,7 @@
 namespace Ferranfg\Base\Clients;
 
 use Unsplash\Photo;
+use Unsplash\Search;
 use Unsplash\Exception;
 use Unsplash\HttpClient;
 
@@ -21,6 +22,15 @@ class Unsplash
         self::init();
 
         return Photo::find($id);
+    }
+
+    public static function search($query, $page = 1, $per_page = 10, $orientation = null)
+    {
+        self::init();
+
+        $search = Search::photos($query, $page, $per_page, $orientation);
+
+        return collect($search->getResults());
     }
 
     public static function random($params)
