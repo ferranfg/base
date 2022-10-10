@@ -43,14 +43,15 @@ class DiscordEventSubscriber
      */
     private function formatMessage($events)
     {
-        $record = ['`' . Carbon::now() . '`'];
+        $record = [];
         $event = reset($events);
 
         if ($event instanceof ExceptionReported and property_exists($event, 'exception'))
         {
             $exception = $event->exception;
 
-            array_push($record, '**' . get_class($exception) . '**');
+            array_push($record, '**' . request()->url() . '**');
+            array_push($record, '`' . get_class($exception) . '`');
             array_push($record, '`' . $exception->getMessage() . '`');
 
             if (method_exists($exception, 'getFile') and method_exists($exception, 'getLine'))
