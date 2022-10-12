@@ -50,7 +50,7 @@ if ( ! function_exists('img'))
     function img(
         $path,
         $width,
-        $height,
+        $height_or_ratio,
         $lazy = true,
         $class = null,
         $alt = null,
@@ -60,13 +60,22 @@ if ( ! function_exists('img'))
     {
         $tag = ['<img'];
 
-        $url = img_url($path, [
-            ['width' => $width, 'height' => $height]
-        ]);
+        $transformation = ['width' => (int) $width];
+        $transformation2x = ['width' => (int) bcmul($width, 2)];
 
-        $url2x = img_url($path, [
-            ['width' => bcmul($width, 2), 'height' => bcmul($height, 2)]
-        ]);
+        if (Str::contains($height_or_ratio, '-'))
+        {
+            $transformation['aspectRatio'] = $height_or_ratio;
+            $transformation2x['aspectRatio'] = $height_or_ratio;
+        }
+        else
+        {
+            $transformation['height'] = (int) $height_or_ratio;
+            $transformation2x['height'] = (int) bcmul($height_or_ratio, 2);
+        }
+
+        $url = img_url($path, [$transformation]);
+        $url2x = img_url($path, [$transformation2x]);
 
         if ($lazy)
         {
