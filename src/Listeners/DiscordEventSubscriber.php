@@ -29,7 +29,6 @@ class DiscordEventSubscriber
      */
     public function subscribe($events)
     {
-        $events->listen('Laravel\Spark\*', 'Ferranfg\Base\Listeners\DiscordEventSubscriber@handle');
         $events->listen('Ferranfg\Base\*', 'Ferranfg\Base\Listeners\DiscordEventSubscriber@handle');
         $events->listen('App\Events\*', 'Ferranfg\Base\Listeners\DiscordEventSubscriber@handle');
     }

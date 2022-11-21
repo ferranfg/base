@@ -2,10 +2,9 @@
 
 namespace Ferranfg\Base;
 
-use Laravel\Spark\Spark;
 use Ferranfg\Base\Configuration\ManagesModelOptions;
 
-class Base extends Spark
+class Base
 {
     use ManagesModelOptions;
 

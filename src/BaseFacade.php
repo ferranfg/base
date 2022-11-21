@@ -2,7 +2,6 @@
 
 namespace Ferranfg\Base;
 
-use Laravel\Spark\Spark;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -22,9 +21,9 @@ class BaseFacade extends Facade
      */
     public static function scriptVariables()
     {
-        return array_merge(Spark::scriptVariables(), [
+        return [
             'locale' => config('app.locale')
-        ]);
+        ];
     }
 
 }

@@ -5,11 +5,10 @@ namespace Ferranfg\Base\Models;
 use Stripe\Customer;
 use Soved\Laravel\Gdpr\Portable;
 use Spatie\Activitylog\LogOptions;
-use Laravel\Spark\User as SparkUser;
 use Ferranfg\Base\Traits\HasMetadata;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class User extends SparkUser
+class User
 {
     use HasMetadata, Portable, LogsActivity;
 

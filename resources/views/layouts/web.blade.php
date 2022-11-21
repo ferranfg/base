@@ -18,7 +18,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous" />
     @stack('styles')
-    <link rel="stylesheet" href="{{ mix('css/web.css') }}" >
+    @vite(['resources/css/web.scss'])
 
     @stack('head')
 
@@ -120,8 +120,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha512-kBFfSXuTKZcABVouRYGnUo35KKa1FBrYgwG4PAx7Z2Heroknm0ca2Fm2TosdrrI356EDHMW383S3ISrwKcVPUw==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/12.3.0/lazyload.min.js" integrity="sha512-z+ZJBKAzuh8g8lp/QTwk1EKLoeQlJoDm9Ur+5/FEi2DX5FsnAtoAv33fqOWtn5OUeBnp1j8T0uOK5gGb7xzJyQ==" crossorigin="anonymous"></script>
     @stack('scripts')
-    <script src="{{ mix('js/web.js') }}"></script>
-    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    @vite(['resources/js/web.js'])
 
 </body>
 </html>
