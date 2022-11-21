@@ -6,11 +6,12 @@ use Stripe\Customer;
 use Soved\Laravel\Gdpr\Portable;
 use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasMetadata;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class User
 {
-    use HasMetadata, Portable, LogsActivity;
+    use HasMetadata, Portable, LogsActivity, Notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -3,8 +3,7 @@
 namespace Ferranfg\Base\Listeners;
 
 use Notification;
-use Carbon\Carbon;
-use Ferranfg\Base\Base;
+use Ferranfg\Base\Models\User;
 use Ferranfg\Base\Events\DiscordMessage;
 use Ferranfg\Base\Events\ExceptionReported;
 use Ferranfg\Base\Notifications\DiscordNotification;
@@ -19,7 +18,7 @@ class DiscordEventSubscriber
      */
     public function handle($name, $events)
     {
-        Notification::send(Base::user(), new DiscordNotification($this->formatMessage($events)));
+        Notification::send(new User, new DiscordNotification($this->formatMessage($events)));
     }
 
     /**
