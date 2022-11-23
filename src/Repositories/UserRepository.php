@@ -48,7 +48,6 @@ class UserRepository
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'last_read_announcements_at' => Carbon::now(),
             'trial_ends_at' => null,
         ])->save();
 

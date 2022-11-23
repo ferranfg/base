@@ -52,7 +52,7 @@ class NewsletterController extends Controller
 
         if ($request->routeIs('newsletter.subscribe')) $user->notify(new WelcomeNewsletter);
 
-        if (function_exists('activity')) activity()->performedOn($user)->log('subscribed');
+        activity()->performedOn($user)->log('subscribed');
 
         event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
 

@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('video_url')->nullable();
             $table->text('attached_url')->nullable();
             $table->string('currency')->nullable();
-            $table->int('amount')->nullable();
+            $table->integer('amount')->nullable();
             $table->string('stripe_id')->nullable();
             $table->string('type')->index();
             $table->string('status')->index();

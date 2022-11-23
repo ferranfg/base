@@ -2,10 +2,11 @@
 
 namespace Ferranfg\Base\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Team
+class Team extends Model
 {
     use LogsActivity;
 
