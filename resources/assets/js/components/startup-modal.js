@@ -1,4 +1,4 @@
-let moment = require('moment');
+import Vue from '$vue';
 
 Vue.component('startup-modal', {
 

@@ -1,6 +1,8 @@
-require('./components/request-access');
-require('./components/newsletter-form');
-require('./components/startup-modal');
+import Vue from '$vue';
+
+await import('./components/request-access');
+await import('./components/newsletter-form');
+await import('./components/startup-modal');
 
 Vue.filter('translate', function (value, path) {
     let translation = value[Spark.locale];
