@@ -25,6 +25,7 @@
         "php": "^8.0",
         "barryvdh/laravel-debugbar": "^3.5",
         "darryldecode/cart": "^4.2",
+        "erusev/parsedown": "^1.7",
         "fiveam-code/laravel-notion-api": "^0.8.0",
         "google/cloud-error-reporting": "^0.16.5",
         "google/cloud-logging": "^1.20",
