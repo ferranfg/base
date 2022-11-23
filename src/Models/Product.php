@@ -7,19 +7,16 @@ use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasTags;
-use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasVisits;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Product extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, LogsActivity;
+    use HasTags, HasSlug, HasMetadata, HasVisits;
 
     /**
      * The database table used by the model.
@@ -41,13 +38,6 @@ class Product extends Model
      * @var array
      */
     protected $appends = ['canonical_url', 'horizontal_photo_url', 'square_photo_url'];
-
-    /**
-     * The attributes that are translatable.
-     *
-     * @var array
-     */
-    public $translatable = ['name', 'slug', 'description'];
 
     /**
      * The available status values.
@@ -102,14 +92,6 @@ class Product extends Model
     public function categories()
     {
         return $this->tags()->where('type', 'category');
-    }
-
-    /**
-     * Configure the model activity logger.
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults();
     }
 
     /**

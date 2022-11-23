@@ -15,7 +15,6 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use Ferranfg\Base\Nova\Filters\PostType;
-use Spatie\NovaTranslatable\Translatable;
 use Ferranfg\Base\Nova\Filters\PostStatus;
 
 class Post extends Resource
@@ -54,16 +53,14 @@ class Post extends Resource
         return [
             ID::make()->sortable(),
 
-            Translatable::make([
-                Text::make('Name')
-                    ->sortable()
-                    ->rules('required'),
+            Text::make('Name')
+                ->sortable()
+                ->rules('required'),
 
-                Textarea::make('Excerpt'),
+            Textarea::make('Excerpt'),
 
-                Markdown::make('Content')
-                    ->rules('required'),
-            ]),
+            Markdown::make('Content')
+                ->rules('required'),
 
             Boolean::make('Featured')
                 ->hideFromIndex(),

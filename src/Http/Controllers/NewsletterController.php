@@ -52,8 +52,6 @@ class NewsletterController extends Controller
 
         if ($request->routeIs('newsletter.subscribe')) $user->notify(new WelcomeNewsletter);
 
-        activity()->performedOn($user)->log('subscribed');
-
         event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
 
         return response()->json([
@@ -81,8 +79,6 @@ class NewsletterController extends Controller
 
         $user->unsubscribed_at = Carbon::now();
         $user->save();
-
-        activity()->performedOn($user)->log('unsubscribed');
 
         event(new DiscordMessage('UserUnsubscribed', ['email' => $user->email]));
 

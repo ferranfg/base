@@ -7,7 +7,6 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\MorphTo;
-use Spatie\NovaTranslatable\Translatable;
 
 class Metadata extends Resource
 {
@@ -56,11 +55,9 @@ class Metadata extends Resource
                 ->sortable()
                 ->rules('required'),
 
-            Translatable::make([
-                Text::make('Value')
-                    ->sortable()
-                    ->rules('required'),
-            ]),
+            Text::make('Value')
+                ->sortable()
+                ->rules('required'),
         ];
     }
 

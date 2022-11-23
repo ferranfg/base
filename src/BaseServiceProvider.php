@@ -4,7 +4,6 @@ namespace Ferranfg\Base;
 
 use Blade;
 use Illuminate\Support\ServiceProvider;
-use Spatie\NovaTranslatable\Translatable;
 use Ferranfg\Base\Commands\PublishCommand;
 use Ferranfg\Base\Commands\InstallCommand;
 
@@ -27,16 +26,13 @@ class BaseServiceProvider extends ServiceProvider
                 $time = '2021_01_01_000000';
 
                 $this->publishes([
-                    // Spatie
-                    __DIR__ . '/../database/migrations/create_tags_table.php.stub' => database_path("migrations/{$time}_create_tags_table.php"),
-                    __DIR__ . '/../database/migrations/create_activity_log_table.php.stub' => database_path("migrations/{$time}_create_activity_log_table.php"),
-                    // Base
                     __DIR__ . '/../database/migrations/create_comments_table.php.stub' => database_path("migrations/{$time}_create_comments_table.php"),
                     __DIR__ . '/../database/migrations/create_events_table.php.stub' => database_path("migrations/{$time}_create_events_table.php"),
                     __DIR__ . '/../database/migrations/create_metadata_table.php.stub' => database_path("migrations/{$time}_create_metadata_table.php"),
                     __DIR__ . '/../database/migrations/create_notes_table.php.stub' => database_path("migrations/{$time}_create_notes_table.php"),
                     __DIR__ . '/../database/migrations/create_posts_table.php.stub' => database_path("migrations/{$time}_create_posts_table.php"),
                     __DIR__ . '/../database/migrations/create_products_table.php.stub' => database_path("migrations/{$time}_create_products_table.php"),
+                    __DIR__ . '/../database/migrations/create_tags_table.php.stub' => database_path("migrations/{$time}_create_tags_table.php"),
                     __DIR__ . '/../database/migrations/update_users_table.php.stub' => database_path("migrations/{$time}_update_users_table.php"),
                 ], 'migrations');
             }
@@ -50,10 +46,6 @@ class BaseServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'base');
         $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang', 'base');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
-
-        Translatable::defaultLocales([
-            config('app.locale')
-        ]);
 
         Blade::directive('markdown', function ($expression)
         {

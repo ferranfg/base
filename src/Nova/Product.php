@@ -14,7 +14,6 @@ use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
-use Spatie\NovaTranslatable\Translatable;
 use Ferranfg\Base\Nova\Filters\ProductType;
 use Ferranfg\Base\Nova\Filters\ProductStatus;
 
@@ -54,13 +53,11 @@ class Product extends Resource
         return [
             ID::make()->sortable(),
 
-            Translatable::make([
-                Text::make('Name')
-                    ->sortable()
-                    ->rules('required'),
+            Text::make('Name')
+                ->sortable()
+                ->rules('required'),
 
-                Markdown::make('Description'),
-            ]),
+            Markdown::make('Description'),
 
             Text::make('Stripe Id')
                 ->onlyOnDetail(),

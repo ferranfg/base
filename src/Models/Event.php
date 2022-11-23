@@ -6,15 +6,12 @@ use Ferranfg\Base\Base;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasUuid;
-use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Event extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, HasUuid, LogsActivity;
+    use HasTags, HasSlug, HasMetadata, HasUuid;
 
     /**
      * The database table used by the model.
@@ -31,13 +28,6 @@ class Event extends Model
     protected $fillable = ['name', 'slug', 'description'];
 
     /**
-     * The attributes that are translatable.
-     *
-     * @var array
-     */
-    public $translatable = ['name', 'slug', 'description'];
-
-    /**
      * Get the owner of the product.
      */
     public function owner()
@@ -52,13 +42,4 @@ class Event extends Model
     {
         return $this->morphMany(Base::$commentModel, 'commentable');
     }
-
-    /**
-     * Configure the model activity logger.
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults();
-    }
-
 }

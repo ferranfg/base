@@ -4,15 +4,13 @@ namespace Ferranfg\Base\Models;
 
 use Stripe\Customer;
 use Soved\Laravel\Gdpr\Portable;
-use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Model
 {
-    use HasMetadata, Portable, LogsActivity, Notifiable;
+    use HasMetadata, Portable, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,14 +18,6 @@ class User extends Model
      * @var array
      */
     protected $fillable = ['name', 'email', 'password'];
-
-    /**
-     * Configure the model activity logger.
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults();
-    }
 
     /**
      * Get the GDPR compliant data portability array for the model.

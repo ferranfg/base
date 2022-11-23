@@ -8,17 +8,14 @@ use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
-use Spatie\Activitylog\LogOptions;
 use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Ferranfg\Base\Notifications\PostNewsletter;
 
 class Post extends Model implements Feedable
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, LogsActivity;
+    use HasTags, HasSlug, HasMetadata, HasVisits;
 
     /**
      * The database table used by the model.
@@ -40,13 +37,6 @@ class Post extends Model implements Feedable
      * @var array
      */
     protected $appends = ['canonical_url', 'horizontal_photo_url'];
-
-    /**
-     * The attributes that are translatable.
-     *
-     * @var array
-     */
-    public $translatable = ['name', 'slug', 'excerpt', 'content'];
 
     /**
      * The available status values.
@@ -85,14 +75,6 @@ class Post extends Model implements Feedable
     public function comments()
     {
         return $this->morphMany(Base::$commentModel, 'commentable')->where('type', 'comment');
-    }
-
-    /**
-     * Configure the model activity logger.
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults();
     }
 
     /**
@@ -194,8 +176,6 @@ class Post extends Model implements Feedable
             $users = Base::user()->whereNull('unsubscribed_at')->get();
 
             $this->setMetadata('newslettered_at', Carbon::now());
-
-            activity()->performedOn($this)->log('sent_newsletter');
         }
 
         foreach ($users as $user)
@@ -215,8 +195,6 @@ class Post extends Model implements Feedable
 
         $this->status = 'published';
         $this->save();
-
-        activity()->performedOn($this)->log('published');
 
         return $this;
     }

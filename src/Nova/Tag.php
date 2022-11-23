@@ -11,7 +11,6 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\MorphMany;
 use Ferranfg\Base\Nova\Filters\TagType;
-use Spatie\NovaTranslatable\Translatable;
 
 class Tag extends Resource
 {
@@ -49,12 +48,10 @@ class Tag extends Resource
         return [
             ID::make()->sortable(),
 
-            Translatable::make([
-                Text::make('Name')
-                    ->rules('required'),
+            Text::make('Name')
+                ->rules('required'),
 
-                Textarea::make('Description'),
-            ]),
+            Textarea::make('Description'),
 
             Image::make('Photo Url'),
 
