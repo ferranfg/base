@@ -31,6 +31,11 @@ class NewsletterController extends Controller
      */
     public function subscribe(Request $request)
     {
+        if ($request->has('from')) $request->merge([
+            'email' => $request->from,
+            'terms' => true,
+        ]);
+
         $this->validate($request, [
             'email' => 'required|email|unique:users,email',
             'terms' => 'accepted'
@@ -45,9 +50,9 @@ class NewsletterController extends Controller
         $user->unsubscribed_at = null;
         $user->save();
 
-        $user->notify(new WelcomeNewsletter);
+        if ($request->routeIs('newsletter.subscribe')) $user->notify(new WelcomeNewsletter);
 
-        activity()->performedOn($user)->log('subscribed');
+        if (function_exists('activity')) activity()->performedOn($user)->log('subscribed');
 
         event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
 
