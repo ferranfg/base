@@ -6,12 +6,12 @@ window.feather = {
 
 // Inits owlCarousel
 if (typeof $.fn.owlCarousel == 'function') {
-    await import('./../../template/js/owl.init.js');
+    import('./../../template/js/owl.init.js');
 }
 
 // Inits counter
 if ($('#counter').length) {
-    await import("./../../template/js/counter.init");
+    import("./../../template/js/counter.init");
 }
 
 // Inits Lazyload
@@ -29,7 +29,7 @@ if (typeof twemoji == 'object') {
     });
 }
 
-await import("./../../template/js/app");
+import("./../../template/js/app")
 
 // Main functions
 $("#ajax-modal").on("shown.bs.modal", function(e) {

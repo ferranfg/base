@@ -21,7 +21,14 @@ class BaseFacade extends Facade
      */
     public static function scriptVariables()
     {
+        $user = auth()->user();
+
         return [
+            'state' => [
+                'user' => $user,
+                'teams' => auth()->check() ? $user->teams : [],
+                'currentTeam' => auth()->check() ? $user->currentTeam : null,
+            ],
             'locale' => config('app.locale')
         ];
     }

@@ -1,8 +1,8 @@
 import Vue from '$vue';
 
-await import('./components/request-access');
-await import('./components/newsletter-form');
-await import('./components/startup-modal');
+import './components/request-access';
+import './components/newsletter-form';
+import './components/startup-modal';
 
 Vue.filter('translate', function (value, path) {
     let translation = value[Spark.locale];
@@ -10,8 +10,8 @@ Vue.filter('translate', function (value, path) {
 });
 
 // Inits twemoji
-if (typeof twemoji == 'object') {
-    twemoji.parse(document);
+if (typeof window.twemoji == 'object') {
+    window.twemoji.parse(document);
 }
 
 // Plausible events
