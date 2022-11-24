@@ -167,23 +167,25 @@ class Post extends Model implements Feedable
      */
     public function sendNewsletter($type = 'test')
     {
+        ignore_user_abort(true) and set_time_limit(0);
+
+        $users = Base::user()->whereNull('unsubscribed_at')->where('email', '!=', '0x%');
+
         switch ($type):
             case 'test':
-                $users = Base::user()->whereIn('email', Base::$developers)->get();
+                $users->whereIn('email', Base::$developers);
             break;
             case 'customers':
-                $users = Base::user()->whereNotNull('stripe_id')->whereNull('unsubscribed_at')->get();
+                $users->whereNotNull('stripe_id');
             break;
             case 'non-customers':
-                $users = Base::user()->whereNull('stripe_id')->whereNull('unsubscribed_at')->get();
+                $users ->whereNull('stripe_id');
             break;
-            default:
-                $users = Base::user()->whereNull('unsubscribed_at')->get();
         endswitch;
 
         $this->setMetadata("sent_{$type}_newsletter_at", Carbon::now());
 
-        foreach ($users as $user)
+        foreach ($users->get() as $user)
         {
             $user->notify(new PostNewsletter($this));
         }
