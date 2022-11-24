@@ -2,12 +2,12 @@
 
 namespace Ferranfg\Base\Nova\Actions;
 
-class PostTestNewsletter extends PostNewsletter
+class PostAllNewsletter extends PostNewsletter
 {
     /**
      * The type of newsletter we are sending.
      *
      * @var string
      */
-    public $newsletter_type = 'test';
+    public $newsletter_type = 'all';
 }

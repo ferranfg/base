@@ -8,9 +8,16 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\InteractsWithQueue;
 
-class PostSendNewsletter extends Action
+class PostNewsletter extends Action
 {
     use InteractsWithQueue, Queueable;
+
+    /**
+     * The type of newsletter we are sending.
+     *
+     * @var string
+     */
+    public $newsletter_type = 'test';
 
     /**
      * Perform the action on the given models.
@@ -26,7 +33,7 @@ class PostSendNewsletter extends Action
             return Action::danger('Please run this on only one user resource.');
         }
 
-        $models->first()->sendNewsletter();
+        $models->first()->sendNewsletter($this->newsletter_type);
     }
 
     /**

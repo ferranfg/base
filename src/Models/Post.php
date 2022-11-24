@@ -183,20 +183,25 @@ class Post extends Model implements Feedable
     /**
      * Sends the post as a newsletter to all users.
      */
-    public function sendNewsletter($test = false)
+    public function sendNewsletter($type = 'test')
     {
-        if ($test)
-        {
-            $users = Base::user()->whereIn('email', Base::$developers)->get();
-        }
-        else
-        {
-            $users = Base::user()->whereNull('unsubscribed_at')->get();
+        switch ($type):
+            case 'test':
+                $users = Base::user()->whereIn('email', Base::$developers)->get();
+            break;
+            case 'customers':
+                $users = Base::user()->whereNotNull('stripe_id')->whereNull('unsubscribed_at')->get();
+            break;
+            case 'non-customers':
+                $users = Base::user()->whereNull('stripe_id')->whereNull('unsubscribed_at')->get();
+            break;
+            default:
+                $users = Base::user()->whereNull('unsubscribed_at')->get();
+        endswitch;
 
-            $this->setMetadata('newslettered_at', Carbon::now());
+        $this->setMetadata("sent_{$type}_newsletter_at", Carbon::now());
 
-            activity()->performedOn($this)->log('sent_newsletter');
-        }
+        activity()->performedOn($this)->log("sent_{$type}_newsletter");
 
         foreach ($users as $user)
         {

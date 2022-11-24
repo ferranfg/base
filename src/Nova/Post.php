@@ -149,8 +149,10 @@ class Post extends Resource
     {
         return [
             new Actions\PostPublish,
-            new Actions\PostSendNewsletter,
-            new Actions\PostTestNewsletter
+            new Actions\PostTestNewsletter,
+            new Actions\PostAllNewsletter,
+            new Actions\PostCustomersNewsletter,
+            new Actions\PostNonCustomersNewsletter,
         ];
     }
 }
