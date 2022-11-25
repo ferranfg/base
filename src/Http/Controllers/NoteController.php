@@ -2,7 +2,6 @@
 
 namespace Ferranfg\Base\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Ferranfg\Base\Models\Note;
 use Illuminate\Routing\Controller;
 
