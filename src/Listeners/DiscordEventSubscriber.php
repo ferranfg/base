@@ -48,7 +48,7 @@ class DiscordEventSubscriber
         {
             $exception = $event->exception;
 
-            array_push($record, '**' . request()->url() . '**');
+            array_push($record, '*' . request()->url() . '*');
             array_push($record, '`' . get_class($exception) . '`');
             array_push($record, '`' . $exception->getMessage() . '`');
 
@@ -59,12 +59,12 @@ class DiscordEventSubscriber
         }
         else if ($event instanceof DiscordMessage)
         {
-            array_push($record, '**' . $event->name . '**');
+            array_push($record, '*' . $event->name . '*');
             array_push($record, '`' . json_encode($event->attr) . '`');
         }
         else
         {
-            array_push($record, '**' . get_class($event) . '**');
+            array_push($record, '*' . get_class($event) . '*');
         }
 
         return implode(' - ', $record);
