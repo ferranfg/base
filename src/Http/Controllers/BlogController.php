@@ -2,6 +2,9 @@
 
 namespace Ferranfg\Base\Http\Controllers;
 
+use Schema;
+use Closure;
+use Ferranfg\Base\Base;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Clients\ImageKit;
@@ -20,6 +23,13 @@ class BlogController extends Controller
     {
         $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
+
+        $this->middleware(function (Request $request, Closure $next)
+        {
+            abort_unless(Schema::hasTable(Base::post()->getTable()), 404);
+
+            return $next($request);
+        });
     }
 
     /**

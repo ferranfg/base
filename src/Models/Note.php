@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Schema;
 use Exception;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -12,6 +13,8 @@ use FiveamCode\LaravelNotionApi\Notion;
 class Note
 {
     private $secret;
+
+    private $table = 'notes';
 
     public $page_id;
 
@@ -47,10 +50,10 @@ class Note
     {
         if (is_null($slug)) $slug = config('services.notion.page_id');
 
-        $note = DB::table('notes')
+        $note = Schema::hasTable($this->table) ? DB::table($this->table)
             ->where('slug', $slug)
             ->orWhere('page_id', $slug)
-            ->first();
+            ->first() : null;
 
         $this->secret = config('services.notion.secret');
         $this->page_id = $note ? $note->page_id : $slug;
@@ -106,7 +109,7 @@ class Note
             'updated_at' => Carbon::now()
         ];
 
-        DB::table('notes')->insert($note);
+        if (Schema::hasTable($this->table)) DB::table($this->table)->insert($note);
 
         return (object) $note;
     }
