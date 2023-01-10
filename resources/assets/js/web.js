@@ -21,7 +21,7 @@ if (typeof LazyLoad == 'function') {
     });
 }
 
-require("./../../template/js/app");
+import("./../../template/js/app");
 
 // Main functions
 $("#ajax-modal").on("shown.bs.modal", function(e) {
