@@ -9,10 +9,5 @@ Vue.filter('translate', function (value, path) {
     return path == undefined ? translation : `/${path}/${translation}`;
 });
 
-// Inits twemoji
-if (typeof window.twemoji == 'object') {
-    window.twemoji.parse(document);
-}
-
 // Plausible events
 window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };

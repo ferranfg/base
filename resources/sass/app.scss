@@ -12,14 +12,6 @@ $btn-font-weight: 600 !default;
 
 @import "vendor/laravel/spark-aurelius/resources/assets/sass/spark";
 
-// Twemoji
-img.emoji {
-  height: 1em;
-  width: 1em;
-  margin: 0 .05em 0 .1em;
-  vertical-align: -0.1em;
-}
-
 h2 {
   font-weight: 300;
 }

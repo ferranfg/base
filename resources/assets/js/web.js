@@ -21,15 +21,7 @@ if (typeof LazyLoad == 'function') {
     });
 }
 
-// Inits twemoji
-if (typeof twemoji == 'object') {
-    twemoji.parse(document, {
-        folder: 'svg',
-        ext: '.svg'
-    });
-}
-
-import("./../../template/js/app")
+require("./../../template/js/app");
 
 // Main functions
 $("#ajax-modal").on("shown.bs.modal", function(e) {
