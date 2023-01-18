@@ -13,28 +13,7 @@ class UserRepository
      */
     public function find($id)
     {
-        $user = User::find($id);
-
-        return $user ? $this->loadUserRelationships($user) : null;
-    }
-
-    /**
-     * Load the relationships for the given user.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return \Illuminate\Contracts\Auth\Authenticatable
-     */
-    protected function loadUserRelationships($user)
-    {
-        $user->load('subscriptions');
-
-        if (config('spark.billables.team')) {
-            $user->load(['ownedTeams.subscriptions', 'teams.subscriptions']);
-
-            $user->currentTeam();
-        }
-
-        return $user;
+        return User::find($id);
     }
 
     /**

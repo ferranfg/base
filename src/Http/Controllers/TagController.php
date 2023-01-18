@@ -24,7 +24,7 @@ class TagController extends Controller
 
     public function show(Request $request)
     {
-        return $this->tagRepository->findBySlug($request->slug, $request->locale);
+        return $this->tagRepository->findBySlug($request->slug);
     }
 
     public function posts(Request $request)

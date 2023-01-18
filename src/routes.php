@@ -36,7 +36,7 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 });
 
-Route::group(['prefix' => 'base/{locale}'], function ()
+Route::group(['prefix' => 'base'], function ()
 {
     // Posts
     Route::get('posts', '\Ferranfg\Base\Http\Controllers\PostController@all');

@@ -11,11 +11,9 @@ class PostRepository
         return Base::post()->findOrFail($id);
     }
 
-    public function findBySlug(string $slug, string $locale = null)
+    public function findBySlug(string $slug)
     {
-        $locale = $locale ?? app()->getLocale();
-
-        return Base::post()->where("slug->{$locale}", $slug)->firstOrFail();
+        return Base::post()->where("slug", $slug)->firstOrFail();
     }
 
     public function whereType($type)

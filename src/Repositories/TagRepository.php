@@ -16,10 +16,8 @@ class TagRepository
         return Base::tag()->findOrFail($id);
     }
 
-    public function findBySlug(string $slug, string $locale = null)
+    public function findBySlug(string $slug)
     {
-        $locale = $locale ?? app()->getLocale();
-
-        return Base::tag()->where("slug->{$locale}", $slug)->firstOrFail();
+        return Base::tag()->where("slug", $slug)->firstOrFail();
     }
 }

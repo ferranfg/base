@@ -31,11 +31,9 @@ class ProductRepository
         return Base::product()->findOrFail($id);
     }
 
-    public function findBySlug(string $slug, string $locale = null)
+    public function findBySlug(string $slug)
     {
-        $locale = $locale ?? app()->getLocale();
-
-        return Base::product()->where("slug->{$locale}", $slug)->firstOrFail();
+        return Base::product()->where("slug", $slug)->firstOrFail();
     }
 
     public function previousProduct($product)

@@ -34,7 +34,7 @@ class PostController extends Controller
 
     public function show(Request $request)
     {
-        return $this->postRepository->findBySlug($request->slug, $request->locale);
+        return $this->postRepository->findBySlug($request->slug);
     }
 
 }
