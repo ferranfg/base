@@ -1,4 +1,4 @@
-@extends(config('base.blog_template', 'template'))
+@extends(config('base.blog_template', 'layouts.web'))
 
 @push('head')
 
