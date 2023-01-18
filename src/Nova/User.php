@@ -63,8 +63,6 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            HasMany::make('Subscriptions'),
-
             MorphMany::make('Metadata'),
         ];
     }

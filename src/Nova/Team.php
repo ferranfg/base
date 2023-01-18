@@ -59,10 +59,6 @@ class Team extends Resource
             }),
 
             BelongsToMany::make('Users'),
-
-            // HasMany::make('Invitations'),
-
-            HasMany::make('Subscriptions'),
         ];
     }
 
