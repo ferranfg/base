@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @section('index')
-        @if (Str::startsWith(request()->url(), config('app.url')))
+        @if (Str::contains(config('app.url'), request()->getHost()))
             <meta name="robot" content="index, follow">
             <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
             <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
