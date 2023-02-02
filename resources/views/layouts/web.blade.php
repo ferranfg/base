@@ -8,9 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @section('index')
-        <meta name="robot" content="index, follow">
-        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-        <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        @if (Str::startsWith(request()->url(), config('app.url')))
+            <meta name="robot" content="index, follow">
+            <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+            <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        @else
+            <meta name="robot" content="noindex, nofollow">
+            <meta name="googlebot" content="noindex, nofollow">
+            <meta name="bingbot" content="noindex, nofollow">
+        @endif
     @show
 
     <title>@yield('title', isset($meta_title) ? $meta_title : config('app.name'))</title>
