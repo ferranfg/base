@@ -43,10 +43,7 @@ trait HasVisits
     {
         $crawlers = ['bot', 'crawl', 'slurp', 'spider', 'mediapartners'];
 
-        if (Str::contains(request()->userAgent(), $crawlers) or auth()->check())
-        {
-            return $this;
-        }
+        if (Str::contains(request()->userAgent(), $crawlers)) return $this;
 
         $visits = $this->getMetadata('_visits');
 
