@@ -3,7 +3,6 @@
 namespace Ferranfg\Base\Exceptions;
 
 use Ferranfg\Base\Events\ExceptionReported;
-use Google\Cloud\ErrorReporting\Bootstrap;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -41,12 +40,6 @@ class Handler extends ExceptionHandler
         if ($this->shouldReport($exception))
         {
             event(new ExceptionReported($exception));
-
-            if (array_key_exists('GAE_SERVICE', $_SERVER))
-            {
-                Bootstrap::init();
-                Bootstrap::exceptionHandler($exception);
-            }
         }
 
         parent::report($exception);

@@ -2,28 +2,18 @@
 
 namespace Ferranfg\Base\Exceptions;
 
-use Google\Cloud\Logging\LoggingClient;
-use Monolog\Handler\PsrHandler;
-use Monolog\Logger;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Container\Container;
+use MarvinLabs\DiscordLogger\Converters\SimpleRecordConverter;
+use MarvinLabs\DiscordLogger\Logger;
 
-class Stackdriver
+class Stackdriver extends Logger
 {
-    /**
-     * Create a custom Monolog instance.
-     *
-     * @param  array  $config
-     * @return \Monolog\Logger
-     */
-    public function __invoke(array $config)
+    public function __construct(Container $container, Repository $config)
     {
-        $logName = isset($config['logName']) ? $config['logName'] : 'app';
+        $config->set('discord-logger.emojis', null);
+        $config->set('discord-logger.converter', SimpleRecordConverter::class);
 
-        $handler = new PsrHandler(
-            LoggingClient::psrBatchLogger($logName)
-        );
-
-        $logger = new Logger($logName, [$handler]);
-
-        return $logger;
+        parent::__construct($container, $config);
     }
 }
