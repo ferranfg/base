@@ -72,6 +72,8 @@ return [
 
     'twitter_username' => env('BASE_TWITTER_USERNAME'),
 
+    'feedback_username' => env('BASE_FEEDBACK_USERNAME'),
+
     /*
     |--------------------------------------------------------------------------
     | Incoming Discord Webhooks

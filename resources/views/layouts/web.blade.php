@@ -99,9 +99,15 @@
                 </div>
             </footer>
 
-            <a href="/" class="btn btn-icon btn-soft-primary back-to-top">
-                <i class="icons fa fa-chevron-up"></i>
-            </a>
+            @if ($username = config('base.feedback_username') and $url = config('app.url'))
+                <a href="{{ "https://twitter.com/intent/tweet?text=@{$username} feedback for {$url}" }}" target="_blank" rel="noopener nofollow" class="btn btn-icon btn-soft-primary fixed-bottom mb-4 mr-4" title="Feedback" style="left:auto">
+                    <i class="icons fas fa-bullhorn"></i>
+                </a>
+            @else
+                <a href="/" class="btn btn-icon btn-soft-primary back-to-top">
+                    <i class="icons fa fa-chevron-up"></i>
+                </a>
+            @endif
         @show
     </div>
 
