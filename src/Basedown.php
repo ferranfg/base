@@ -3,6 +3,7 @@
 namespace Ferranfg\Base;
 
 use Parsedown;
+use diversen\markdownSplit;
 
 class Basedown extends Parsedown
 {
@@ -18,5 +19,20 @@ class Basedown extends Parsedown
         $output = str_replace('href="/', 'href="' . url('/') . '/', $output); // relative links
 
         return $output;
+    }
+
+    /**
+     * Splits the markdown text into an array of headings
+     *
+     * @return array
+     */
+    public static function split($content, $level = 2)
+    {
+        $pieces = (new markdownSplit)->splitMarkdownAtLevel($content, true, 2);
+
+        return collect($pieces)->filter(function ($item)
+        {
+            return array_key_exists('header', $item) and $item['header'] != '';
+        });
     }
 }

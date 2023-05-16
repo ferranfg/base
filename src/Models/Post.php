@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Ferranfg\Base\Base;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
+use Ferranfg\Base\Basedown;
+use Ferranfg\Base\Clients\OpenAI;
 use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Spatie\Activitylog\LogOptions;
@@ -228,4 +230,17 @@ class Post extends Model implements Feedable
         return $this;
     }
 
+    /**
+     * Connects with the OpenAI API to generate embeddings.
+     */
+    public function embeddings()
+    {
+        $split = Basedown::split($this->content);
+
+        (new OpenAI)->embeddings()->create([
+            'model' => 'text-similarity-babbage-001',
+            'input' => 'The food was delicious and the waiter...',
+        ]);
+
+    }
 }
