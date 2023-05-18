@@ -227,4 +227,5 @@ class Post extends Model implements Feedable
 
         return $this;
     }
+
 }
