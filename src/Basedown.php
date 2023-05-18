@@ -28,11 +28,17 @@ class Basedown extends Parsedown
      */
     public static function split($content, $level = 2)
     {
+        $content = "## Empty Header\n\n" . $content;
         $pieces = (new markdownSplit)->splitMarkdownAtLevel($content, true, 2);
 
-        return collect($pieces)->filter(function ($item)
-        {
-            return array_key_exists('header', $item) and $item['header'] != '';
-        });
+        return collect($pieces)
+            ->filter(function ($item)
+            {
+                return ! ($item['header'] == '');
+            })
+            ->map(function ($item)
+            {
+                return (object) $item;
+            });
     }
 }

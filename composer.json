@@ -27,6 +27,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "ankane/pgvector": "^0.1",
         "barryvdh/laravel-debugbar": "^3.5",
         "darryldecode/cart": "^4.2",
         "diversen/markdown-split-by-header": "^1.0",
