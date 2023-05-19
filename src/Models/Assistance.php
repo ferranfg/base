@@ -87,10 +87,10 @@ class Assistance extends Model
      * @param  string  $query
      * 
      */
-    public static function completion($query)
+    public static function completion($query, $match_threshold = 0.78, $match_count = 10)
     {
         $assistance = self::embeddingFromInput($query);
-        $assistances = self::match($assistance->embedding, 0.78, 2);
+        $assistances = self::match($assistance->embedding, $match_threshold, $match_count);
 
         $prompt = implode("\n", config('base.assistance_system'));
         $prompt = "{$prompt}\n\nContext sections:\n\n";

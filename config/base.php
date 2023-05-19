@@ -49,6 +49,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Embeddings Information
+    |--------------------------------------------------------------------------
+    |
+    | Función que se encarga de recoger los documentos que queremos convertir a embeddings
+    | para enviarlo posteriormente a OpenAI.
+    |
+    | gcloud compute ssh --project=ferran-figueredo --zone=us-central1-a root@ferranfigueredo-vm
+    |
+    */
+
+    'assistance_embeddings_handler' => null,
+
+    'assistance_system' => [],
+
+    /*
+    |--------------------------------------------------------------------------
     | Notes Information
     |--------------------------------------------------------------------------
     |
