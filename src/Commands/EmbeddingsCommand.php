@@ -2,9 +2,8 @@
 
 namespace Ferranfg\Base\Commands;
 
+use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use OpenAI;
 
 class EmbeddingsCommand extends Command
 {
@@ -14,26 +13,16 @@ class EmbeddingsCommand extends Command
 
     public function handle()
     {
-        $embeddings_handler = app(config('base.embeddings_handler'));
+        $embeddings_handler = app(config('base.assistance_embeddings_handler'));
 
         if ( ! method_exists($embeddings_handler, 'handle')) return Command::FAILURE;
 
-        $client = OpenAI::client(
-            config('services.openai.secret'),
-            config('services.openai.key')
-        );
+        Assistance::truncate();
 
-        foreach ($embeddings_handler->handle() as $title => $input)
+        foreach ($embeddings_handler->handle() as $input)
         {
-            $response = $client->embeddings()->create([
-                'model' => 'text-embedding-ada-002',
-                'input' => $input
-            ]);
-
-            DB::connection(config('base.embeddings_connection'))->insert(
-                'insert into embeddings (content, embedding) values (?, ?)',
-                [$input, $response->embeddings]
-            );
+            $assistance = Assistance::embeddingFromInput($input);
+            $assistance->save();
         }
     }
 }
