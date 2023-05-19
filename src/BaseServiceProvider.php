@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Spatie\NovaTranslatable\Translatable;
 use Ferranfg\Base\Commands\PublishCommand;
 use Ferranfg\Base\Commands\InstallCommand;
+use Ferranfg\Base\Commands\EmbeddingsCommand;
 
 class BaseServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,7 @@ class BaseServiceProvider extends ServiceProvider
             }
 
             $this->commands([
+                EmbeddingsCommand::class,
                 InstallCommand::class,
                 PublishCommand::class,
             ]);
