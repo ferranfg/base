@@ -5,6 +5,7 @@ namespace Ferranfg\Base\Models;
 use OpenAI;
 use Pgvector\Laravel\Vector;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Assistance extends Model
@@ -92,7 +93,9 @@ class Assistance extends Model
         $assistance = self::embeddingFromInput($query);
         $assistances = self::match($assistance->embedding, $match_threshold, $match_count);
 
-        $prompt = implode("\n", config('base.assistance_system'));
+        [$class, $method] = Str::parseCallback(config('base.assistance_system'));
+
+        $prompt = implode("\n", app($class)->$method());
         $prompt = "{$prompt}\n\nContext sections:\n\n";
 
         foreach ($assistances as $assistance)
