@@ -1,14 +1,14 @@
 <chat-form default-input="{{ isset($input) ? $input : '' }}" inline-template>
     <div>
-        <div class="media mb-3" v-if="showInput">
+        <div class="media mb-3" v-if="currentInput">
             <div class="rounded-circle border p-1 mr-2 text-center" style="width:34px">
                 <span class="fa fa-user"></span>
             </div>
             <div class="media-body">
-                <p class="mb-0">@{{ chatForm.input }}</p>
+                <p class="mb-0">@{{ currentInput }}</p>
             </div>
         </div>
-        <div class="media mb-3 text-white" v-if="showInput && !response">
+        <div class="media mb-3 text-white" v-if="currentInput && !rawResponse">
             <div class="rounded-circle border p-1 mr-2 text-center" style="width:34px">
                 <span class="fa fa-spinner fa-spin"></span>
             </div>
@@ -16,11 +16,11 @@
                 <p class="mb-0">{{__('Escribiendo...')}}</p>
             </div>
         </div>
-        <div class="media mb-3 text-white" v-if="response">
+        <div class="media mb-3 text-white" v-if="rawResponse">
             <div class="rounded-circle border p-1 mr-2 text-center" style="width:34px">
                 <span class="fas fa-robot"></span>
             </div>
-            <div class="media-body" v-html="response"></div>
+            <div class="media-body" v-html="typingResponse"></div>
         </div>
         <div class="subcribe-form">
             <form class="m-0">

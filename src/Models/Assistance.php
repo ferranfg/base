@@ -90,20 +90,27 @@ class Assistance extends Model
      */
     public static function completion($query, $match_threshold = 0.78, $match_count = 10)
     {
-        $assistance = self::embeddingFromInput($query);
-        $assistances = self::match($assistance->embedding, $match_threshold, $match_count);
-
+        // System
         [$class, $method] = Str::parseCallback(config('base.assistance_system'));
 
         $prompt = implode("\n", app($class)->$method());
-        $prompt = "{$prompt}\n\nContext sections:\n\n";
 
-        foreach ($assistances as $assistance)
+        // Context
+        $assistance = self::embeddingFromInput($query);
+        $assistances = self::match($assistance->embedding, $match_threshold, $match_count);
+
+        if (count($assistances))
         {
-            $prompt = "{$prompt}{$assistance->content}\n";
+            $prompt = "{$prompt}\n\nContext sections:\n";
+
+            foreach ($assistances as $assistance)
+            {
+                $prompt = "{$prompt}{$assistance->content}\n";
+            }
         }
 
-        $prompt = "{$prompt}Query:\"\"\"\n{$query}\n\"\"\"\n\nResponse:";
+        // Query
+        $prompt = "{$prompt}\n\nQuery:\"\"\"\n{$query}\n\"\"\"\n\nResponse:";
 
         return self::getOpenAI()->completions()->create([
             'model' => 'text-davinci-003',
