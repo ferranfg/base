@@ -8,23 +8,47 @@ Vue.component('chat-form', {
     data() {
         return {
             chatForm: new SparkForm({
-                input: this.defaultInput
+                input: ''
             }),
-            showInput: this.defaultInput != '',
-            response: null
+            currentInput: this.defaultInput,
+            rawResponse: '',
+            typingResponse: '',
         };
     },
 
     mounted() {
-        if (this.chatForm.input) this.submit();
+        if (this.defaultInput) {
+            this.chatForm.input = this.defaultInput;
+            this.submit();
+        }
     },
 
     methods: {
         submit() {
-            this.showInput = true;
+            this.resetResponse();
+            this.currentInput = this.chatForm.input;
+
             Spark.post('/chat', this.chatForm).then(response => {
-                this.response = response.text;
+                this.rawResponse = response.text;
+                this.startTyping();
+
+                this.chatForm.reset();
+            }).catch(error => {
+                this.currentInput = false;
             });
+        },
+
+        resetResponse() {
+            this.rawResponse = '';
+            this.typingResponse = '';
+        },
+
+        startTyping() {
+            this.typingResponse = this.rawResponse.substring(0, this.typingResponse.length + 1);
+
+            if (this.typingResponse.length != this.rawResponse.length) {
+                setTimeout(this.startTyping, 20);
+            }
         }
     }
 });
