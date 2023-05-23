@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Commands;
 
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class EmbeddingsCommand extends Command
 {
@@ -13,13 +14,15 @@ class EmbeddingsCommand extends Command
 
     public function handle()
     {
-        $embeddings_handler = app(config('base.assistance_embeddings_handler'));
+        [$class, $method] = Str::parseCallback(config('base.assistance_embeddings'));
 
-        if ( ! method_exists($embeddings_handler, 'handle')) return Command::FAILURE;
+        $embeddings_handler = app($class);
+
+        if ( ! method_exists($embeddings_handler, $method)) return Command::FAILURE;
 
         Assistance::truncate();
 
-        foreach ($embeddings_handler->handle() as $input)
+        foreach ($embeddings_handler->$method() as $input)
         {
             $assistance = Assistance::embeddingFromInput($input);
             $assistance->save();

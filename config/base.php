@@ -59,9 +59,9 @@ return [
     |
     */
 
-    'assistance_embeddings_handler' => null,
+    'assistance_embeddings' => null,
 
-    'assistance_system' => [],
+    'assistance_system' => null,
 
     /*
     |--------------------------------------------------------------------------
