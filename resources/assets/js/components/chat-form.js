@@ -1,3 +1,6 @@
+import Vue from '$vue';
+import { SparkForm } from '../forms/form';
+
 Vue.component('chat-form', {
 
     props: ['defaultInput'],
