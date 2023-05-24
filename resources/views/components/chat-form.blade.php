@@ -13,7 +13,7 @@
                 <span class="fa fa-spinner fa-spin"></span>
             </div>
             <div class="media-body">
-                <p class="mb-0">{{__('Escribiendo...')}}</p>
+                <p class="mb-0">{{__('Typing...')}}</p>
             </div>
         </div>
         <div class="media mb-3 text-white" v-if="rawResponse">
@@ -25,7 +25,7 @@
         <div class="subcribe-form">
             <form class="m-0">
                 <div class="form-group mb-0" :class="{'is-invalid': chatForm.errors.has('input')}">
-                    <input type="text" name="input" class="rounded" v-model="chatForm.input" placeholder="{{__('Hola! ¿Cuál es tu pregunta?')}}" :disabled="chatForm.busy">
+                    <input type="text" name="input" class="rounded" v-model="chatForm.input" placeholder="{{__('Hello! How can I help?')}}" :disabled="chatForm.busy">
                     <button type="button" class="btn btn-primary" @click.prevent="submit" :disabled="chatForm.busy">
                         <span class="fa fa-paper-plane"></span>
                     </button>

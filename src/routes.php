@@ -33,6 +33,9 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@post');
     Route::post('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@comment');
 
+    Route::get('/chat', '\Ferranfg\Base\Http\Controllers\ChatController@index');
+    Route::post('/chat', '\Ferranfg\Base\Http\Controllers\ChatController@message');
+
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 });
 

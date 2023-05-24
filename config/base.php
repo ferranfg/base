@@ -59,9 +59,13 @@ return [
     |
     */
 
+    'assistance_enabled' => false,
+
     'assistance_embeddings' => null,
 
     'assistance_system' => null,
+
+    'assistance_docs_view' => null,
 
     /*
     |--------------------------------------------------------------------------
