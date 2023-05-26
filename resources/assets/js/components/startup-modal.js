@@ -1,5 +1,3 @@
-let moment = require('moment');
-
 Vue.component('startup-modal', {
 
     props: ['modalId', 'offset', 'expiration'],
