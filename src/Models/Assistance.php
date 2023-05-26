@@ -5,6 +5,7 @@ namespace Ferranfg\Base\Models;
 use OpenAI;
 use Pgvector\Laravel\Vector;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
@@ -88,8 +89,15 @@ class Assistance extends Model
      * @param  string  $query
      * 
      */
-    public static function completion($query, $match_threshold = 0.78, $match_count = 10)
+    public static function completion($query, $options = [])
     {
+        // Options
+        $match_threshold = Arr::get($options, 'match_threshold', 0.78);
+        $match_count     = Arr::get($options, 'match_count', 10);
+        $model           = Arr::get($options, 'model', 'text-davinci-003');
+        $max_tokens      = Arr::get($options, 'max_tokens', 512);
+        $temperature     = Arr::get($options, 'temperature', 0);
+
         // System
         [$class, $method] = Str::parseCallback(config('base.assistance_system'));
 
@@ -113,10 +121,10 @@ class Assistance extends Model
         $prompt = "{$prompt}\n\nQuery:\"\"\"\n{$query}\n\"\"\"\n\nResponse:";
 
         return self::getOpenAI()->completions()->create([
-            'model' => 'text-davinci-003',
+            'model' => $model,
             'prompt' => $prompt,
-            'max_tokens' => 512,
-            'temperature' => 0,
+            'max_tokens' => $max_tokens,
+            'temperature' => $temperature,
         ]);
     }
 }
