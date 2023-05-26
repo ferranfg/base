@@ -1,4 +1,4 @@
-@extends('template')
+@extends(config('base.assistance_template', 'layouts.web'))
 
 @section('content')
 
