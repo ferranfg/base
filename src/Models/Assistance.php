@@ -94,7 +94,7 @@ class Assistance extends Model
         // Options
         $match_threshold = Arr::get($options, 'match_threshold', 0.78);
         $match_count     = Arr::get($options, 'match_count', 10);
-        $model           = Arr::get($options, 'model', 'text-davinci-003');
+        $model           = Arr::get($options, 'model', 'gpt-3.5-turbo');
         $max_tokens      = Arr::get($options, 'max_tokens', 512);
         $temperature     = Arr::get($options, 'temperature', 0);
 
@@ -117,12 +117,12 @@ class Assistance extends Model
             }
         }
 
-        // Query
-        $prompt = "{$prompt}\n\nQuery:\"\"\"\n{$query}\n\"\"\"\n\nResponse:";
-
-        return self::getOpenAI()->completions()->create([
+        return self::getOpenAI()->chat()->create([
             'model' => $model,
-            'prompt' => $prompt,
+            'messages' => [
+                ['role' => 'system', 'content' => $prompt],
+                ['role' => 'user', 'content' => $query]
+            ],
             'max_tokens' => $max_tokens,
             'temperature' => $temperature,
         ]);
