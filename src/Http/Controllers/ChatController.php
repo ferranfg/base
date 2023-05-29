@@ -45,7 +45,7 @@ class ChatController extends Controller
         $assistance = Assistance::completion($request->input);
 
         return response()->json([
-            'text' => $assistance->choices[0]->text
+            'text' => $assistance->choices[0]->message->content
         ]);
     }
 }
