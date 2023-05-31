@@ -67,6 +67,8 @@
                         @basedown($post->content)
                     </div>
 
+                    @yield('post-footer')
+
                     @include('base::components.previous-next')
 
                     @if ( ! $post->comments_disabled)
