@@ -17,9 +17,9 @@ if (config('feed.feeds.main.items')) Route::feeds('feed');
 
 Route::group(['middleware' => 'web'], function ()
 {
-    Route::get('/_ah/{action}', 'Ferranfg\Base\Http\Controllers\SchedulerController@engine');
-    Route::get('/scheduler/weekly', 'Ferranfg\Base\Http\Controllers\SchedulerController@weekly');
-    Route::get('/scheduler/daily', 'Ferranfg\Base\Http\Controllers\SchedulerController@daily');
+    Route::get('/_ah/{action}', '\Ferranfg\Base\Http\Controllers\SchedulerController@engine');
+    Route::get('/scheduler/weekly', '\Ferranfg\Base\Http\Controllers\SchedulerController@weekly');
+    Route::get('/scheduler/daily', '\Ferranfg\Base\Http\Controllers\SchedulerController@daily');
 
     Route::post('/newsletter/subscribe', '\Ferranfg\Base\Http\Controllers\NewsletterController@subscribe');
     Route::get('/newsletter/unsubscribe/{token}', '\Ferranfg\Base\Http\Controllers\NewsletterController@unsubscribe');
@@ -36,6 +36,8 @@ Route::group(['middleware' => 'web'], function ()
     Route::post('/chat', '\Ferranfg\Base\Http\Controllers\ChatController@message');
 
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
+
+    Route::get('/feed/merchant.xml', '\Ferranfg\Base\Http\Controllers\FeedController@merchant');
 });
 
 Route::group(['prefix' => 'base/{locale}'], function ()

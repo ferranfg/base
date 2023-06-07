@@ -16,6 +16,10 @@ class BlogController extends Controller
 {
     use ValidatesRequests;
 
+    public $commentRepository;
+
+    public $postRepository;
+
     public function __construct(
         CommentRepository $commentRepository,
         PostRepository $postRepository
