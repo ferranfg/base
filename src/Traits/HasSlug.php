@@ -14,7 +14,7 @@ trait HasSlug
         });
     }
 
-    protected function generateSlug(): string
+    protected function generateSlug($locale = null): string
     {
         if ( ! empty($this->slug)) return $this->slug;
 
