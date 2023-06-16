@@ -7,6 +7,7 @@ use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\InteractsWithQueue;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class PostNewsletter extends Action
 {
@@ -41,7 +42,7 @@ class PostNewsletter extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [];
     }

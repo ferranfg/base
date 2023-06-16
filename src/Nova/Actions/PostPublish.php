@@ -7,6 +7,7 @@ use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\InteractsWithQueue;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class PostPublish extends Action
 {
@@ -34,7 +35,7 @@ class PostPublish extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [];
     }
