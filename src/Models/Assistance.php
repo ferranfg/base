@@ -93,7 +93,7 @@ class Assistance extends Model
     {
         // Options
         $match_threshold = Arr::get($options, 'match_threshold', 0.78);
-        $match_count     = Arr::get($options, 'match_count', 10);
+        $match_count     = Arr::get($options, 'match_count', 0);
         $model           = Arr::get($options, 'model', 'gpt-3.5-turbo');
         $max_tokens      = Arr::get($options, 'max_tokens', 512);
         $temperature     = Arr::get($options, 'temperature', 0);
@@ -104,16 +104,19 @@ class Assistance extends Model
         $prompt = implode("\n", app($class)->$method());
 
         // Context
-        $assistance = self::embeddingFromInput($query);
-        $assistances = self::match($assistance->embedding, $match_threshold, $match_count);
-
-        if (count($assistances))
+        if ($match_count)
         {
-            $prompt = "{$prompt}\n\nContext sections:\n";
+            $assistance = self::embeddingFromInput($query);
+            $assistances = self::match($assistance->embedding, $match_threshold, $match_count);
 
-            foreach ($assistances as $assistance)
+            if (count($assistances))
             {
-                $prompt = "{$prompt}{$assistance->content}\n";
+                $prompt = "{$prompt}\n\nContext sections:\n";
+
+                foreach ($assistances as $assistance)
+                {
+                    $prompt = "{$prompt}{$assistance->content}\n";
+                }
             }
         }
 

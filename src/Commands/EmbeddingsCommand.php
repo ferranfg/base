@@ -20,12 +20,12 @@ class EmbeddingsCommand extends Command
 
         if ( ! method_exists($embeddings_handler, $method)) return Command::FAILURE;
 
-        Assistance::truncate();
-
         foreach ($embeddings_handler->$method() as $input)
         {
             $assistance = Assistance::embeddingFromInput($input);
             $assistance->save();
         }
+
+        return Command::SUCCESS;
     }
 }
