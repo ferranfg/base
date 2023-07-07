@@ -14,22 +14,30 @@
                 <div class="col-lg-8">
                     <div class="page-next-level">
                         <div class="title-heading text-center">
-                            <h1 class="text-white title-dark mb-3">{{ $post->name }}</h1>
-                            <p class="para-desc mx-auto text-white-50 mb-0">{{ $post->excerpt }}</p>
+                            @if ($post->excerpt)
+                                <h1 class="text-white title-dark mb-3">{{ $post->name }}</h1>
+                                <p class="para-desc mx-auto text-white-50 mb-0">{{ $post->excerpt }}</p>
+                            @else
+                                <h1 class="text-white title-dark mb-0">{{ $post->name }}</h1>
+                            @endif
                         </div>
-                        <div class="page-next text-center">
-                            <nav class="d-inline-block">
-                                <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                    @if ($post->author->name == 'Ferran Figueredo')
-                                        <li class="breadcrumb-item"><i class="fa fa-user"></i> <a href="https://ferranfigueredo.com" target="_blank">Ferran Figueredo</a></li>
-                                    @else
-                                        <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
-                                    @endif
-                                    <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at->toFormattedDateString() }}</li>
-                                </ul>
-                                <time class="updated" datetime="{{ $post->updated_at }}"></time>
-                            </nav>
-                        </div>
+                        @section('post-breadcrumb')
+                            <div class="page-next text-center">
+                                <nav class="d-inline-block">
+                                    <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                        @if ($post->author)
+                                            @if ($post->author->name == 'Ferran Figueredo')
+                                                <li class="breadcrumb-item"><i class="fa fa-user"></i> <a href="https://ferranfigueredo.com" target="_blank">Ferran Figueredo</a></li>
+                                            @else
+                                                <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
+                                            @endif
+                                        @endif
+                                        <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at->toFormattedDateString() }}</li>
+                                    </ul>
+                                    <time class="updated" datetime="{{ $post->updated_at }}"></time>
+                                </nav>
+                            </div>
+                        @show
                     </div>
                 </div>
             </div>
@@ -58,6 +66,8 @@
                     <div class="post">
                         @basedown($post->content)
                     </div>
+
+                    @yield('post-footer')
 
                     @include('base::components.previous-next')
 

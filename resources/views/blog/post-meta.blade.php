@@ -21,8 +21,10 @@
 <meta name="twitter:description" content="{{ $post->excerpt }}" />
 <meta name="twitter:url" content="{{ $post->canonical_url }}" />
 <meta name="twitter:image" content="{{ $photo_url }}" />
-<meta name="twitter:label1" content="By" />
-<meta name="twitter:data1" content="{{ $post->author->name }}" />
+@if ($post->author)
+    <meta name="twitter:label1" content="By" />
+    <meta name="twitter:data1" content="{{ $post->author->name }}" />
+@endif
 <meta name="twitter:site" content="{{ config('base.twitter_username') }}" />
 <meta property="og:image:width" content="1920" />
 <meta property="og:image:height" content="1280" />
@@ -44,16 +46,18 @@
             "height": 1280
         }
     },
-    "author": {
-        "@type": "Person",
-        "name": "{{ $post->author->name }}",
-        "image": {
-            "@type": "ImageObject",
-            "url": "{{ $post->author->photo_url }}",
-            "width": 200,
-            "height": 200
-        }
-    },
+    @if ($post->author)
+        "author": {
+            "@type": "Person",
+            "name": "{{ $post->author->name }}",
+            "image": {
+                "@type": "ImageObject",
+                "url": "{{ $post->author->photo_url }}",
+                "width": 200,
+                "height": 200
+            }
+        },
+    @endif
     "headline": "{{ $post->name }}",
     "url": "{{ $post->canonical_url }}",
     "datePublished": "{{ $post->created_at->toISOString() }}",
