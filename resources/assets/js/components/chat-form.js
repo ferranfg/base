@@ -18,6 +18,8 @@ Vue.component('chat-form', {
             this.chatForm.input = this.defaultInput;
             this.submit();
         }
+
+        this.$refs.input.focus();
     },
 
     methods: {
