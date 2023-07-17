@@ -38,6 +38,13 @@ Vue.component('chat-form', {
             });
         },
 
+        resetAll() {
+            this.chatForm.input = '';
+            this.currentInput = '';
+
+            this.resetResponse();
+        },
+
         resetResponse() {
             this.rawResponse = '';
             this.typingResponse = '';
@@ -49,6 +56,12 @@ Vue.component('chat-form', {
             if (this.typingResponse.length != this.rawResponse.length) {
                 setTimeout(this.startTyping, 20);
             }
+        }
+    },
+
+    computed: {
+        showTyping() {
+            return this.currentInput && !this.rawResponse;
         }
     }
 });
