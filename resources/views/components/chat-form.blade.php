@@ -30,7 +30,7 @@
         <div class="subcribe-form" v-if="!currentInput">
             <form class="my-0">
                 <div class="form-group mb-0" :class="{'is-invalid': chatForm.errors.has('input')}">
-                    <input type="text" name="input" class="rounded" v-model="chatForm.input" placeholder="{{__('Hello! How can I help?')}}" :disabled="chatForm.busy">
+                    <input type="text" name="input" class="rounded" v-model="chatForm.input" ref="input" placeholder="{{__('Hello! How can I help?')}}" :disabled="chatForm.busy" style="padding-right:80px">
                     <button type="button" class="btn btn-primary" @click.prevent="submit" :disabled="chatForm.busy">
                         <span class="fa fa-paper-plane"></span>
                     </button>
