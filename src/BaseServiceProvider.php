@@ -11,6 +11,7 @@ use Spatie\NovaTranslatable\Translatable;
 use Ferranfg\Base\Commands\PublishCommand;
 use Ferranfg\Base\Commands\InstallCommand;
 use Ferranfg\Base\Commands\EmbeddingsCommand;
+use Ferranfg\Base\Commands\SendPostNewsletter;
 
 class BaseServiceProvider extends ServiceProvider
 {
@@ -49,6 +50,7 @@ class BaseServiceProvider extends ServiceProvider
                 EmbeddingsCommand::class,
                 InstallCommand::class,
                 PublishCommand::class,
+                SendPostNewsletter::class,
             ]);
         }
 
