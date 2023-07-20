@@ -22,7 +22,9 @@ Vue.component('chat-form', {
             this.submit();
         }
 
-        this.$refs.input.focus();
+        if (this.$refs.input) {
+            this.$refs.input.focus();
+        }
     },
 
     methods: {
