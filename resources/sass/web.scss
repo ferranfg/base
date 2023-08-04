@@ -219,6 +219,18 @@ img.emoji {
     }
 }
 
+// Chat form
+.subcribe-form.chat-form {
+    input, textarea {
+        width: 100%;
+        color: #3c4858;
+        border: none;
+        outline: none;
+        padding:14px 80px 14px 14px;
+        height: auto !important;
+    }
+}
+
 // Footer
 .social-icon li a {
     line-height: 32px;

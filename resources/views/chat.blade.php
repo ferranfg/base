@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-7">
-                    <div class="footer p-3 rounded mb-5">
+                    <div class="border py-2 px-2 py-sm-3 px-sm-3 rounded mb-5">
                         @include('base::components.chat-form')
                     </div>
                     @if (config('base.assistance_docs_view'))
