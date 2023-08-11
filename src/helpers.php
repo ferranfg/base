@@ -141,9 +141,7 @@ if ( ! function_exists('meta_title'))
         if ($page = request()->page and $page > 1) $meta_title[] = "Page {$page}";
         if (is_string($title)) $meta_title[] = $title;
 
-        $meta_title[] = config('app.name');
-
-        return implode(' | ', $meta_title);
+        return implode(' - ', $meta_title);
     }
 }
 
