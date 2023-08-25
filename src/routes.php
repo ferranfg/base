@@ -1,5 +1,6 @@
 <?php
 
+use Ferranfg\Base\Clients\Unsplash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,11 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 
     Route::get('/feed/merchant.xml', '\Ferranfg\Base\Http\Controllers\FeedController@merchant');
+
+    Route::get('/unsplash/{method}/{param?}', function (Request $request, $method, $param = null)
+    {
+        return method_exists(Unsplash::class, $method) ? Unsplash::$method($param)->toArray() : abort(404);
+    });
 });
 
 Route::group(['prefix' => 'base'], function ()
