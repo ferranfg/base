@@ -22,7 +22,7 @@ class ChatController extends Controller
     {
         abort_unless(config('base.assistance_enabled'), 404);
 
-        return view('base::chat', [
+        return view('base::chat.index', [
             'input' => $request->input,
             'header' => Unsplash::randomFromCollections()->pluck('urls.regular')->random()
         ]);

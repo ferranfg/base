@@ -35,7 +35,7 @@ class FeedController extends Controller
      *
      * @return Response
      */
-    private function feed($products)
+    protected function feed($products)
     {
         $feed = new Feed(
             config('app.name'),
