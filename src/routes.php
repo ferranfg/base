@@ -37,6 +37,13 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/chat', '\Ferranfg\Base\Http\Controllers\ChatController@index');
     Route::post('/chat', '\Ferranfg\Base\Http\Controllers\ChatController@message');
 
+    Route::get('/connect', '\Ferranfg\Base\Http\Controllers\ConnectController@facebook');
+    Route::get('/connect/facebook', '\Ferranfg\Base\Http\Controllers\ConnectController@callbackFacebook');
+    Route::get('/connect/instagram', '\Ferranfg\Base\Http\Controllers\ConnectController@instagram');
+    Route::post('/connect/instagram', '\Ferranfg\Base\Http\Controllers\ConnectController@callbackInstagram');
+    Route::get('/connect/return', '\Ferranfg\Base\Http\Controllers\ConnectController@return');
+    Route::get('/connect/cancel', '\Ferranfg\Base\Http\Controllers\ConnectController@cancel');
+
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 
     Route::get('/feed/merchant.xml', '\Ferranfg\Base\Http\Controllers\FeedController@merchant');

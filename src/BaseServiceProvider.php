@@ -36,6 +36,7 @@ class BaseServiceProvider extends ServiceProvider
                     __DIR__ . '/../database/migrations/create_products_table.php.stub' => database_path("migrations/{$time}_create_products_table.php"),
                     __DIR__ . '/../database/migrations/create_tags_table.php.stub' => database_path("migrations/{$time}_create_tags_table.php"),
                     __DIR__ . '/../database/migrations/update_users_table.php.stub' => database_path("migrations/{$time}_update_users_table.php"),
+                    __DIR__ . '/../database/migrations/update_users_connect.php.stub' => database_path("migrations/{$time}_update_users_connect.php"),
                 ], 'migrations');
             }
 
