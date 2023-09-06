@@ -5,6 +5,7 @@ namespace Ferranfg\Base\Http\Controllers;
 use Exception;
 use Ferranfg\Base\Clients\Facebook;
 use Ferranfg\Base\Clients\Unsplash;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Socialite\Facades\Socialite;
@@ -12,6 +13,8 @@ use League\OAuth1\Client\Credentials\CredentialsException;
 
 class ConnectController extends Controller
 {
+    use ValidatesRequests;
+
     /**
      * Redirect user to the Facebook login page.
      *
@@ -134,5 +137,25 @@ class ConnectController extends Controller
             <hr />
             <p class="mb-0">If you think this is a mistake, please contact us.</p>
         ');
+    }
+
+    /**
+     * Uploads a file to the user's Instagram account.
+     *
+     * @return Response
+     */
+    public function upload(Request $request)
+    {
+        $this->validate($request, [
+            'image_url' => 'required|url',
+        ]);
+
+        $user = auth()->user();
+
+        return Facebook::uploadMedia(
+            $user->facebook_id,
+            $user->facebook_token,
+            $request->image_url
+        );
     }
 }
