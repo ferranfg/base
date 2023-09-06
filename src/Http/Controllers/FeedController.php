@@ -11,7 +11,7 @@ use Vitalybaev\GoogleMerchant\Product;
 
 class FeedController extends Controller
 {
-    private $productRepository;
+    protected $productRepository;
 
     public function __construct(
         ProductRepository $productRepository
