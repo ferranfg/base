@@ -25,7 +25,7 @@ class ConnectController extends Controller
         if ( ! auth()->check()) return $this->cancel();
 
         return Socialite::driver('facebook')
-            ->scopes(['pages_read_engagement', 'instagram_basic', 'instagram_content_publish'])
+            ->scopes(['pages_show_list', 'business_management', 'instagram_basic', 'instagram_content_publish'])
             ->usingGraphVersion('v15.0')
             ->redirect();
     }
@@ -153,7 +153,7 @@ class ConnectController extends Controller
         $user = auth()->user();
 
         return Facebook::uploadMedia(
-            $user->facebook_id,
+            $user->instagram_id,
             $user->facebook_token,
             $request->image_url
         );
