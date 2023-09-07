@@ -43,6 +43,8 @@ Route::group(['middleware' => 'web'], function ()
     Route::post('/connect/instagram', '\Ferranfg\Base\Http\Controllers\ConnectController@callbackInstagram');
     Route::get('/connect/return', '\Ferranfg\Base\Http\Controllers\ConnectController@return');
     Route::get('/connect/cancel', '\Ferranfg\Base\Http\Controllers\ConnectController@cancel');
+    Route::post('/connect/upload', '\Ferranfg\Base\Http\Controllers\ConnectController@upload')
+        ->middleware('auth:api')->withoutMiddleware('web');
 
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 
