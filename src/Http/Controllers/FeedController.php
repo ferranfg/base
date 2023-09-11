@@ -5,7 +5,6 @@ namespace Ferranfg\Base\Http\Controllers;
 use Ferranfg\Base\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
 use Vitalybaev\GoogleMerchant\Feed;
 use Vitalybaev\GoogleMerchant\Product;
 
@@ -52,8 +51,8 @@ class FeedController extends Controller
             $item->setTitle((string) $product->name);
             $item->setDescription((string) $product->description);
             $item->setLink((string) $product->canonical_url);
-            if ($product->photo_url) $item->setImage((string) Storage::url($product->photo_url));
-            if ($product->attached_url) $item->setAdditionalImage((string) Storage::url($product->attached_url));
+            if ($product->photo_url) $item->setImage((string) $product->photo_url);
+            if ($product->attached_url) $item->setAdditionalImage((string) $product->attached_url);
             $item->setAttribute('availability', 'in stock', false);
             $item->setPrice(bcdiv($product->amount, 100, 2) . " {$product->currency}");
             $item->setBrand(config('app.name'));
