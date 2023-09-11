@@ -55,7 +55,7 @@ class FeedController extends Controller
             if ($product->attached_url) $item->setAdditionalImage((string) $product->attached_url);
             $item->setAttribute('availability', 'in stock', false);
             $item->setPrice("{$product->amount}{$product->currency}");
-            $item->setBrand(config('app.name'));
+            $item->setBrand((string) $product->brand);
             $item->setCondition('new');
             $item->setAttribute('is_bundle', $product->type == 'bundle' ? 'yes' : 'no', false);
 
