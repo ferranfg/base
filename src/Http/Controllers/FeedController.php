@@ -59,6 +59,9 @@ class FeedController extends Controller
             $item->setCondition('new');
             $item->setAttribute('is_bundle', $product->type == 'bundle' ? 'yes' : 'no', false);
 
+            // https://support.google.com/merchants/answer/6324436
+            if ($product->google_category) $item->setGoogleCategory(216);
+
             $feed->addProduct($item);
         }
 

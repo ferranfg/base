@@ -151,9 +151,9 @@ class Product extends Model
     /**
      * Get the Instagram Photo URL for the product.
      */
-    public function getGoogleProductCategoryAttribute()
+    public function getGoogleCategoryAttribute()
     {
-        return $this->getMetadata('google_product_category');
+        return $this->getMetadata('google_category');
     }
 
     /**
@@ -315,11 +315,11 @@ class Product extends Model
      *
      * @return \Illuminate\Support\Collection
      */
-    public static function googleProductCategories()
+    public static function googleCategories()
     {
-        return cache()->remember('google_product_categories', 60 * 60 * 24, function ()
+        return cache()->remember('google_categories', 60 * 60 * 24, function ()
         {
-            return static::fetchGoogleProductCategories();
+            return static::fetchGoogleCategories();
         });
     }
 
@@ -328,7 +328,7 @@ class Product extends Model
      * 
      * @return \Illuminate\Support\Collection
      */
-    protected static function fetchGoogleProductCategories()
+    public static function fetchGoogleCategories()
     {
         $categories = file_get_contents('https://www.google.com/basepages/producttype/taxonomy-with-ids.en-GB.txt');
         $categories = explode("\n", $categories);
