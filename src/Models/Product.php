@@ -131,6 +131,14 @@ class Product extends Model
     }
 
     /**
+     * Get the Instagram Photo URL for the product.
+     */
+    public function getGoogleProductCategoryAttribute()
+    {
+        return $this->getMetadata('google_product_category');
+    }
+
+    /**
      * Get the avg rating from the attached comments
      *
      * @var string
@@ -282,5 +290,43 @@ class Product extends Model
     public function isPrivate()
     {
         return $this->status == 'private';
+    }
+
+    /**
+     * Get the Google Product Categories.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function googleProductCategories()
+    {
+        return cache()->remember('google_product_categories', 60 * 60 * 24, function ()
+        {
+            return static::fetchGoogleProductCategories();
+        });
+    }
+
+    /**
+     * Fetch the Google Product Categories.
+     * 
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function fetchGoogleProductCategories()
+    {
+        $categories = file_get_contents('https://www.google.com/basepages/producttype/taxonomy-with-ids.en-GB.txt');
+        $categories = explode("\n", $categories);
+
+        return collect($categories)->filter(function ($category)
+        {
+            return str_contains($category, ' - ') and ! str_contains($category, '>');
+
+        })->map(function ($category)
+        {
+            $category = explode(' - ', $category);
+
+            return (object) [
+                'id' => $category[0],
+                'name' => $category[1]
+            ];
+        })->values();
     }
 }
