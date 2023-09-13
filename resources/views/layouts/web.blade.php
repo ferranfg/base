@@ -123,6 +123,8 @@
         </div>
     </div>
 
+    @includeWhen(config('base.newsletter_modal'), 'base::components.newsletter-modal')
+
     @include('cookie-consent::index')
 
     <script src="https://kit.fontawesome.com/ba5226906a.js" crossorigin="anonymous"></script>
