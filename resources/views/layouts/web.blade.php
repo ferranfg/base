@@ -109,6 +109,8 @@
                 </a>
             @endif
         @show
+
+        @includeWhen(config('base.newsletter_modal'), 'base::components.newsletter-modal')
     </div>
 
     <div class="modal fade" id="ajax-modal">
@@ -122,8 +124,6 @@
             </div>
         </div>
     </div>
-
-    @includeWhen(config('base.newsletter_modal'), 'base::components.newsletter-modal')
 
     @include('cookie-consent::index')
 
