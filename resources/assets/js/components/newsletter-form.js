@@ -20,6 +20,8 @@ Vue.component('newsletter-form', {
                     timer: 2000
                 });
 
+                $('#subscribe-modal').modal('hide');
+
                 this.subscribeForm.reset();
                 this.mounted();
             });
