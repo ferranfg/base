@@ -11,14 +11,18 @@
                 @{{ subscribeForm.errors.get('email') }}
             </span>
             <div class="custom-control custom-checkbox mt-2 mb-0 ml-3 text-white">
-                <input class="custom-control-input" :class="{'is-invalid': subscribeForm.errors.has('terms')}" type="checkbox" value="checked" id="terms" v-model="subscribeForm.terms" :disabled="subscribeForm.busy">
-                <label class="custom-control-label small" for="terms">
+                @php
+                    $terms = 'terms-' . Str::random(8);
+                @endphp
+                <input class="custom-control-input" :class="{'is-invalid': subscribeForm.errors.has('terms')}" type="checkbox" value="checked" id="{{ $terms }}" v-model="subscribeForm.terms" :disabled="subscribeForm.busy">
+                <label class="custom-control-label small" for="{{ $terms }}">
                     {!! __('I understand and agree to the :termsOpen Terms of Service :termsClose and :privacyOpen Privacy Policy :privacyClose.', [
                         'termsOpen' => '<a href="/terms" target="_blank">',
                         'termsClose' => '</a>',
                         'privacyOpen' => '<a href="/privacy" target="_blank">',
                         'privacyClose' => '</a>',
                     ]) !!}
+                </label>
                 <span class="invalid-feedback" v-show="subscribeForm.errors.has('terms')">
                     @{{ subscribeForm.errors.get('terms') }}
                 </span>

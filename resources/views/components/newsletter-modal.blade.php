@@ -4,8 +4,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h3>{{ config('base.blog_title') }}</h3>
-                    <p>{{ config('base.blog_description') }}</p>
+                    <h3>{{ config('base.newsletter_title') }}</h3>
+                    <p>{{ config('base.newsletter_description') }}</p>
                     @include('base::components.newsletter-form')
                     <button type="button" class="btn btn-lg btn-link text-white" data-dismiss="modal" v-on:click="dismiss">
                         <span>{{ __('Let me read it first') }}</span>

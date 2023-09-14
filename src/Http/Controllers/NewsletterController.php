@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Events\DiscordMessage;
 use Ferranfg\Base\Repositories\UserRepository;
-use Ferranfg\Base\Notifications\WelcomeNewsletter;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
@@ -50,7 +49,9 @@ class NewsletterController extends Controller
         $user->unsubscribed_at = null;
         $user->save();
 
-        if ($request->routeIs('newsletter.subscribe')) $user->notify(new WelcomeNewsletter);
+        $user->notify(new (config('base.newsletter_notification')));
+
+        activity()->performedOn($user)->log('subscribed');
 
         event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
 

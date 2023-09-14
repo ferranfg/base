@@ -59,7 +59,4 @@
             </div>
         </section>
     @endif
-
-    @includeWhen(config('base.blog_substack_mode'), 'base::components.newsletter-modal')
-
 @endsection

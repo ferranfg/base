@@ -1,5 +1,7 @@
 <?php
 
+use Ferranfg\Base\Notifications\WelcomeNewsletter;
+
 return [
 
     /*
@@ -39,13 +41,28 @@ return [
     |
     */
 
-    'blog_title' => env('BASE_BLOG_TITLE'),
+    'blog_title' => env('APP_NAME'),
 
     'blog_description' => env('BASE_BLOG_DESCRIPTION'),
 
     'blog_path' => '/blog',
 
-    'blog_substack_mode' => false,
+    /*
+    |--------------------------------------------------------------------------
+    | Newsletter Information
+    |--------------------------------------------------------------------------
+    |
+    | Información sobre la configuración de la newsletter
+    |
+    */
+
+    'newsletter_modal' => false,
+
+    'newsletter_title' => env('APP_NAME'),
+
+    'newsletter_description' => env('BASE_NEWSLETTER_DESCRIPTION'),
+
+    'newsletter_notification' => WelcomeNewsletter::class,
 
     /*
     |--------------------------------------------------------------------------
