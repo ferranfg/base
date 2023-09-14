@@ -58,6 +58,10 @@ return [
 
     'newsletter_modal' => false,
 
+    'newsletter_offset' => 0,
+
+    'newsletter_expiration' => 1,
+
     'newsletter_title' => env('APP_NAME'),
 
     'newsletter_description' => env('BASE_NEWSLETTER_DESCRIPTION'),

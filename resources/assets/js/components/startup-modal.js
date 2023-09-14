@@ -11,7 +11,7 @@ Vue.component('startup-modal', {
     mounted() {
         if ( ! this.dismissedAt || moment(this.dismissedAt).add(this.expiration, 'days').isBefore(moment())) {
             $(window).on('scroll', () => {
-                if (window.pageYOffset > this.offset) {
+                if (window.scrollY > this.offset) {
                     $(`#${this.modalId}`).modal('show');
 
                     $(window).off('scroll');
