@@ -169,9 +169,9 @@ class Post extends Model implements Feedable
             'title' => (string) $this->name,
             'summary' => (string) $this->excerpt,
             'content' => (string) $this->content,
-            'updated' => (string) $this->updated_at,
-            'link' => (string) $this->canonical_url,
-            'authorName' => (string) $this->author->name
+            'updated' => $this->updated_at,
+            'link' => $this->canonical_url,
+            'authorName' => $this->author->name
         ]);
     }
 
