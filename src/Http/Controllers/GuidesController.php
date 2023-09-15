@@ -33,7 +33,7 @@ class GuidesController extends BlogController
 
         // No podemos utilizar findBySlug porque algunos pueden tener vacio y da error
         $question = $this->postRepository->whereType('guide')
-            ->where("slug->{$locale}", $request->slug)
+            ->where("slug", $request->slug)
             ->where('status', 'published')
             ->firstOrFail();
 
@@ -102,7 +102,7 @@ class GuidesController extends BlogController
 
             $slugs = collect($matching)->pluck('content')->map(function($content)
             {
-                return '{"en":"' . Str::slug($content) . '"}';
+                return Str::slug($content);
             });
 
             if ($slugs->count())
