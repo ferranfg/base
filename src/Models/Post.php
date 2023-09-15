@@ -69,6 +69,7 @@ class Post extends Model implements Feedable
         'entry' => 'Entry',
         'page' => 'Page',
         'newsletter' => 'Newsletter',
+        'guide' => 'Guide',
     ];
 
     /**
