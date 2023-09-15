@@ -93,6 +93,8 @@ class GuidesController extends BlogController
      */
     private function getEmbeddingGuides($question)
     {
+        if ( ! config('base.assistance_embeddings')) return collect();
+
         $assistance = Assistance::whereContent($question->name)->first();
         $embeddings = collect();
 

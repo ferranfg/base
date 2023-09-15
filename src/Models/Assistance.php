@@ -97,11 +97,15 @@ class Assistance extends Model
         $model           = Arr::get($options, 'model', 'gpt-4');
         $max_tokens      = Arr::get($options, 'max_tokens', 512);
         $temperature     = Arr::get($options, 'temperature', 0);
+        $system          = Arr::get($options, 'system', '');
 
         // System
-        [$class, $method] = Str::parseCallback(config('base.assistance_system'));
+        if (config('base.assistance_system'))
+        {
+            [$class, $method] = Str::parseCallback(config('base.assistance_system'));
 
-        $prompt = implode("\n", app($class)->$method());
+            $system .= implode("\n", app($class)->$method());
+        }
 
         // Context
         if ($match_count)
@@ -111,11 +115,11 @@ class Assistance extends Model
 
             if (count($assistances))
             {
-                $prompt = "{$prompt}\n\nContext sections:\n";
+                $system = "{$system}\n\nContext sections:\n";
 
                 foreach ($assistances as $assistance)
                 {
-                    $prompt = "{$prompt}{$assistance->content}\n";
+                    $system = "{$system}{$assistance->content}\n";
                 }
             }
         }
@@ -123,7 +127,7 @@ class Assistance extends Model
         return self::getOpenAI()->chat()->create([
             'model' => $model,
             'messages' => [
-                ['role' => 'system', 'content' => $prompt],
+                ['role' => 'system', 'content' => $system],
                 ['role' => 'user', 'content' => $query]
             ],
             'max_tokens' => $max_tokens,

@@ -1,4 +1,4 @@
-@extends('layouts.web')
+@extends(config('base.blog_template', 'layouts.web'))
 
 @section('content')
     <section class="bg-half d-table w-100 lazy" data-bg="url({{ $photo_url }})">
@@ -13,8 +13,8 @@
                         <div class="page-next text-center">
                             <nav class="d-inline-block">
                                 <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                    <li class="breadcrumb-item active">Guides</li>
+                                    <li class="breadcrumb-item"><a href="/">{{ __('Home') }}</a></li>
+                                    <li class="breadcrumb-item active">{{ __('Guides') }}</li>
                                 </ul>
                             </nav>
                         </div>

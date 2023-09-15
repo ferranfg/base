@@ -46,6 +46,14 @@ class Tag extends SpatieTag
     }
 
     /**
+     * Get all of the posts that are assigned this tag.
+     */
+    public function posts()
+    {
+        return $this->morphedByMany(Base::post(), 'taggable')->orderBy('id', 'asc');
+    }
+
+    /**
      * Configure the model activity logger.
      */
     public function getActivitylogOptions(): LogOptions

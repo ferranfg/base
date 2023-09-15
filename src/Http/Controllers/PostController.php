@@ -8,21 +8,16 @@ use Ferranfg\Base\Base;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Repositories\PostRepository;
-use Ferranfg\Base\Repositories\TagRepository;
 
 class PostController extends Controller
 {
     public $postRepository;
 
-    public $tagRepository;
-
     public function __construct(
-        PostRepository $postRepository,
-        TagRepository $tagRepository
+        PostRepository $postRepository
     )
     {
         $this->postRepository = $postRepository;
-        $this->tagRepository = $tagRepository;
 
         $this->middleware(function (Request $request, Closure $next)
         {
