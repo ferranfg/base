@@ -26,6 +26,7 @@ class Tag extends SpatieTag
     public static $types = [
         'tag' => 'Tag',
         'category' => 'Category',
+        'guide-tag' => 'Guide Tag',
     ];
 
     /**
