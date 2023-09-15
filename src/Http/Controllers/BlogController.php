@@ -131,7 +131,7 @@ class BlogController extends Controller
 
         $post = $this->postRepository->findBySlug($request->slug);
 
-        abort_unless($post->type == 'entry' and $post->status == 'published', 404);
+        abort_unless($post->status == 'published', 404);
 
         $this->commentRepository->comment('comment', $post, $request);
 

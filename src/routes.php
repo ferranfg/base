@@ -46,6 +46,11 @@ Route::group(['middleware' => 'web'], function ()
     Route::post('/connect/upload', '\Ferranfg\Base\Http\Controllers\ConnectController@upload')
         ->middleware('auth:api')->withoutMiddleware('web');
 
+    Route::get('guides', '\Ferranfg\Base\Http\Controllers\GuidesController@index');
+    Route::get('guides/{id}', '\Ferranfg\Base\Http\Controllers\GuidesController@answer')->where('id', '[0-9]+');
+    Route::get('guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@show');
+    Route::post('guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@comment');
+
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 
     Route::get('/feed/merchant.xml', '\Ferranfg\Base\Http\Controllers\FeedController@merchant');
