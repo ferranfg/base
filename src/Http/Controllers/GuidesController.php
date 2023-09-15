@@ -16,9 +16,13 @@ class GuidesController extends BlogController
      */
     public function index()
     {
+        $tags = $this->tagRepository->whereType('guide-tag')->with('posts')->get();
+
+        abort_unless($tags->count(), 404);
+
         return view('base::guides.index', [
             'photo_url' => Unsplash::randomFromCollections()->pluck('urls.regular')->random(),
-            'tags' => $this->tagRepository->whereType('guide-tag')->with('posts')->get()
+            'tags' => $tags
         ]);
     }
 
