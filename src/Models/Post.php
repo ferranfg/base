@@ -82,6 +82,11 @@ class Post extends Model implements Feedable
      */
     public function getCanonicalUrlAttribute()
     {
+        if ($this->type == 'guide')
+        {
+            return $this->status == 'draft' ? url("guides/{$this->id}") : url("guides/{$this->slug}");
+        }
+
         return url("blog/{$this->slug}");
     }
 

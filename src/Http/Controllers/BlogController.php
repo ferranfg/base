@@ -8,8 +8,9 @@ use Ferranfg\Base\Base;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Clients\ImageKit;
-use Ferranfg\Base\Repositories\PostRepository;
 use Ferranfg\Base\Repositories\CommentRepository;
+use Ferranfg\Base\Repositories\PostRepository;
+use Ferranfg\Base\Repositories\TagRepository;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class BlogController extends Controller
@@ -20,13 +21,17 @@ class BlogController extends Controller
 
     public $postRepository;
 
+    public $tagRepository;
+
     public function __construct(
         CommentRepository $commentRepository,
-        PostRepository $postRepository
+        PostRepository $postRepository,
+        TagRepository $tagRepository,
     )
     {
         $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
+        $this->tagRepository = $tagRepository;
 
         $this->middleware(function (Request $request, Closure $next)
         {
@@ -52,6 +57,7 @@ class BlogController extends Controller
 
         $query = $this->postRepository
             ->whereStatus('published')
+            ->where('type', '!=', 'guide')
             ->orderBy('updated_at', 'desc');
 
         $featured = (clone $query)->whereFeatured(true)->first();

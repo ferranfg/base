@@ -37,6 +37,14 @@ class Tag extends SpatieTag
     }
 
     /**
+     * Get all of the posts that are assigned this tag.
+     */
+    public function posts()
+    {
+        return $this->morphedByMany(Base::post(), 'taggable')->orderBy('id', 'asc');
+    }
+
+    /**
      * Get the product canonical URL.
      */
     public function getCanonicalUrlAttribute()
