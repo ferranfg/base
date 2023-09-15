@@ -3,13 +3,15 @@
 namespace Ferranfg\Base\Models;
 
 use Ferranfg\Base\Base;
-use Spatie\Tags\Tag as SpatieTag;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasMetadata;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Tag extends SpatieTag
+class Tag extends Model implements Sortable
 {
-    use HasMetadata, HasSlug;
+    use HasMetadata, HasSlug, SortableTrait;
 
     /**
      * The attributes that are mass assignable.
