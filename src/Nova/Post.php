@@ -61,9 +61,12 @@ class Post extends Resource
 
                 Textarea::make('Excerpt'),
 
-                Markdown::make('Content')
-                    ->rules('required'),
+                Markdown::make('Content'),
             ]),
+
+            Text::make('Keywords')
+                ->sortable()
+                ->rules('required'),
 
             Boolean::make('Featured')
                 ->hideFromIndex(),
