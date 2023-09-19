@@ -34,17 +34,19 @@ class GenerateDynamicPost extends Command
         if (is_null($post)) return Command::FAILURE;
 
         $prompt = [
-            "Create a blog post content for an titled: \"{$post->name}\".",
-            "Use transition words. Use active voice. Write over 1800 words.",
-            "It should have a minimum of 6 sections. Add subtitles for each section.",
+            "Write a long post content for an article titled: \"{$post->name}\".",
             "Include the following keywords: \"{$post->keywords}\".",
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
-            "The response must be written in Markdown."
+            "Response must be in Markdown format. Response must contain more than 2000 words.",
+            "It should have a minimum of 4 sections.",
+            "Do not include an h1 title; start with text.",
+            "Do not include the word \"Section\" in the title of the sections.",
+            "Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
         ];
 
         $assistance = Assistance::completion(implode(' ', $prompt), [
-            'temperature' => 0.2,
-            'max_tokens' => 2048
+            'temperature' => 0.5,
+            'max_tokens' => 7168,
         ]);
 
         $post->content = $assistance->choices[0]->message->content;
