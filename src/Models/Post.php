@@ -45,6 +45,7 @@ class Post extends Model implements Feedable
      */
     public static $status = [
         'draft' => 'Draft',
+        'pending' => 'Pending',
         'scheduled' => 'Scheduled',
         'published' => 'Published',
         'private' => 'Private'
@@ -60,6 +61,7 @@ class Post extends Model implements Feedable
         'page' => 'Page',
         'newsletter' => 'Newsletter',
         'guide' => 'Guide',
+        'dynamic' => 'Dynamic',
     ];
 
     /**

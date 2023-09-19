@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Ferranfg\Base\Commands\PublishCommand;
 use Ferranfg\Base\Commands\InstallCommand;
 use Ferranfg\Base\Commands\EmbeddingsCommand;
+use Ferranfg\Base\Commands\GenerateDynamicPost;
 use Ferranfg\Base\Commands\SendPostNewsletter;
 
 class BaseServiceProvider extends ServiceProvider
@@ -45,6 +46,7 @@ class BaseServiceProvider extends ServiceProvider
                 InstallCommand::class,
                 PublishCommand::class,
                 SendPostNewsletter::class,
+                GenerateDynamicPost::class,
             ]);
         }
 
