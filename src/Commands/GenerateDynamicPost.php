@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Commands;
 
+use Ferranfg\Base\Clients\Unsplash;
 use Ferranfg\Base\Models\Post;
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
@@ -20,7 +21,7 @@ class GenerateDynamicPost extends Command
      *
      * @var string
      */
-    public $description = 'Generate the first pending dynamic post';
+    public $description = 'Generate the first draft dynamic post';
 
     /**
      * Execute the console command.
@@ -29,9 +30,14 @@ class GenerateDynamicPost extends Command
      */
     public function handle()
     {
-        $post = Post::whereStatus('pending')->whereType('dynamic')->first();
+        $post = Post::whereStatus('draft')->whereType('dynamic')->first();
 
-        if (is_null($post)) return Command::FAILURE;
+        if (is_null($post)) $post = $this->suggestDynamicPost();
+
+        if ( ! $post->exists) return Command::FAILURE;
+
+        $post->status = 'pending';
+        $post->save();
 
         $prompt = [
             "Write a long post content for an article titled: \"{$post->name}\".",
@@ -54,5 +60,48 @@ class GenerateDynamicPost extends Command
         $post->save();
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * Create a new dynamic post
+     *
+     * @return \Ferranfg\Base\Models\Post
+     */
+    public function suggestDynamicPost()
+    {
+        $post = new Post;
+
+        $prompt = [
+            'Suggest a name, excerpt and keywords for an original new blog post.',
+            "Language: \"" . strtoupper(config('app.locale')) . "\".",
+            "Response must follow the JSON structure: ",
+            '{"name": "Replace with post title up to 80 chars", "excerpt": "Replace with post excerpt up to 160 chars", "keywords": "Replace with post keywords"}',
+        ];
+
+        $assistance = Assistance::completion(implode(' ', $prompt), [
+            'temperature' => 1,
+            'max_tokens' => 1024,
+        ]);
+
+        $response = $assistance->choices[0]->message->content;
+        $response = str_replace("\n", '', (string) $response);
+        $response = json_decode($response);
+
+        if ( ! is_object($response)) return $post;
+
+        if (property_exists($response, 'name') and property_exists($response, 'excerpt'))
+        {
+            $post->author_id = 1;
+            $post->name = $response->name;
+            $post->excerpt = $response->excerpt;
+            $post->photo_url = Unsplash::randomFromCollections()->pluck('urls.regular')->random();
+            $post->content = (string) null;
+            $post->type = 'dynamic';
+            $post->status = 'draft';
+            $post->keywords = $response->keywords;
+            $post->save();
+        }
+
+        return $post;
     }
 }
