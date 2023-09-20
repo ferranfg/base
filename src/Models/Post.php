@@ -161,7 +161,7 @@ class Post extends Model implements Feedable
 
         if ($this->exists and is_null($value) and config('services.unsplash.collections'))
         {
-            return Unsplash::randomFromCollections()->pluck('urls.regular')->first();
+            return Unsplash::randomFromCollections()->pluck('urls.regular')->random();
         }
 
         return null;
