@@ -75,7 +75,7 @@ class GenerateDynamicPost extends Command
             'Imagine a list of 10 blog post ideas and pick one randomly to write about.',
             'Suggest a name, excerpt and keywords for the selected blog post.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
-            "Response must follow the JSON structure: ",
+            "Response must be in JSON format and follow the structure: ",
             '{"name": "Replace with post title up to 70 chars", "excerpt": "Replace with post excerpt up to 150 chars", "keywords": "Replace with post keywords"}',
         ];
 
@@ -84,10 +84,23 @@ class GenerateDynamicPost extends Command
             'max_tokens' => 1024,
         ]);
 
-        $response = $assistance->choices[0]->message->content;
-        $response = str_replace("\n", '', (string) $response);
-        $response = json_decode($response);
+        $content = $assistance->choices[0]->message->content;
+        $content = str_replace("\n", ' ', (string) $content);
 
+        $response = json_decode($content);
+
+        // Attempt to get JSON from Markdown
+        if (is_null($response))
+        {
+            preg_match('/\{([^}]+)\}/s', $content, $matches);
+
+            if (array_key_exists(0, $matches))
+            {
+                $response = json_decode($matches[0]);
+            }
+        }
+
+        // Not able to get JSON from string
         if ( ! is_object($response)) return $post;
 
         if (property_exists($response, 'name') and property_exists($response, 'excerpt'))
