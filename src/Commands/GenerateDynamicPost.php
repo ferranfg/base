@@ -72,10 +72,11 @@ class GenerateDynamicPost extends Command
         $post = new Post;
 
         $prompt = [
-            'Suggest a name, excerpt and keywords for an original new blog post.',
+            'Imagine a list of 10 blog post ideas and pick one randomly to write about.',
+            'Suggest a name, excerpt and keywords for the selected blog post.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must follow the JSON structure: ",
-            '{"name": "Replace with post title up to 80 chars", "excerpt": "Replace with post excerpt up to 160 chars", "keywords": "Replace with post keywords"}',
+            '{"name": "Replace with post title up to 70 chars", "excerpt": "Replace with post excerpt up to 150 chars", "keywords": "Replace with post keywords"}',
         ];
 
         $assistance = Assistance::completion(implode(' ', $prompt), [
