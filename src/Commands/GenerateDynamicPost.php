@@ -2,7 +2,6 @@
 
 namespace Ferranfg\Base\Commands;
 
-use Ferranfg\Base\Clients\Unsplash;
 use Ferranfg\Base\Models\Post;
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
@@ -108,7 +107,6 @@ class GenerateDynamicPost extends Command
             $post->author_id = 1;
             $post->name = $response->name;
             $post->excerpt = $response->excerpt;
-            $post->photo_url = Unsplash::randomFromCollections()->pluck('urls.regular')->random();
             $post->content = (string) null;
             $post->type = 'dynamic';
             $post->status = 'draft';

@@ -100,7 +100,7 @@ class BlogController extends Controller
             $post->trackVisit();
         }
 
-        $photo_url = ImageKit::init()->url([
+        $photo_url = str_starts_with($post->photo_url, 'http') ? $post->photo_url : ImageKit::init()->url([
             'path' => $post->photo_url,
             'transformation' => [
                 ['width' => 1920, 'height' => 1280]

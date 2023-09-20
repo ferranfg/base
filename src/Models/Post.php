@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Models;
 
 use Carbon\Carbon;
 use Ferranfg\Base\Base;
+use Ferranfg\Base\Clients\Unsplash;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Ferranfg\Base\Traits\HasTags;
@@ -149,6 +150,21 @@ class Post extends Model implements Feedable
     public function getUpdatedAtDiffAttribute()
     {
         return $this->updated_at->diffForHumans();
+    }
+
+    /**
+     * Get the photo URL for the product.
+     */
+    public function getPhotoUrlAttribute($value)
+    {
+        if ($value) return $value;
+
+        if ($this->exists and is_null($value) and config('services.unsplash.collections'))
+        {
+            return Unsplash::randomFromCollections()->pluck('urls.regular')->first();
+        }
+
+        return null;
     }
 
     /**
