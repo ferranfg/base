@@ -40,6 +40,7 @@ class GenerateDynamicPost extends Command
 
         $prompt = [
             "Write a long post content for an article titled: \"{$post->name}\".",
+            "The article should be about: \"{$post->excerpt}\".",
             "Include the following keywords: \"{$post->keywords}\".",
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in Markdown format. Response must contain more than 2000 words.",
@@ -71,7 +72,7 @@ class GenerateDynamicPost extends Command
         $post = new Post;
 
         $prompt = [
-            'Imagine a list of 10 blog post ideas and pick one randomly to write about.',
+            'Imagine a new blog post idea to write about.',
             'Suggest a name, excerpt and keywords for the selected blog post.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in JSON format and follow the structure: ",
