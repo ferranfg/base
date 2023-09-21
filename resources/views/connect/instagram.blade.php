@@ -14,7 +14,7 @@
                         <div class="alert alert-danger">Has been an error saving your data. Please try again later.</div>
                     @endif
                     @if ($accounts->count())
-                        <form action="/connect/instagram" method="POST">
+                        <form action="/connect/instagram" method="POST" class="my-5">
                             @csrf
                             @foreach ($accounts as $account)
                                 <div class="card shadow rounded border-0 overflow-hidden mb-3">
@@ -27,11 +27,16 @@
                                                 <h5 class="card-title">{{ $account->name }}</h5>
                                                 @if (property_exists($account, 'connected_instagram_account'))
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" id="instagram-{{ $account->id }}" name="instagram_id" value="{{ $account->connected_instagram_account->id }}" class="custom-control-input">
-                                                        <label class="custom-control-label" for="instagram-{{ $account->id }}">Connect with <a href="https://instagram.com/{{ $account->connected_instagram_account->username }}" target="_blank" rel="noreferrer nofollow">{{ $account->connected_instagram_account->name }}</a></label>
+                                                        <input type="hidden" id="instagram-{{ $account->id }}" name="instagram_id" value="{{ $account->connected_instagram_account->id }}">
+                                                        <input type="radio" id="facebook-{{ $account->id }}" name="facebook_id" value="{{ $account->id }}" class="custom-control-input">
+                                                        <label class="custom-control-label" for="facebook-{{ $account->id }}">Connect with <a href="https://instagram.com/{{ $account->connected_instagram_account->username }}" target="_blank" rel="noreferrer nofollow">{{ $account->connected_instagram_account->name }}</a></label>
                                                     </div>
                                                 @else
-                                                    <div class="alert alert-warning small mb-0">There is no professional Instagram account linked to this page.</div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="facebook-{{ $account->id }}" name="facebook_id" value="{{ $account->id }}" class="custom-control-input">
+                                                        <label class="custom-control-label" for="facebook-{{ $account->id }}">Connect with Facebook page</a></label>
+                                                    </div>
+                                                    <div class="alert alert-warning small mt-2 mb-0">There is no professional Instagram account linked to this page.</div>
                                                 @endif
                                             </div>
                                         </div>

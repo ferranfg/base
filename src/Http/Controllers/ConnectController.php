@@ -99,10 +99,12 @@ class ConnectController extends Controller
     public function callbackInstagram(Request $request)
     {
         $this->validate($request, [
-            'instagram_id' => 'required'
+            'facebook_id' => 'required',
+            'instagram_id' => 'nullable',
         ]);
 
         $user = auth()->user();
+        $user->facebook_id = $request->facebook_id;
         $user->instagram_id = $request->instagram_id;
         $user->save();
 
