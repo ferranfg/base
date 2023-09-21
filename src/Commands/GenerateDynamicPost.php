@@ -72,7 +72,8 @@ class GenerateDynamicPost extends Command
         $post = new Post;
 
         $prompt = [
-            'Imagine a new blog post idea to write about.',
+            'Imagine a new blog post idea to write about from one particular area of your knowledge.',
+            'Blog post idea must be very specific about the topic and not too broad.',
             'Suggest a name, excerpt and keywords for the selected blog post.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in JSON format and follow the structure: ",
