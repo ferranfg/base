@@ -39,13 +39,11 @@ class Facebook
      *
      * @return Response
      */
-    public static function uploadMedia($consumer_key, $consumer_secret, $image_url)
+    public static function uploadMedia($consumer_key, $consumer_secret, $params)
     {
         $media = self::graphApi("{$consumer_key}/media", [
             'access_token' => $consumer_secret
-        ], [
-            'image_url' => $image_url
-        ]);
+        ], $params);
 
         if ( ! property_exists($media, 'id')) return false;
 
