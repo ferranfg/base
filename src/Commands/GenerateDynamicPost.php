@@ -49,7 +49,7 @@ class GenerateDynamicPost extends Command
             "Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
         ];
 
-        $assistance = Assistance::completion(implode(' ', $prompt), [
+        $assistance = Assistance::completion(implode("\n", $prompt), [
             'temperature' => 0.5,
             'max_tokens' => 7168,
         ]);
@@ -78,7 +78,7 @@ class GenerateDynamicPost extends Command
             '{"name": "Replace with post title up to 70 chars", "excerpt": "Replace with post excerpt up to 150 chars", "keywords": "Replace with post keywords"}',
         ];
 
-        $assistance = Assistance::completion(implode(' ', $prompt), [
+        $assistance = Assistance::completion(implode("\n", $prompt), [
             'temperature' => 1,
             'max_tokens' => 1024,
         ]);
