@@ -14,7 +14,7 @@
                 <h2 class="h5">
                     <a href="{{ $post->canonical_url }}" class="card-title title text-dark" title="{{ $post->name }}">{{ $post->name }}</a>
                 </h2>
-                <p class="text-muted mb-0">{{ (strlen($post->excerpt) > 120) ? substr($post->excerpt, 0, 120) . '…' : $post->excerpt }}</p>
+                <p class="text-muted mb-0">{{ (strlen($post->excerpt) > 160) ? substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}</p>
                 <div class="post-meta d-flex justify-content-between mt-3">
                     <ul class="list-unstyled mb-0">
                         <li class="list-inline-item">

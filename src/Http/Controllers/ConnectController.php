@@ -16,6 +16,14 @@ class ConnectController extends Controller
     use ValidatesRequests;
 
     /**
+     * The scopes to request.
+     */
+    protected $scopes = [
+        'pages_show_list',
+        'business_management'
+    ];
+
+    /**
      * Redirect user to the Facebook login page.
      *
      * @return Response
@@ -25,7 +33,7 @@ class ConnectController extends Controller
         if ( ! auth()->check()) return $this->cancel();
 
         return Socialite::driver('facebook')
-            ->scopes(['pages_show_list', 'business_management', 'instagram_basic', 'instagram_content_publish'])
+            ->scopes($this->scopes)
             ->usingGraphVersion('v15.0')
             ->redirect();
     }
