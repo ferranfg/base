@@ -33,6 +33,7 @@ if ( ! function_exists('img_url'))
             'path' => $path,
             'transformation' => $transformation,
             'signed' => true,
+            'expireSeconds' => 300,
         ]);
 
         return $path;
