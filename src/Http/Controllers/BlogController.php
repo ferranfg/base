@@ -104,7 +104,8 @@ class BlogController extends Controller
             'path' => $post->photo_url,
             'transformation' => [
                 ['width' => 1920, 'height' => 1280]
-            ]
+            ],
+            'signed' => true,
         ]);
 
         view()->share([
