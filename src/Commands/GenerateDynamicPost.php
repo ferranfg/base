@@ -70,19 +70,35 @@ class GenerateDynamicPost extends Command
     public function suggestDynamicPost()
     {
         $post = new Post;
+        $archive = (new Post)
+            ->whereIn('type', ['entry', 'dynamic'])
+            ->whereStatus('published')
+            ->orderBy('updated_at', 'desc')
+            ->take(7);
 
         $prompt = [
             'Imagine a new blog post idea to write about from one particular area of your knowledge.',
             'Blog post idea must be very specific about the topic and not too broad.',
+            'Use different blog types like listicles, how-to guides, case studies, comparison, etc.',
             'Suggest a name, excerpt and keywords for the selected blog post.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in JSON format and follow the structure: ",
             '{"name": "Replace with post title up to 70 chars", "excerpt": "Replace with post excerpt up to 150 chars", "keywords": "Replace with post keywords"}',
         ];
 
+        if ($archive->count())
+        {
+            $prompt[] = 'Here are the last posts published in the blog as a reference:';
+
+            foreach ($archive->get() as $post)
+            {
+                $prompt[] = "{\"name\": \"{$post->name}\", \"excerpt\": \"{$post->excerpt}\", \"keywords\": \"{$post->keywords}\"}";
+            }
+        }
+
         $assistance = Assistance::completion(implode("\n", $prompt), [
             'temperature' => 1,
-            'max_tokens' => 1024,
+            'max_tokens' => 2048,
         ]);
 
         $content = $assistance->choices[0]->message->content;

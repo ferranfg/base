@@ -99,6 +99,8 @@ class Assistance extends Model
         $temperature     = Arr::get($options, 'temperature', 0);
         $system          = Arr::get($options, 'system', '');
 
+        $system .= 'Current date: ' . now()->format('Y-m-d') . "\n";
+
         // System
         if (config('base.assistance_system'))
         {
