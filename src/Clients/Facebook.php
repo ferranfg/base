@@ -35,22 +35,37 @@ class Facebook
     }
 
     /**
-     * Sube una imagen a la API de Facebook Graph.
+     * Sube una imagen de Instagram mediante la API de Facebook Graph.
      *
      * @return Response
      */
-    public static function uploadMedia($consumer_key, $consumer_secret, $params)
+    public static function uploadMedia($ig_user_id, $access_token, $params)
     {
-        $media = self::graphApi("{$consumer_key}/media", [
-            'access_token' => $consumer_secret
+        $media = self::graphApi("{$ig_user_id}/media", [
+            'access_token' => $access_token
         ], $params);
 
         if ( ! property_exists($media, 'id')) return false;
 
-        return self::graphApi("{$consumer_key}/media_publish", [
-            'access_token' => $consumer_secret
+        return self::graphApi("{$ig_user_id}/media_publish", [
+            'access_token' => $access_token
         ], [
             'creation_id' => $media->id
         ]);
+    }
+
+    /**
+     * Suba una imagen a la Facebook Page mediante la API de Facebook Graph.
+     */
+    public static function uploadPost($page_id, $access_token, $params)
+    {
+        $page = self::graphApi("{$page_id}", [
+            'access_token' => $access_token,
+            'fields' => 'access_token'
+        ]);
+
+        return self::graphApi("{$page_id}/photos", [
+            'access_token' => $page->access_token
+        ], $params);
     }
 }
