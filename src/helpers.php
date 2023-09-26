@@ -32,8 +32,8 @@ if ( ! function_exists('img_url'))
         if (config('services.imagekit.key')) return ImageKit::init()->url([
             'path' => $path,
             'transformation' => $transformation,
-            'signed' => true,
-            'expireSeconds' => 300,
+            // 'signed' => true,
+            // 'expireSeconds' => 300,
         ]);
 
         return $path;

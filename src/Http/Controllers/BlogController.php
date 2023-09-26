@@ -105,8 +105,8 @@ class BlogController extends Controller
             'transformation' => [
                 ['width' => 1920, 'height' => 1280]
             ],
-            'signed' => true,
-            'expireSeconds' => 300,
+            // 'signed' => true,
+            // 'expireSeconds' => 300,
         ]);
 
         view()->share([
