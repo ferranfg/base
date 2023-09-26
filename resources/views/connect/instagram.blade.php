@@ -27,8 +27,8 @@
                                                 <h5 class="card-title">{{ $account->name }}</h5>
                                                 @if (property_exists($account, 'connected_instagram_account'))
                                                     <div class="custom-control custom-radio">
-                                                        <input type="hidden" id="instagram-{{ $account->id }}" name="instagram_id" value="{{ $account->connected_instagram_account->id }}">
                                                         <input type="radio" id="facebook-{{ $account->id }}" name="facebook_id" value="{{ $account->id }}" class="custom-control-input">
+                                                        <input type="radio" id="instagram-{{ $account->id }}" name="instagram_id" value="{{ $account->connected_instagram_account->id }}" style="display:none">
                                                         <label class="custom-control-label" for="facebook-{{ $account->id }}">Connect with <a href="https://instagram.com/{{ $account->connected_instagram_account->username }}" target="_blank" rel="noreferrer nofollow">{{ $account->connected_instagram_account->name }}</a></label>
                                                     </div>
                                                 @else
@@ -43,6 +43,16 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <script>
+                                const handleFacebookChange = event => {
+                                    // Uncheck all Instagram accounts
+                                    document.querySelectorAll('input[name="instagram_id"]').forEach(el => el.checked = false);
+                                    // Check the Instagram account related to the Facebook page
+                                    if (event.target.checked) event.target.nextElementSibling.checked = true;
+                                };
+
+                                document.querySelectorAll('input[name="facebook_id"]').forEach(el => el.addEventListener('change', handleFacebookChange));
+                            </script>
                             <button type="submit" class="btn btn-primary btn-block btn-lg"><span class="fa fa-link"></span> Connect</button>
                         </form>
                     @else
