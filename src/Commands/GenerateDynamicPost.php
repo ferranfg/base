@@ -69,13 +69,6 @@ class GenerateDynamicPost extends Command
      */
     public function suggestDynamicPost()
     {
-        $post = new Post;
-        $archive = (new Post)
-            ->whereIn('type', ['entry', 'dynamic'])
-            ->whereStatus('published')
-            ->orderBy('updated_at', 'desc')
-            ->take(7);
-
         $prompt = [
             'Imagine a new blog post idea to write about from one particular area of your knowledge.',
             'Blog post idea must be very specific about the topic and not too broad.',
@@ -86,13 +79,19 @@ class GenerateDynamicPost extends Command
             '{"name": "Replace with post title up to 70 chars", "excerpt": "Replace with post excerpt up to 150 chars", "keywords": "Replace with post keywords"}',
         ];
 
+        $archive = (new Post)
+            ->whereIn('type', ['entry', 'dynamic'])
+            ->whereStatus('published')
+            ->orderBy('updated_at', 'desc')
+            ->take(7);
+
         if ($archive->count())
         {
             $prompt[] = 'Here are the last posts published in the blog as a reference:';
 
             foreach ($archive->get() as $post)
             {
-                $prompt[] = "{\"name\": \"{$post->name}\", \"excerpt\": \"{$post->excerpt}\", \"keywords\": \"{$post->keywords}\"}";
+                $prompt[] = "{\"name\": \"{$post->name}\", \"excerpt\": \"{$post->excerpt}\"}";
             }
         }
 
@@ -116,6 +115,9 @@ class GenerateDynamicPost extends Command
                 $response = json_decode($matches[0]);
             }
         }
+
+        // Create new post
+        $post = new Post;
 
         // Not able to get JSON from string
         if ( ! is_object($response)) return $post;
