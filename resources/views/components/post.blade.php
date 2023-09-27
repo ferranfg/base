@@ -19,11 +19,13 @@
                 <p class="text-muted mb-0 {{ $compact ? 'small' : '' }}">{{ (mb_strlen($post->excerpt) > 165) ? mb_substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}</p>
                 @if ( ! $compact)
                     <div class="post-meta d-flex justify-content-between mt-3">
-                        <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item">
-                                <a href="{{ $post->canonical_url }}#comments" class="text-muted comments"><i class="fa fa-comments mr-1"></i> {{ $post->comments()->count() }}</a>
-                            </li>
-                        </ul>
+                        @if ( ! $post->comments_disabled)
+                            <ul class="list-unstyled mb-0">
+                                <li class="list-inline-item">
+                                    <a href="{{ $post->canonical_url }}#comments" class="text-muted comments"><i class="fa fa-comments mr-1"></i> {{ $post->comments()->count() }}</a>
+                                </li>
+                            </ul>
+                        @endif
                         <a href="{{ $post->canonical_url }}" class="text-muted readmore">Read more <i class="fa fa-chevron-right"></i></a>
                     </div>
                 @endif
