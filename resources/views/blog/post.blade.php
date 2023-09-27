@@ -79,7 +79,7 @@
                     @elseif ($related->count())
                         <h5>Related Posts:</h5>
                         @foreach ($related as $related_post)
-                            @include('base::components.post', ['post' => $related_post])
+                            @include('base::components.post', ['post' => $related_post, 'compact' => true])
                         @endforeach
                     @endif
 

@@ -158,6 +158,8 @@ class BlogController extends Controller
     {
         if ( ! config('base.assistance_embeddings')) return collect();
 
+        if (cache()->has("related-{$post->id}")) return cache("related-{$post->id}");
+
         $assistance = Assistance::whereContent($post->name)->first();
         $embeddings = collect();
 
@@ -178,9 +180,11 @@ class BlogController extends Controller
                 $embeddings = $this->postRepository->whereStatus('published')
                     ->whereIn('type', $type)
                     ->whereIn('slug', $slugs->toArray())
-                    ->whereId('!=', $post->id)
+                    ->where('id', '!=', $post->id)
                     ->get();
             }
+
+            cache()->put("related-{$post->id}", $embeddings, now()->addDays(7));
         }
 
         return $embeddings;
