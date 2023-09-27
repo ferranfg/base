@@ -67,7 +67,21 @@
                         @basedown($post->content)
                     </div>
 
-                    @yield('post-footer')
+                    @if ($related->count() and $post->type == 'guide')
+                        <h5 class="mt-5">Related Guides:</h5>
+                        <ul class="list-unstyled mt-4 mb-0">
+                            @foreach ($related as $question)
+                                <li class="mt-2">
+                                    <a href="{{ $question->canonical_url }}" class="text-muted"><span class="fa fa-arrow-right text-primary"></span> {{ $question->name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @elseif ($related->count())
+                        <h5 class="mt-5">Related Posts:</h5>
+                        @foreach ($related as $related_post)
+                            @include('base::components.post', ['post' => $related_post, 'compact' => true])
+                        @endforeach
+                    @endif
 
                     @include('base::components.previous-next')
 

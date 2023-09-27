@@ -115,7 +115,7 @@ class Post extends Model implements Feedable
      */
     public function getExcerptLengthAttribute()
     {
-        return strlen($this->excerpt);
+        return mb_strlen($this->excerpt);
     }
 
     /**
