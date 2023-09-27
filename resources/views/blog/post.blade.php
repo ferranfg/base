@@ -68,7 +68,7 @@
                     </div>
 
                     @if ($related->count() and $post->type == 'guide')
-                        <h5>Related Guides:</h5>
+                        <h5 class="mt-5">Related Guides:</h5>
                         <ul class="list-unstyled mt-4 mb-0">
                             @foreach ($related as $question)
                                 <li class="mt-2">
@@ -77,7 +77,7 @@
                             @endforeach
                         </ul>
                     @elseif ($related->count())
-                        <h5>Related Posts:</h5>
+                        <h5 class="mt-5">Related Posts:</h5>
                         @foreach ($related as $related_post)
                             @include('base::components.post', ['post' => $related_post, 'compact' => true])
                         @endforeach

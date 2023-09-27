@@ -54,7 +54,7 @@ class GuidesController extends BlogController
             'previous' => $this->postRepository->previousPost($question),
             'next' => $this->postRepository->nextPost($question),
             'random' => $this->postRepository->randomPost($question),
-            'related' => $this->getRelated($question, ['guide'], 5),
+            'related' => $this->getRelated($question, ['guide'], 6),
         ]);
     }
 

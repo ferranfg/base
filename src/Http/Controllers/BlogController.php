@@ -154,7 +154,7 @@ class BlogController extends Controller
      *
      * @return Response
      */
-    protected function getRelated($post, array $type, $match_count = 3, $match_threshold = 0.78)
+    protected function getRelated($post, array $type, $match_count = 4, $match_threshold = 0.78)
     {
         if ( ! config('base.assistance_embeddings')) return collect();
 

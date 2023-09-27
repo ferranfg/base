@@ -12,8 +12,8 @@
             </div>
         </div>
         <div class="col-lg-8">
-            <div class="card-body content">
-                <h2 class="h5">
+            <div class="card-body content" style="padding:1.25rem">
+                <h2 class="h5 text-truncate">
                     <a href="{{ $post->canonical_url }}" class="card-title title text-dark" title="{{ $post->name }}">{{ $post->name }}</a>
                 </h2>
                 <p class="text-muted mb-0 {{ $compact ? 'small' : '' }}">{{ (strlen($post->excerpt) > 165) ? substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}</p>
