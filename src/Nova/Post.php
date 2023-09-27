@@ -96,7 +96,7 @@ class Post extends Resource
                 return $this->comments()->count();
             }),
 
-            Number::make('Excerpt Length')
+            Number::make('Meta Description Length')
                 ->onlyOnIndex(),
 
             Number::make('Word Count')
