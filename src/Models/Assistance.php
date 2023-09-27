@@ -41,6 +41,20 @@ class Assistance extends Model
     }
 
     /**
+     * Get the default embeddings
+     *
+     * @return array
+     */
+    public function hydrateDefaultEmbeddings()
+    {
+        return Post::whereIn('type', ['entry', 'dynamic'])
+            ->whereStatus('published')
+            ->get()
+            ->pluck('name')
+            ->toArray();
+    }
+
+    /**
      * Create a new Embedding instance from an input string
      *
      * @param  string  $input
