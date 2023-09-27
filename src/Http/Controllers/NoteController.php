@@ -22,7 +22,7 @@ class NoteController extends Controller
 
         view()->share([
             'meta_title' => meta_title($post->name),
-            'meta_description' => $post->meta_description,
+            'meta_description' => $post->excerpt,
             'meta_image' => $post->photo_url
         ]);
 

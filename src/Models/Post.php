@@ -129,32 +129,11 @@ class Post extends Model implements Feedable
     }
 
     /**
-     * Get the meta description for the post.
-     */
-    public function getMetaDescriptionAttribute($value)
-    {
-        if ($value) return $value;
-
-        $meta = '';
-
-        foreach (explode('.', $this->excerpt) as $sentence)
-        {
-            $next = $meta . $sentence . '.';
-
-            if (strlen($next) > 195) break;
-
-            $meta .= "{$sentence}.";
-        }
-
-        return $meta;
-    }
-
-    /**
      * Get the total chars on the excerpt (Used for meta-description).
      */
-    public function getMetaDescriptionLengthAttribute()
+    public function getExcerptLengthAttribute()
     {
-        return strlen($this->meta_description);
+        return strlen($this->excerpt);
     }
 
     /**
