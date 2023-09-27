@@ -28,30 +28,27 @@ class InternalLinking extends Command
      */
     public function handle()
     {
-        $hits = 0;
-
         foreach (Base::post()->whereStatus('published')->get() as $post)
         {
             if (is_null($post->keywords)) continue;
 
+            // $post habla sobre las siguientes keywords
             $keywords = explode(', ', $post->keywords);
 
             foreach ($keywords as $keyword)
             {
+                // Buscamos posts que tengan en el contenido la keyword
                 Base::post()->where('content', 'LIKE', "% {$keyword} %")
                     ->where('id', '!=', $post->id)
                     ->get()
-                    ->each(function ($post) use ($keyword, &$hits)
+                    ->each(function ($edit) use ($keyword, $post)
                     {
-                        $hits++;
-
-                        // $post->content = str_replace(" {$keyword} ", " [{$keyword}]({$post->canonical_url}) ", $post->content);
-                        // $post->save();
+                        // Reemplazamos la keyword por un enlace interno al post
+                        $edit->content = str_replace(" {$keyword} ", " [{$keyword}]({$post->internal_link}) ", $edit->content);
+                        $edit->save();
                     });
             }
         }
-
-        logger()->info("Internal linking finished. {$hits} hits.");
 
         return Command::SUCCESS;
     }

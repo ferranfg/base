@@ -100,16 +100,24 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Get the internal link for the post.
+     */
+    public function getInternalLinkAttribute()
+    {
+        if ($this->type == 'guide')
+        {
+            return $this->status == 'draft' ? "/guides/{$this->id}" : "/guides/{$this->slug}";
+        }
+
+        return "/blog/{$this->slug}";
+    }
+
+    /**
      * Get the post canonical URL.
      */
     public function getCanonicalUrlAttribute()
     {
-        if ($this->type == 'guide')
-        {
-            return $this->status == 'draft' ? url("guides/{$this->id}") : url("guides/{$this->slug}");
-        }
-
-        return url("blog/{$this->slug}");
+        return url($this->internal_link);
     }
 
     /**
