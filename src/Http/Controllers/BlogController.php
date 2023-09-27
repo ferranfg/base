@@ -7,7 +7,9 @@ use Closure;
 use Ferranfg\Base\Base;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
 use Ferranfg\Base\Clients\ImageKit;
+use Ferranfg\Base\Models\Assistance;
 use Ferranfg\Base\Repositories\CommentRepository;
 use Ferranfg\Base\Repositories\PostRepository;
 use Ferranfg\Base\Repositories\TagRepository;
@@ -120,7 +122,8 @@ class BlogController extends Controller
             'photo_url' => $photo_url,
             'previous' => $this->postRepository->previousPost($post),
             'next' => $this->postRepository->nextPost($post),
-            'random' => $this->postRepository->randomPost($post)
+            'random' => $this->postRepository->randomPost($post),
+            'related' => $this->getRelated($post, ['entry', 'dynamic']),
         ]);
     }
 
@@ -144,5 +147,42 @@ class BlogController extends Controller
         $this->commentRepository->comment('comment', $post, $request);
 
         return redirect()->back()->with('success', __('Gracias por tu comentario.'));
+    }
+
+    /**
+     * Get the embedding guides for a question.
+     *
+     * @return Response
+     */
+    protected function getRelated($post, array $type, $match_count = 3, $match_threshold = 0.78)
+    {
+        if ( ! config('base.assistance_embeddings')) return collect();
+
+        $assistance = Assistance::whereContent($post->name)->first();
+        $embeddings = collect();
+
+        if ($assistance)
+        {
+            $matching = Assistance::match($assistance->embedding, $match_threshold, $match_count);
+
+            $slugs = collect($matching)->pluck('content')->map(function($content)
+            {
+                $locale = app()->getLocale();
+                $content = Str::slug($content);
+
+                return "{\"{$locale}\":\"{$content}\"}";
+            });
+
+            if ($slugs->count())
+            {
+                $embeddings = $this->postRepository->whereStatus('published')
+                    ->whereIn('type', $type)
+                    ->whereIn('slug', $slugs->toArray())
+                    ->whereId('!=', $post->id)
+                    ->get();
+            }
+        }
+
+        return $embeddings;
     }
 }

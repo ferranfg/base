@@ -54,7 +54,7 @@ class GuidesController extends BlogController
             'previous' => $this->postRepository->previousPost($question),
             'next' => $this->postRepository->nextPost($question),
             'random' => $this->postRepository->randomPost($question),
-            'embeddings' => $this->getEmbeddingGuides($question),
+            'related' => $this->getRelated($question, ['guide'], 5),
         ]);
     }
 
@@ -88,37 +88,5 @@ class GuidesController extends BlogController
         $question->save();
 
         return redirect()->to($question->canonical_url, 302);
-    }
-
-    /**
-     * Get the embedding guides for a question.
-     *
-     * @return Response
-     */
-    private function getEmbeddingGuides($question)
-    {
-        if ( ! config('base.assistance_embeddings')) return collect();
-
-        $assistance = Assistance::whereContent($question->name)->first();
-        $embeddings = collect();
-
-        if ($assistance)
-        {
-            $matching = Assistance::match($assistance->embedding, 0.78, 5);
-
-            $slugs = collect($matching)->pluck('content')->map(function($content)
-            {
-                return '{"en":"' . Str::slug($content) . '"}';
-            });
-
-            if ($slugs->count())
-            {
-                $embeddings = $this->postRepository->whereType('guide')
-                    ->whereIn('slug', $slugs->toArray())
-                    ->get();
-            }
-        }
-
-        return $embeddings;
     }
 }

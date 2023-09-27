@@ -47,7 +47,7 @@ class Assistance extends Model
      */
     public function hydrateDefaultEmbeddings()
     {
-        return Post::whereIn('type', ['entry', 'dynamic'])
+        return Post::whereIn('type', ['entry', 'dynamic', 'guide'])
             ->whereStatus('published')
             ->get()
             ->pluck('name')
