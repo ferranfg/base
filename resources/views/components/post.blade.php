@@ -16,7 +16,7 @@
                 <h2 class="h5 text-truncate">
                     <a href="{{ $post->canonical_url }}" class="card-title title text-dark" title="{{ $post->name }}">{{ $post->name }}</a>
                 </h2>
-                <p class="text-muted mb-0 {{ $compact ? 'small' : '' }}">{{ (strlen($post->excerpt) > 165) ? substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}</p>
+                <p class="text-muted mb-0 {{ $compact ? 'small' : '' }}">{{ (mb_strlen($post->excerpt) > 165) ? mb_substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}</p>
                 @if ( ! $compact)
                     <div class="post-meta d-flex justify-content-between mt-3">
                         <ul class="list-unstyled mb-0">
