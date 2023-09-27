@@ -6,6 +6,7 @@ use Blade;
 use Illuminate\Support\ServiceProvider;
 use Ferranfg\Base\Commands\PublishCommand;
 use Ferranfg\Base\Commands\InstallCommand;
+use Ferranfg\Base\Commands\InternalLinking;
 use Ferranfg\Base\Commands\EmbeddingsCommand;
 use Ferranfg\Base\Commands\GenerateDynamicPost;
 use Ferranfg\Base\Commands\SendPostNewsletter;
@@ -47,6 +48,7 @@ class BaseServiceProvider extends ServiceProvider
                 PublishCommand::class,
                 SendPostNewsletter::class,
                 GenerateDynamicPost::class,
+                InternalLinking::class,
             ]);
         }
 
