@@ -12,7 +12,7 @@ class InternalLinking extends Command
      *
      * @var string
      */
-    protected $signature = 'base:internal-linking';
+    protected $signature = 'base:internal-linking {--debug=false}';
 
     /**
      * The console command description.
@@ -47,7 +47,12 @@ class InternalLinking extends Command
                         // Reemplazamos la keyword por un enlace interno al post
                         $edit->content = str_replace($keyword, "[{$keyword}]({$post->internal_link})", $edit->content);
                         $edit->timestamps = false;
-                        $edit->save();
+
+                        $this->info("Post: {$edit->name}");
+                        $this->info("Keyword: {$keyword}");
+                        $this->info("Link to: {$post->internal_link}");
+
+                        if ( ! $this->option('debug')) $edit->save();
                     });
             }
         }
