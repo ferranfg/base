@@ -25,6 +25,7 @@
         "php": "^8.0",
         "ankane/pgvector": "^0.1",
         "barryvdh/laravel-debugbar": "^3.5",
+        "benbjurstrom/replicate-php": "^0.2.0",
         "darryldecode/cart": "^4.2",
         "diversen/markdown-split-by-header": "^1.0",
         "erusev/parsedown": "^1.7",
