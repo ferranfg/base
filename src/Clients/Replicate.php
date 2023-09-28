@@ -7,9 +7,9 @@ use BenBjurstrom\Replicate\Replicate as ReplicateClient;
 
 class Replicate
 {
-    public static function generate($prompt)
+    public static function generate($prompt, $input = [])
     {
-        $input = [
+        if (empty($input)) $input = [
             'width' => 512,
             'height' => 512,
         ];
