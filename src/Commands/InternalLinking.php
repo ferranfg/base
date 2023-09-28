@@ -38,13 +38,14 @@ class InternalLinking extends Command
             foreach ($keywords as $keyword)
             {
                 // Buscamos posts que tengan en el contenido la keyword
-                Base::post()->where('content', 'LIKE', "% {$keyword} %")
+                // No hay espacio final en el like por si hay signos de puntuación
+                Base::post()->where('content', 'LIKE', "% {$keyword}%")
                     ->where('id', '!=', $post->id)
                     ->get()
                     ->each(function ($edit) use ($keyword, $post)
                     {
                         // Reemplazamos la keyword por un enlace interno al post
-                        $edit->content = str_replace(" {$keyword} ", " [{$keyword}]({$post->internal_link}) ", $edit->content);
+                        $edit->content = str_replace($keyword, "[{$keyword}]({$post->internal_link})", $edit->content);
                         $edit->save();
                     });
             }
