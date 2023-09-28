@@ -48,11 +48,12 @@ class InternalLinking extends Command
                         $edit->content = str_replace($keyword, "[{$keyword}]({$post->internal_link})", $edit->content);
                         $edit->timestamps = false;
 
+                        $this->info('***');
                         $this->info("Post: {$edit->name}");
                         $this->info("Keyword: {$keyword}");
                         $this->info("Link to: {$post->internal_link}");
 
-                        if ( ! $this->option('debug')) $edit->save();
+                        if ($this->option('debug') == 'false') $edit->save();
                     });
             }
         }
