@@ -39,8 +39,9 @@ class InternalLinking extends Command
             {
                 // Buscamos posts que tengan en el contenido la keyword
                 // No hay espacio final en el like por si hay signos de puntuación
-                Base::post()->where('content', 'LIKE', "% {$keyword}%")
+                Base::post()->whereStatus('published')
                     ->where('id', '!=', $post->id)
+                    ->where('content', 'LIKE', "% {$keyword}%")
                     ->get()
                     ->each(function ($edit) use ($keyword, $post)
                     {
