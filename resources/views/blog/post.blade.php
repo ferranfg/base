@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="post">
-                        @basedown($post->content)
+                        @basedownExtended($post->content)
                     </div>
 
                     @if ($related->count() and $post->type == 'guide')

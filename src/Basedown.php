@@ -2,8 +2,13 @@
 
 namespace Ferranfg\Base;
 
-use Parsedown;
 use diversen\markdownSplit;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
+use League\CommonMark\MarkdownConverter;
+use Parsedown;
 
 class Basedown extends Parsedown
 {
@@ -15,6 +20,27 @@ class Basedown extends Parsedown
     public function directive($expression)
     {
         $output = $this->text($expression);
+        $output = preg_replace('/\[youtube id=&quot;(.+)&quot;]/m', '<div class="embed-container"><iframe src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe></div>', $output, 1);
+        $output = str_replace('href="/', 'href="' . url('/') . '/', $output); // relative links
+
+        return $output;
+    }
+
+    /**
+     * Converts the markdown text into the output
+     *
+     * @return string
+     */
+    public function directiveExtended($expression)
+    {
+        $environment = new Environment;
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new HeadingPermalinkExtension());
+        $environment->addExtension(new TableOfContentsExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $output = $converter->convert($expression);
         $output = preg_replace('/\[youtube id=&quot;(.+)&quot;]/m', '<div class="embed-container"><iframe src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe></div>', $output, 1);
         $output = str_replace('href="/', 'href="' . url('/') . '/', $output); // relative links
 
