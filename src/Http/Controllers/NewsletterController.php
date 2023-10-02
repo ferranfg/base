@@ -51,8 +51,6 @@ class NewsletterController extends Controller
 
         $user->notify(new (config('base.newsletter_notification')));
 
-        activity()->performedOn($user)->log('subscribed');
-
         event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
 
         return response()->json([
