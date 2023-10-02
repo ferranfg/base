@@ -65,6 +65,11 @@ class BaseServiceProvider extends ServiceProvider
         {
             return "<?php echo (new \Ferranfg\Base\Basedown)->directive($expression); ?>";
         });
+
+        Blade::directive('basedownExtended', function ($expression)
+        {
+            return "<?php echo (new \Ferranfg\Base\Basedown)->directiveExtended($expression); ?>";
+        });
     }
 
     public function register()
