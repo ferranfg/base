@@ -64,7 +64,11 @@ class Facebook
             'fields' => 'access_token'
         ]);
 
-        return self::graphApi("{$page_id}/photos", [
+        if (array_key_exists('url', $params)) return self::graphApi("{$page_id}/photos", [
+            'access_token' => $page->access_token
+        ], $params);
+
+        return self::graphApi("{$page_id}/feed", [
             'access_token' => $page->access_token
         ], $params);
     }

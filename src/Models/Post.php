@@ -282,16 +282,22 @@ class Post extends Model implements Feedable
     {
         if ($author = $this->author and $author->facebook_id and $author->facebook_token)
         {
-            $caption = $this->excerpt . "\n\n" . $this->canonical_url;
+            $message = $this->excerpt;
 
             // Convert coma separated keywords to hashtags
-            if ($this->keywords) $caption .= "\n\n" . "#" . str_replace(
-                ',', ' #', str_replace(' ', '', clean_accents($this->keywords))
-            );
+            if ($this->keywords)
+            {
+                $hashtags = clean_accents($this->keywords);
+                $hashtags = preg_replace("/[^a-zA-Z0-9,]/", '', $hashtags);
+                $hashtags = str_replace(',', ' #', $hashtags);
+
+                $message .= "\n\n" . "#" . $hashtags;
+            }
 
             $res = Facebook::uploadPost($author->facebook_id, $author->facebook_token, [
-                'url' => $this->horizontal_photo_url,
-                'caption' => $caption,
+                'link' => $this->canonical_url,
+                'message' => $message,
+                'published' => true,
             ]);
 
             logger(json_encode($res));
