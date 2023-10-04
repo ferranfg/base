@@ -37,8 +37,6 @@ class EmbeddingsCommand extends Command
 
         foreach ($embeddings_handler->$method() as $content)
         {
-            if (is_array($content)) $content = json_encode($content);
-
             if (Assistance::whereContent($content)->exists()) continue;
 
             $assistance = Assistance::embeddingFromInput($content);

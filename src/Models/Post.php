@@ -192,11 +192,11 @@ class Post extends Model implements Feedable
      */
     public function toEmbedding()
     {
-        return [
+        return json_encode([
             'id' => $this->id,
             'name' => clean_accents($this->name),
             'internal_link' => $this->internal_link,
-        ];
+        ]);
     }
 
     /**
