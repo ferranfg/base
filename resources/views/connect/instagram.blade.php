@@ -29,7 +29,7 @@
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" id="facebook-{{ $account->id }}" name="facebook_id" value="{{ $account->id }}" class="custom-control-input">
                                                         <input type="radio" id="instagram-{{ $account->id }}" name="instagram_id" value="{{ $account->connected_instagram_account->id }}" style="display:none">
-                                                        <label class="custom-control-label" for="facebook-{{ $account->id }}">Connect with <a href="https://instagram.com/{{ $account->connected_instagram_account->username }}" target="_blank" rel="noreferrer nofollow">{{ $account->connected_instagram_account->name }}</a></label>
+                                                        <label class="custom-control-label" for="facebook-{{ $account->id }}">Connect with <a href="https://instagram.com/{{ $account->connected_instagram_account->username }}" target="_blank" rel="noreferrer nofollow">{{ '@' . $account->connected_instagram_account->username }}</a></label>
                                                     </div>
                                                 @else
                                                     <div class="custom-control custom-radio">

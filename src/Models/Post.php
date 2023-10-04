@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Models;
 
 use Carbon\Carbon;
 use Ferranfg\Base\Base;
+use Ferranfg\Base\Clients\Facebook;
 use Ferranfg\Base\Clients\Unsplash;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
@@ -170,6 +171,18 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Used to create embeddings and search for them
+     */
+    public function toEmbedding()
+    {
+        return json_encode([
+            'id' => $this->id,
+            'name' => clean_accents($this->name),
+            'internal_link' => $this->internal_link,
+        ]);
+    }
+
+    /**
      * Used to display the post content as a feed item.
      */
     public function toFeedItem(): FeedItem
@@ -238,6 +251,29 @@ class Post extends Model implements Feedable
         $this->save();
 
         return $this;
+    }
+
+    /**
+     * Publishes a post on Facebook if page_id is set.
+     */
+    public function publishFacebook()
+    {
+        if ($author = $this->author and $author->facebook_id and $author->facebook_token)
+        {
+            $caption = $this->excerpt . "\n\n" . $this->canonical_url;
+
+            // Convert coma separated keywords to hashtags
+            if ($this->keywords) $caption .= "\n\n" . "#" . str_replace(
+                ',', ' #', str_replace(' ', '', clean_accents($this->keywords))
+            );
+
+            $res = Facebook::uploadPost($author->facebook_id, $author->facebook_token, [
+                'url' => $this->horizontal_photo_url,
+                'caption' => $caption,
+            ]);
+
+            logger(json_encode($res));
+        }
     }
 
 }

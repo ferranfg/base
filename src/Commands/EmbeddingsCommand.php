@@ -35,9 +35,11 @@ class EmbeddingsCommand extends Command
 
         if ( ! method_exists($embeddings_handler, $method)) return Command::FAILURE;
 
-        foreach ($embeddings_handler->$method() as $input)
+        foreach ($embeddings_handler->$method() as $content)
         {
-            $assistance = Assistance::embeddingFromInput($input);
+            if (Assistance::whereContent($content)->exists()) continue;
+
+            $assistance = Assistance::embeddingFromInput($content);
             $assistance->save();
         }
 

@@ -113,7 +113,7 @@ class ConnectController extends Controller
 
         $user = auth()->user();
         $user->facebook_id = $request->facebook_id;
-        $user->instagram_id = $request->instagram_id;
+        if ($request->instagram_id) $user->instagram_id = $request->instagram_id;
         $user->save();
 
         return $this->success();

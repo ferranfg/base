@@ -50,7 +50,10 @@ class Assistance extends Model
         return Post::whereIn('type', ['entry', 'dynamic', 'guide'])
             ->whereStatus('published')
             ->get()
-            ->pluck('name')
+            ->map(function ($post)
+            {
+                return $post->toEmbedding();
+            })
             ->toArray();
     }
 
@@ -109,7 +112,7 @@ class Assistance extends Model
         $match_threshold = Arr::get($options, 'match_threshold', 0.78);
         $match_count     = Arr::get($options, 'match_count', 0);
         $model           = Arr::get($options, 'model', 'gpt-4');
-        $max_tokens      = Arr::get($options, 'max_tokens', 512);
+        $max_tokens      = Arr::get($options, 'max_tokens', null);
         $temperature     = Arr::get($options, 'temperature', 0);
         $system          = Arr::get($options, 'system', '');
 
@@ -131,23 +134,26 @@ class Assistance extends Model
 
             if (count($assistances))
             {
-                $system = "{$system}\n\nContext sections:\n";
+                $system .= "\nContext sections:\n";
 
                 foreach ($assistances as $assistance)
                 {
-                    $system = "{$system}{$assistance->content}\n";
+                    $system .= "- {$assistance->content}\n";
                 }
             }
         }
 
-        return self::getOpenAI()->chat()->create([
+        $params = [
             'model' => $model,
             'messages' => [
                 ['role' => 'system', 'content' => $system],
                 ['role' => 'user', 'content' => $query]
             ],
-            'max_tokens' => $max_tokens,
             'temperature' => $temperature,
-        ]);
+        ];
+
+        if ($max_tokens) $params['max_tokens'] = $max_tokens;
+
+        return self::getOpenAI()->chat()->create($params);
     }
 }

@@ -43,7 +43,9 @@ class GenerateDynamicPost extends Command
             "The article should be about: \"{$post->excerpt}\".",
             "Include the following keywords: \"{$post->keywords}\".",
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
-            "Response must be in Markdown format. Response must contain more than 2000 words.",
+            "Response must be in Markdown format. Use bold, italics, lists, etc.",
+            "Response must contain more than 2000 words.",
+            "If available, use the \"Context sections\" to add links to other articles in the blog.",
             "It should have a minimum of 4 sections.",
             "Do not include an h1 title; start with text.",
             "Do not include the word \"Section\" in the title of the sections.",
@@ -52,12 +54,14 @@ class GenerateDynamicPost extends Command
 
         $assistance = Assistance::completion(implode("\n", $prompt), [
             'temperature' => 0.5,
-            'max_tokens' => 7168,
+            'match_count' => 5,
         ]);
 
         $post->content = $assistance->choices[0]->message->content;
         $post->status = 'published';
         $post->save();
+
+        $post->publishFacebook();
 
         return Command::SUCCESS;
     }

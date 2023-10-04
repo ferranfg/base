@@ -158,30 +158,30 @@ class BlogController extends Controller
     {
         if ( ! config('base.assistance_embeddings')) return collect();
 
-        if (cache()->has("related-{$post->id}")) return cache("related-{$post->id}");
+        if (cache()->has("related-v2-{$post->id}")) return cache("related-v2-{$post->id}");
 
-        $assistance = Assistance::whereContent($post->name)->first();
+        $assistance = Assistance::whereContent($post->toEmbedding())->first();
         $embeddings = collect();
 
         if ($assistance)
         {
             $matching = Assistance::match($assistance->embedding, $match_threshold, $match_count);
 
-            $slugs = collect($matching)->pluck('content')->map(function($content)
+            $posts = collect($matching)->pluck('content')->map(function($content)
             {
-                return Str::slug($content);
+                return json_decode($content);
             });
 
-            if ($slugs->count())
+            if ($posts->count())
             {
                 $embeddings = $this->postRepository->whereStatus('published')
                     ->whereIn('type', $type)
-                    ->whereIn('slug', $slugs->toArray())
+                    ->whereIn('id', $posts->pluck('id')->toArray())
                     ->where('id', '!=', $post->id)
                     ->get();
             }
 
-            cache()->put("related-{$post->id}", $embeddings, now()->addDays(7));
+            cache()->put("related-v2-{$post->id}", $embeddings, now()->addDays(7));
         }
 
         return $embeddings;
