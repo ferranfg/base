@@ -19,8 +19,10 @@ class ConnectController extends Controller
      * The scopes to request.
      */
     protected $scopes = [
+        'business_management',
         'pages_show_list',
-        'business_management'
+        'pages_manage_posts',
+        'pages_read_engagement',
     ];
 
     /**
