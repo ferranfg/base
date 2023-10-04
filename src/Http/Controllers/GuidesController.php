@@ -79,7 +79,6 @@ class GuidesController extends BlogController
 
         $assistance = Assistance::completion($question->name, [
             'temperature' => 0.7,
-            'max_tokens' => 2048
         ]);
 
         $question->slug = Str::slug($question->name);

@@ -188,6 +188,18 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Used to create embeddings and search for them
+     */
+    public function toEmbedding()
+    {
+        return [
+            'id' => $this->id,
+            'name' => clean_accents($this->name),
+            'internal_link' => $this->internal_link,
+        ];
+    }
+
+    /**
      * Used to display the post content as a feed item.
      */
     public function toFeedItem(): FeedItem
