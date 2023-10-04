@@ -282,7 +282,7 @@ class Post extends Model implements Feedable
     {
         if ($author = $this->author and $author->facebook_id and $author->facebook_token)
         {
-            $message = $this->excerpt;
+            $message = $this->excerpt . "\n\n➡️ " . $this->canonical_url;
 
             // Convert coma separated keywords to hashtags
             if ($this->keywords)
@@ -295,6 +295,7 @@ class Post extends Model implements Feedable
             }
 
             $res = Facebook::uploadPost($author->facebook_id, $author->facebook_token, [
+                'url' => $this->horizontal_photo_url,
                 'link' => $this->canonical_url,
                 'message' => $message,
                 'published' => true,
