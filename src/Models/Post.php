@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Models;
 
 use Carbon\Carbon;
 use Ferranfg\Base\Base;
+use Ferranfg\Base\Clients\Facebook;
 use Ferranfg\Base\Clients\Unsplash;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
@@ -272,6 +273,30 @@ class Post extends Model implements Feedable
         activity()->performedOn($this)->log('published');
 
         return $this;
+    }
+
+    /**
+     * Publishes a post on Facebook if page_id is set.
+     */
+    public function publishFacebook()
+    {
+        if ($author = $this->author and $author->facebook_id and $author->facebook_token)
+        {
+            $caption = $this->excerpt;
+
+            // Convert coma separated keywords to hashtags
+            if ($this->keywords) $caption .= "\n\n" . "#" . str_replace(
+                ',', ' #', str_replace(' ', '', clean_accents($this->keywords))
+            );
+
+            $res = Facebook::uploadPost($author->facebook_id, $author->facebook_token, [
+                'url' => $this->canonical_url,
+                'image_url' => $this->horizontal_photo_url,
+                'caption' => $caption,
+            ]);
+
+            logger($res);
+        }
     }
 
 }

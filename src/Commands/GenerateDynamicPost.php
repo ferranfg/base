@@ -61,6 +61,8 @@ class GenerateDynamicPost extends Command
         $post->status = 'published';
         $post->save();
 
+        $post->publishFacebook();
+
         return Command::SUCCESS;
     }
 
