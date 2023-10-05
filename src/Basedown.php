@@ -36,7 +36,7 @@ class Basedown extends Parsedown
     {
         $environment = new Environment([
             'external_link' => [
-                'internal_hosts' => parse_url(config('app.url'), PHP_URL_HOST),
+                'internal_hosts' => '/(^|\.)' . parse_url(config('app.url'), PHP_URL_HOST) . '$/',
                 'nofollow' => 'external',
             ],
         ]);
