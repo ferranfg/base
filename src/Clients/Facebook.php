@@ -47,6 +47,18 @@ class Facebook
 
         if ( ! property_exists($media, 'id')) return false;
 
+        $pending = true;
+
+        while ($pending)
+        {
+            $media = self::graphApi("{$media->id}", [
+                'access_token' => $access_token,
+                'fields' => 'status_code'
+            ]);
+
+            $pending = (property_exists($media, 'status_code') and $media->status_code != 'FINISHED');
+        }
+
         return self::graphApi("{$ig_user_id}/media_publish", [
             'access_token' => $access_token
         ], [
