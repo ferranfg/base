@@ -131,7 +131,7 @@ class GenerateDynamicPost extends Command
 
         // Only return the OpenAI response
         if ( ! $create_post) return $this->info(
-            json_encode($response, JSON_PRETTY_PRINT)
+            json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
 
         // Create new post
