@@ -27,7 +27,7 @@
                                     <ul class="breadcrumb bg-white rounded shadow mb-0">
                                         @if ($post->author)
                                             @if ($post->author->name == 'Ferran Figueredo')
-                                                <li class="breadcrumb-item"><i class="fa fa-user"></i> <a href="https://ferranfigueredo.com" target="_blank">Ferran Figueredo</a></li>
+                                                <li class="breadcrumb-item"><i class="fa fa-user"></i> <a href="https://ferranfigueredo.com" target="_blank" rel="noopener nofollow">Ferran Figueredo</a></li>
                                             @else
                                                 <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
                                             @endif
