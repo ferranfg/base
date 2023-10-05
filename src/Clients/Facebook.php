@@ -80,6 +80,10 @@ class Facebook
             'access_token' => $page->access_token
         ], $params);
 
+        if (array_key_exists('file_url', $params)) return self::graphApi("{$page_id}/videos", [
+            'access_token' => $page->access_token
+        ], $params);
+
         return self::graphApi("{$page_id}/feed", [
             'access_token' => $page->access_token
         ], $params);
