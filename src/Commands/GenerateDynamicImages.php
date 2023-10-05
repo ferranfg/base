@@ -37,7 +37,7 @@ class GenerateDynamicImages extends Command
         if (is_null($post)) return Command::FAILURE;
 
         // Buscamos un punto final, salto de linea y el tercer h2
-        preg_match_all('/\.\r\n\r\n## (.+)/i', $post->content, $matches);
+        preg_match_all('/\.\n\n## (.+)/i', $post->content, $matches);
 
         if (array_key_exists(1, $matches) and array_key_exists($this->option('level'), $matches[1]))
         {
