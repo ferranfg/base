@@ -77,10 +77,13 @@ class GenerateDynamicPost extends Command
             'Imagine a new blog post idea to write about from one particular area of your knowledge.',
             'Blog post idea must be very specific about the topic and not too broad.',
             'Use different blog types like listicles, how-to guides, case studies, comparison, etc.',
-            'Suggest a name, excerpt and keywords for the selected blog post.',
+            'Suggest the following fields for the selected blog post:',
+            '- Name: must be up to 70 characters.',
+            '- Excerpt: must be up to 150 characters.',
+            '- Keywords: must be popular used on social media and search engines.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in JSON format and follow the structure: ",
-            '{"name": "Replace with post title up to 70 chars", "excerpt": "Replace with post excerpt up to 150 chars", "keywords": "Replace with post keywords"}',
+            '{"name": "Replace with post name", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
         ];
 
         $archive = (new Post)
