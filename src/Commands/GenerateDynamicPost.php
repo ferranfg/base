@@ -13,7 +13,7 @@ class GenerateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:generate-dynamic-post';
+    public $signature = 'base:generate-dynamic-post {action=generate} {--topic=}';
 
     /**
      * The console command description.
@@ -29,6 +29,8 @@ class GenerateDynamicPost extends Command
      */
     public function handle()
     {
+        if ($this->argument('action') == 'suggest') return $this->suggestDynamicPost(false);
+
         $post = Post::whereStatus('draft')->whereType('dynamic')->first();
 
         if (is_null($post)) $post = $this->suggestDynamicPost();
@@ -71,10 +73,14 @@ class GenerateDynamicPost extends Command
      *
      * @return \Ferranfg\Base\Models\Post
      */
-    public function suggestDynamicPost()
+    public function suggestDynamicPost($create_post = true)
     {
+        $topic = $this->option('topic') ?
+            'the topic "' . $this->option('topic') . '"' :
+            'one topic of your system knowledge';
+
         $prompt = [
-            'Imagine a new blog post idea to write about from one particular area of your knowledge.',
+            "Imagine a new blog post idea to write about {$topic}.",
             'Blog post idea must be very specific about the topic and not too broad.',
             'Use different blog types like listicles, how-to guides, case studies, comparison, etc.',
             'Suggest the following fields for the selected blog post:',
@@ -122,6 +128,9 @@ class GenerateDynamicPost extends Command
                 $response = json_decode($matches[0]);
             }
         }
+
+        // Only return the OpenAI response
+        if ( ! $create_post) return $response;
 
         // Create new post
         $post = new Post;
