@@ -5,6 +5,7 @@ namespace Ferranfg\Base;
 use diversen\markdownSplit;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\MarkdownConverter;
@@ -33,10 +34,17 @@ class Basedown extends Parsedown
      */
     public function directiveExtended($expression)
     {
-        $environment = new Environment;
+        $environment = new Environment([
+            'external_link' => [
+                'internal_hosts' => '/(^|\.)' . parse_url(config('app.url'), PHP_URL_HOST) . '$/',
+                'nofollow' => 'external',
+            ],
+        ]);
+
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
         $environment->addExtension(new TableOfContentsExtension());
+        $environment->addExtension(new ExternalLinkExtension());
 
         $converter = new MarkdownConverter($environment);
 
