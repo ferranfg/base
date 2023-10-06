@@ -66,7 +66,7 @@ class Post extends Resource
                 Markdown::make('Content'),
             ]),
 
-            DateTime::make('Created At'),
+            DateTime::make('Created At')
                 ->rules('required'),
 
             Number::make('Excerpt Length')
