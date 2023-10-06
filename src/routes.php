@@ -56,7 +56,7 @@ Route::group(['middleware' => 'web'], function ()
 
     Route::get('/unsplash/{method}/{param?}', function (Request $request, $method, $param = null)
     {
-        return method_exists(Unsplash::class, $method) ? Unsplash::$method($param)->toArray() : abort(404);
+        return Unsplash::request($request, $method, $param);
     });
 });
 

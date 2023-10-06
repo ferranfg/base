@@ -2,6 +2,9 @@
 
 namespace Ferranfg\Base\Clients;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Intervention\Image\ImageManagerStatic;
 use Unsplash\Photo;
 use Unsplash\Search;
 use Unsplash\Exception;
@@ -60,5 +63,30 @@ class Unsplash
                 ['urls' => ['regular' => config('base.hero_image')]]
             ]);
         }
+    }
+
+    /**
+     * Utilizado como endpoint para obtener imágenes aleatorias
+     *
+     * @param Request $request
+     * @param $method
+     * @param null $param
+     * @return array|\Illuminate\Http\Response
+     */
+    public static function request(Request $request, $method, $param = null)
+    {
+        if ( ! method_exists(self::class, $method)) return abort(404);
+
+        $response = self::$method($param);
+
+        if ($request->type == 'image')
+        {
+            if ($response instanceof Collection) $response = $response->random();
+            if ($response instanceof Photo) $response = $response->toArray();
+
+            return ImageManagerStatic::make($response['urls']['regular'])->response();
+        }
+
+        return $response->toArray();
     }
 }
