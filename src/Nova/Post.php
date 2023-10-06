@@ -67,6 +67,7 @@ class Post extends Resource
             ]),
 
             DateTime::make('Created At'),
+                ->rules('required'),
 
             Number::make('Excerpt Length')
             ->onlyOnIndex(),
