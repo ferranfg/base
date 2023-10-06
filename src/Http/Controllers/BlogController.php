@@ -60,10 +60,10 @@ class BlogController extends Controller
         $query = $this->postRepository
             ->whereStatus('published')
             ->where('type', '!=', 'guide')
-            ->orderBy('updated_at', 'desc');
+            ->orderBy('created_at', 'desc');
 
         $featured = (clone $query)->whereFeatured(true)->first();
-        $posts = (clone $query)->whereFeatured(false)->simplePaginate(5);
+        $posts = (clone $query)->whereFeatured(false)->simplePaginate(8);
 
         $posts->setPath(config('base.blog_path'));
 

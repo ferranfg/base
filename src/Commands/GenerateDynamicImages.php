@@ -63,7 +63,6 @@ class GenerateDynamicImages extends Command
                 $post->content
             );
 
-            $post->timestamps = false;
             $post->save();
         }
 

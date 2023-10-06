@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use Ferranfg\Base\Nova\Filters\PostType;
 use Ferranfg\Base\Nova\Filters\PostStatus;
+use Laravel\Nova\Fields\DateTime;
 
 class Post extends Resource
 {
@@ -62,15 +63,25 @@ class Post extends Resource
 
             Markdown::make('Content'),
 
+            DateTime::make('Created At'),
+
+            Number::make('Excerpt Length')
+            ->onlyOnIndex(),
+
+            Number::make('Word Count')
+                ->onlyOnIndex(),
+
             Text::make('Keywords')
-                ->rules('required'),
+                ->rules('required')
+                ->hideFromIndex(),
 
             Boolean::make('Featured')
                 ->hideFromIndex(),
 
             BelongsTo::make('Author', 'author', User::class)
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->hideFromIndex(),
 
             Image::make('Photo Url')
                 ->onlyOnForms(),
@@ -87,17 +98,6 @@ class Post extends Resource
                 ->rules('required')
                 ->options(Base::post()::$status)
                 ->displayUsingLabels(),
-
-            Number::make('Comments', function ()
-            {
-                return $this->comments()->count();
-            }),
-
-            Number::make('Excerpt Length')
-                ->onlyOnIndex(),
-
-            Number::make('Word Count')
-                ->onlyOnIndex(),
 
             MorphToMany::make('Tags'),
         ];
