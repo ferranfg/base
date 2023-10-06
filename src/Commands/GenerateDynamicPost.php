@@ -41,29 +41,22 @@ class GenerateDynamicPost extends Command
         $post->save();
 
         $prompt = [
-            "Write up to 50 paragraphs for an article titled: \"{$post->name}\".",
+            "Write a long post content for an article titled: \"{$post->name}\".",
             "The article should be about: \"{$post->excerpt}\".",
-            "Include the keywords: \"{$post->keywords}\".",
-            "Format:",
-            "- Language: \"" . strtoupper(config('app.locale')) . "\".",
-            "- Response must be in Markdown format.",
-            "- Use bold, italics, lists, etc.",
-            "- It should have a minimum of 4 sections.",
-            "- Do not include an h1 title; start with text.",
-            "- Do not include the word \"Section\" in the title of the sections.",
-            "Content:",
-            "- Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
-            "- Each paragraph should be 2-4 sentences in length.",
-            "- Include specific examples or case studies to illustrate the points being made.",
-            "- Mention explicit credentials or qualifications to enhance credibility.",
-            "- Make the article user focused by addressing specific problems or questions that a reader might have.",
-            "- Consider providing actionable advice and solutions to common problems.",
-            "- If available, use the \"Context sections\" to add links to other articles in the blog.",
+            "Include the following keywords: \"{$post->keywords}\".",
+            "Language: \"" . strtoupper(config('app.locale')) . "\".",
+            "Response must be in Markdown format. Use bold, italics, lists, etc.",
+            "Response must contain more than 2000 words.",
+            "If available, use the \"Context sections\" to add links to other articles in the blog.",
+            "It should have a minimum of 4 sections.",
+            "Do not include an h1 title; start with text.",
+            "Do not include the word \"Section\" in the title of the sections.",
+            "Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
         ];
 
         $assistance = Assistance::completion(implode("\n", $prompt), [
             'temperature' => 0.5,
-            'match_count' => 8,
+            'match_count' => 5,
         ]);
 
         $post->content = $assistance->choices[0]->message->content;
