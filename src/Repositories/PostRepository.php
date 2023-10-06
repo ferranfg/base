@@ -33,8 +33,8 @@ class PostRepository
         return Base::post()
             ->whereType($post->type)
             ->whereStatus($post->status)
-            ->where('updated_at', $comparison, $post->updated_at)
-            ->orderBy('updated_at', $sort)
+            ->where('created_at', $comparison, $post->updated_at)
+            ->orderBy('created_at', $sort)
             ->first();
     }
 

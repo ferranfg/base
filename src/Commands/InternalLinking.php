@@ -47,7 +47,6 @@ class InternalLinking extends Command
                     {
                         // Reemplazamos la keyword por un enlace interno al post
                         $edit->content = str_replace($keyword, "[{$keyword}]({$post->internal_link})", $edit->content);
-                        $edit->timestamps = false;
 
                         $this->info('***');
                         $this->info("Post: {$edit->name}");

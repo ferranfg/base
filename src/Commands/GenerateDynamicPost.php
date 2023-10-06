@@ -95,8 +95,8 @@ class GenerateDynamicPost extends Command
         $archive = (new Post)
             ->whereIn('type', ['entry', 'dynamic'])
             ->whereStatus('published')
-            ->orderBy('updated_at', 'desc')
-            ->take(7);
+            ->orderBy('created_at', 'desc')
+            ->take(8);
 
         if ($archive->count())
         {
