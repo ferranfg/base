@@ -41,12 +41,12 @@ class GenerateDynamicPost extends Command
         $post->save();
 
         $prompt = [
-            "Write a long post content for an article titled: \"{$post->name}\".",
+            "Write 100 paragraphs for an article titled: \"{$post->name}\".",
             "The article should be about: \"{$post->excerpt}\".",
             "Include the following keywords: \"{$post->keywords}\".",
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in Markdown format. Use bold, italics, lists, etc.",
-            "Response must contain more than 2000 words.",
+            "Each paragraph should be 2-4 sentences in length.",
             "If available, use the \"Context sections\" to add links to other articles in the blog.",
             "It should have a minimum of 4 sections.",
             "Do not include an h1 title; start with text.",
@@ -55,7 +55,9 @@ class GenerateDynamicPost extends Command
         ];
 
         $assistance = Assistance::completion(implode("\n", $prompt), [
+            'model' => 'gpt-3.5-turbo-16k',
             'temperature' => 0.5,
+            'max_tokens' => 14000,
             'match_count' => 5,
         ]);
 
