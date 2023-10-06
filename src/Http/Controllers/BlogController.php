@@ -154,7 +154,7 @@ class BlogController extends Controller
      *
      * @return Response
      */
-    protected function getRelated($post, array $type, $match_count = 4, $match_threshold = 0.78)
+    protected function getRelated($post, array $type, $match_count = 5, $match_threshold = 0.6)
     {
         if ( ! config('base.assistance_embeddings')) return collect();
 
@@ -181,7 +181,7 @@ class BlogController extends Controller
                     ->get();
             }
 
-            cache()->put("related-v2-{$post->id}", $embeddings, now()->addDays(7));
+            cache()->put("related-v2-{$post->id}", $embeddings, now()->addDays(2));
         }
 
         return $embeddings;
