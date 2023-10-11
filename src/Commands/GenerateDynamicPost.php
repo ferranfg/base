@@ -100,7 +100,8 @@ class GenerateDynamicPost extends Command
 
         if ($archive->count())
         {
-            $prompt[] = 'Here are the last posts published in the blog as a reference:';
+            $prompt[] = '---';
+            $prompt[] = 'Here are the last posts published in the blog as a reference. Do not repeat the same topic.';
 
             foreach ($archive->get() as $post)
             {
