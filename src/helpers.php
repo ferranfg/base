@@ -31,7 +31,7 @@ if ( ! function_exists('img_url'))
     {
         if (config('services.imagekit.key'))
         {
-            if (str_starts_with($path, 'http')) return urlencode($path);
+            if (str_starts_with($path, 'http')) $path = urlencode($path);
 
             return ImageKit::init()->url([
                 'path' => $path,
