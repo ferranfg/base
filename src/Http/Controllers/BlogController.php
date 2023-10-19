@@ -77,9 +77,9 @@ class BlogController extends Controller
         return view('base::blog.list', [
             'posts' => $posts,
             'featured' => $featured,
-            'featured_photo_url' => img_url($featured->photo_url, [
+            'featured_photo_url' => $featured ? img_url($featured->photo_url, [
                 ['width' => 1920, 'height' => 1280]
-            ]),
+            ]) : hero_image(),
         ]);
     }
 
