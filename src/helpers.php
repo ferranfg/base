@@ -29,12 +29,17 @@ if ( ! function_exists('img_url'))
 {
     function img_url($path, $transformation = [])
     {
-        if (config('services.imagekit.key')) return ImageKit::init()->url([
-            'path' => $path,
-            'transformation' => $transformation,
-            // 'signed' => true,
-            // 'expireSeconds' => 300,
-        ]);
+        if (config('services.imagekit.key'))
+        {
+            if (str_starts_with($path, 'http')) return urlencode($path);
+
+            return ImageKit::init()->url([
+                'path' => $path,
+                'transformation' => $transformation,
+                // 'signed' => true,
+                // 'expireSeconds' => 300,
+            ]);
+        }
 
         return $path;
     }

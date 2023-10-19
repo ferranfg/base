@@ -77,12 +77,9 @@ class BlogController extends Controller
         return view('base::blog.list', [
             'posts' => $posts,
             'featured' => $featured,
-            'featured_photo_url' => ($featured and $featured->photo_url) ? ImageKit::init()->url([
-                'path' => $featured->photo_url,
-                'transformation' => [
-                    ['width' => 1920, 'height' => 1280]
-                ]
-            ]) : hero_image(),
+            'featured_photo_url' => img_url($featured->photo_url, [
+                ['width' => 1920, 'height' => 1280]
+            ]),
         ]);
     }
 
@@ -102,13 +99,8 @@ class BlogController extends Controller
             $post->trackVisit();
         }
 
-        $photo_url = ImageKit::init()->url([
-            'path' => $post->photo_url,
-            'transformation' => [
-                ['width' => 1920, 'height' => 1280]
-            ],
-            // 'signed' => true,
-            // 'expireSeconds' => 300,
+        $photo_url = img_url($post->photo_url, [
+            ['width' => 1920, 'height' => 1280]
         ]);
 
         view()->share([
