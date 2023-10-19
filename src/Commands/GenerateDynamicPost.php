@@ -75,18 +75,15 @@ class GenerateDynamicPost extends Command
      */
     public function suggestDynamicPost($create_post = true)
     {
-        $topic = $this->option('topic') ?
-            'the topic "' . $this->option('topic') . '"' :
-            'one topic of your system knowledge';
+        $topic = $this->option('topic') ?? 'one topic of your system knowledge';
 
         $prompt = [
-            "Imagine a new blog post idea to write about {$topic}.",
-            'Blog post idea must be very specific about the topic and not too broad.',
-            'Use different blog types like listicles, how-to guides, case studies, comparison, etc.',
+            "Imagine a new blog post to write about \"{$topic}\".",
+            'Blog post must be very specific about the topic and not too broad.',
             'Suggest the following fields for the selected blog post:',
-            '- Name: must be up to 70 characters.',
-            '- Excerpt: must be up to 150 characters.',
-            '- Keywords: must be popular used on social media and search engines.',
+            '- Name: It should be informative, engaging, and concise, ideally between 50-70 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
+            '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
+            '- Keywords: Provide a list of 5-10 keywords that are well-suited to promote the content effectively on Instagram. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in JSON format and follow the structure: ",
             '{"name": "Replace with post name", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
