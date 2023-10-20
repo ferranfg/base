@@ -39,6 +39,9 @@ class Basedown extends Parsedown
                 'internal_hosts' => '/(^|\.)' . parse_url(config('app.url'), PHP_URL_HOST) . '$/',
                 'nofollow' => 'external',
             ],
+            'table_of_contents' => [
+                'position' => 'before-headings',
+            ],
         ]);
 
         $environment->addExtension(new CommonMarkCoreExtension());
