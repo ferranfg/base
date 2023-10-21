@@ -9,11 +9,11 @@
 
     @section('index')
         @if (Str::contains(config('app.url'), request()->getHost()))
-            <meta name="robot" content="index, follow">
+            <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
             <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
             <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
         @else
-            <meta name="robot" content="noindex, nofollow">
+            <meta name="robots" content="noindex, nofollow">
             <meta name="googlebot" content="noindex, nofollow">
             <meta name="bingbot" content="noindex, nofollow">
         @endif
