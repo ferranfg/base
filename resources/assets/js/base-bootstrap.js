@@ -4,6 +4,7 @@ import './components/request-access';
 import './components/newsletter-form';
 import './components/startup-modal';
 import './components/chat-form';
+import './components/contact-form';
 
 Vue.filter('translate', function (value, path) {
     let translation = value[Spark.locale];
