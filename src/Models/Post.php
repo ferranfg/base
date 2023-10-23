@@ -285,7 +285,7 @@ class Post extends Model implements Feedable
     {
         if ($author = $this->author and $author->facebook_id and $author->facebook_token)
         {
-            $message = $this->excerpt . "\n\n➡️ " . $this->canonical_url;
+            $message = $this->excerpt . "\n\n👉 " . $this->canonical_url;
 
             // Convert coma separated keywords to hashtags
             if ($this->keywords)
