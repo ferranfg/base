@@ -59,7 +59,7 @@ class BlogController extends Controller
 
         $query = $this->postRepository
             ->whereStatus('published')
-            ->where('type', '!=', 'guide')
+            ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
             ->orderBy('created_at', 'desc');
 
         $featured = (clone $query)->whereFeatured(true)->first();

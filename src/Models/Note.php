@@ -42,8 +42,6 @@ class Note
 
     public $content;
 
-    public $comments_disabled;
-
     public $comments;
 
     public function __construct($slug = null, $base_path = "notes")
@@ -94,7 +92,6 @@ class Note
         ];
 
         // UNSUPPORTED
-        $this->comments_disabled = true;
         $this->comments = collect();
 
         return $this;

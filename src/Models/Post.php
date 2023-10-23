@@ -189,6 +189,14 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Check if comments are disabled for this post.
+     */
+    public function getCommentsDisabledAttribute()
+    {
+        return $this->type == 'page' or $this instanceof Note;
+    }
+
+    /**
      * Used to create embeddings and search for them
      */
     public function toEmbedding()

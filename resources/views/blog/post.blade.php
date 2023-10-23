@@ -84,7 +84,7 @@
                         @endforeach
                     @endif
 
-                    @include('base::components.previous-next')
+                    @includeUnless($post->type == 'page', 'base::components.previous-next')
 
                     @if ( ! $post->comments_disabled)
                         <div id="comments">

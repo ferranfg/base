@@ -2,6 +2,7 @@ require('./components/request-access');
 require('./components/newsletter-form');
 require('./components/startup-modal');
 require('./components/chat-form');
+require('./components/contact-form');
 
 Vue.filter('translate', function (value, path) {
     let translation = value[Spark.locale];
