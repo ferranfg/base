@@ -54,6 +54,7 @@
         "spatie/laravel-tags": "^4.3",
         "spatie/nova-translatable": "^3.0",
         "unsplash/unsplash": "^3.2",
+        "vincentbean/laravel-plausible": "^1.4",
         "vitalybaev/google-merchant-feed": "^2.1"
     },
     "require-dev": {
