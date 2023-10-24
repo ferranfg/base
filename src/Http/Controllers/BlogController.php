@@ -57,13 +57,17 @@ class BlogController extends Controller
             return redirect($post->canonical_url, 302);
         }
 
-        $query = $this->postRepository
+        $featured = $this->postRepository
+            ->whereStatus('published')
+            ->whereFeatured(true)
+            ->last();
+
+        $posts = $this->postRepository
             ->whereStatus('published')
             ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
-            ->orderBy('created_at', 'desc');
-
-        $featured = (clone $query)->whereFeatured(true)->first();
-        $posts = (clone $query)->whereFeatured(false)->simplePaginate(8);
+            ->whereFeatured(false)
+            ->orderBy('created_at', 'desc')
+            ->simplePaginate(8);
 
         $posts->setPath(config('base.blog_path'));
 
