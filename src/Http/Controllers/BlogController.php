@@ -60,7 +60,7 @@ class BlogController extends Controller
         $featured = $this->postRepository
             ->whereStatus('published')
             ->whereFeatured(true)
-            ->last();
+            ->latest();
 
         $posts = $this->postRepository
             ->whereStatus('published')
