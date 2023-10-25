@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Commands;
 
+use Ferranfg\Base\Clients\Unsplash;
 use Ferranfg\Base\Models\Post;
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
@@ -54,6 +55,24 @@ class GenerateDynamicPost extends Command
             "Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
         ];
 
+        $keywords = collect(explode(', ', (string) $post->keywords));
+
+        if ($keywords->count() and config('services.unsplash.collections'))
+        {
+            $keyword = $keywords->random();
+            $images = Unsplash::search($keyword, 1, 30, 'landscape');
+
+            if ($images->count())
+            {
+                $prompt[] = 'Here are some image URLs related to the topic. Add them into the article:';
+
+                foreach ($images->pluck('urls.regular')->random(2) as $url)
+                {
+                    $prompt[] = "- ![{$keyword}]({$url})";
+                }
+            }
+        }
+
         $assistance = Assistance::completion(implode("\n", $prompt), [
             'temperature' => 0.5,
             'match_count' => 5,
@@ -81,7 +100,7 @@ class GenerateDynamicPost extends Command
             "Imagine a new blog post to write about \"{$topic}\".",
             'Be very specific about the topic and not too broad.',
             'Suggest the following fields for the selected blog post:',
-            '- Title: It must be a question, a listicle or a clickbait title. It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
+            '- Title: It can be a question, a listicle, or a clickbait title. It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
             '- Keywords: Provide a list of 5-10 one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
