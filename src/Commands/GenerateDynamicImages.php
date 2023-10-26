@@ -43,7 +43,7 @@ class GenerateDynamicImages extends Command
         if (array_key_exists(1, $matches) and array_key_exists($this->option('level'), $matches[1]))
         {
             $replace = $matches[1][$this->option('level')];
-            $search = $this->option('keyword') ?? $replace;
+            $keyword = $this->option('keyword') ?? $post->main_keyword;
 
             $image_name = Str::random(32) . '.webp';
             $image_url = Storage::url($image_name);
@@ -51,7 +51,7 @@ class GenerateDynamicImages extends Command
 
             if ($this->option('method') == 'replicate')
             {
-                $replicate = Replicate::generate("{$search}, RAW candid cinema, 16mm, color graded portra 400 film, remarkable color, ultra realistic, textured skin, remarkable detailed pupils, realistic dull skin noise, visible skin detail, skin fuzz, dry skin, shot with cinematic camera", [
+                $replicate = Replicate::generate("{$keyword}, RAW candid cinema, 16mm, color graded portra 400 film, remarkable color, ultra realistic, textured skin, remarkable detailed pupils, realistic dull skin noise, visible skin detail, skin fuzz, dry skin, shot with cinematic camera", [
                     'width' => 1264,
                     'height' => 712
                 ]);
@@ -60,7 +60,7 @@ class GenerateDynamicImages extends Command
             }
             else if ($this->option('method') == 'unsplash' and config('services.unsplash.collections'))
             {
-                $unsplash = Unsplash::search($search, 1, 30, 'landscape');
+                $unsplash = Unsplash::search($keyword, 1, 30, 'landscape');
 
                 $image_raw = $unsplash->count() ? $unsplash->pluck('urls.regular')->random() : null;
             }

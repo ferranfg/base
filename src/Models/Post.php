@@ -179,6 +179,14 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Get the main keyword for the post.
+     */
+    public function getMainKeywordAttribute($value)
+    {
+        return $value ?: collect(explode(', ', (string) $this->keywords))->first();
+    }
+
+    /**
      * Used to create embeddings and search for them
      */
     public function toEmbedding()
