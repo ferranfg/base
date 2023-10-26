@@ -44,7 +44,6 @@ class GenerateDynamicPost extends Command
         $prompt = [
             "Write a long post content for an article titled: \"{$post->name}\".",
             "The article should be about: \"{$post->excerpt}\".",
-            "Include the following keywords: \"{$post->keywords}\".",
             "Language: \"" . strtoupper(config('app.locale')) . "\".",
             "Response must be in Markdown format. Use bold, italics, lists, etc.",
             "Response must contain more than 2000 words.",
@@ -65,7 +64,7 @@ class GenerateDynamicPost extends Command
 
                 foreach ($images->pluck('urls.regular')->random(2) as $url)
                 {
-                    $prompt[] = "- ![{$keyword}]({$url})";
+                    $prompt[] = "- ![]({$url})";
                 }
             }
         }
@@ -105,7 +104,7 @@ class GenerateDynamicPost extends Command
             'Suggest the following fields for the imagined blog post:',
             '- Title: It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
-            '- Keywords: Provide a list of 5-10 one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
+            '- Keywords: Provide a list of 5-7 one-word keywords in english. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
             (string) null,
             'Response must be in JSON format and follow the structure:',
             '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
