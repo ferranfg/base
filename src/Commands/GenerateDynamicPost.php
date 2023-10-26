@@ -65,7 +65,7 @@ class GenerateDynamicPost extends Command
 
                 foreach ($images->pluck('urls.regular')->random(2) as $url)
                 {
-                    $prompt[] = "- ![{$keyword}]({$url})";
+                    $prompt[] = "- ![]({$url})";
                 }
             }
         }
