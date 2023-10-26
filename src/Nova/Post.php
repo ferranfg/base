@@ -70,10 +70,12 @@ class Post extends Resource
                 ->rules('required'),
 
             Number::make('Excerpt Length')
-            ->onlyOnIndex(),
+                ->onlyOnIndex(),
 
             Number::make('Word Count')
                 ->onlyOnIndex(),
+
+            Text::make('Main Keyword'),
 
             Text::make('Keywords')
                 ->rules('required')
