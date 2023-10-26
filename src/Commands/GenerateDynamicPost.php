@@ -94,18 +94,26 @@ class GenerateDynamicPost extends Command
      */
     public function suggestDynamicPost($create_post = true)
     {
-        $topic = $this->option('topic') ?? 'one topic of your system knowledge';
+        $topic = $this->option('topic') ? '"' . $this->option('topic') . '"' : 'one topic of your system knowledge';
+
+        $letters = ['e', 'a', 'o', 'i', 'n', 'r', 's', 'd', 'u', 'c', 'l', 't', 'b', 'p'];
+        $letter = strtoupper($letters[array_rand($letters)]);
 
         $prompt = [
-            "Imagine a new blog post to write about \"{$topic}\".",
-            'Be very specific about the topic and not too broad.',
-            'Suggest the following fields for the selected blog post:',
+            "Imagine a new blog post to write about {$topic}.",
+            (string) null,
+            'Suggest the following fields for the imagined blog post:',
             '- Title: It can be a question, a listicle, or a clickbait title. It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
             '- Keywords: Provide a list of 5-10 one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
-            "Language: \"" . strtoupper(config('app.locale')) . "\".",
-            "Response must be in JSON format and follow the structure: ",
+            (string) null,
+            'Response must be in JSON format and follow the structure:',
             '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
+            (string) null,
+            'Conditions:',
+            '- Be very specific about the topic and not too broad.',
+            '- Language: "' . strtoupper(config('app.locale')) . '".',
+            "- The title\'s first letter must be the letter: \"{$letter}\".",
         ];
 
         $archive = (new Post)
@@ -116,7 +124,7 @@ class GenerateDynamicPost extends Command
 
         if ($archive->count())
         {
-            $prompt[] = '---';
+            $prompt[] = (string) null;
             $prompt[] = 'Here are the last posts published in the blog as a reference. Do not repeat the same topic.';
 
             foreach ($archive->get() as $post)
