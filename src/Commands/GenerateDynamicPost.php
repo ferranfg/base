@@ -96,14 +96,17 @@ class GenerateDynamicPost extends Command
     {
         $topic = $this->option('topic') ? '"' . $this->option('topic') . '"' : 'one topic of your system knowledge';
 
-        $letters = ['e', 'a', 'o', 'i', 'n', 'r', 's', 'd', 'u', 'c', 'l', 't', 'b', 'p'];
+        $letters = ['e', 'a', 'o', 'i', 'n', 'r', 's', 'd', 'u', 'c', 'l', 't', 'b', 'p', '3', '5', '7'];
         $letter = strtoupper($letters[array_rand($letters)]);
+
+        $post_type = ['question', 'listicle', 'how-to', 'case-study', 'tutorial', 'checklist', 'statistics', 'facts', 'historical', 'faqs', 'glossary', 'comparative analysis', 'inspiration and motivation'];
+        $post_type = $post_type[array_rand($post_type)];
 
         $prompt = [
             "Imagine a new blog post to write about {$topic}.",
             (string) null,
             'Suggest the following fields for the imagined blog post:',
-            '- Title: It can be a question, a listicle, or a clickbait title. It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
+            '- Title: It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
             '- Keywords: Provide a list of 5-10 one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
             (string) null,
@@ -111,9 +114,10 @@ class GenerateDynamicPost extends Command
             '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
             (string) null,
             'Conditions:',
-            '- Be very specific about the topic and not too broad.',
+            '- Be very specific about the topic.',
             '- Language: "' . strtoupper(config('app.locale')) . '".',
-            "- The title\'s first letter must be the letter: \"{$letter}\".",
+            "- Post type: \"{$post_type}\".",
+            "- The title must start with: \"{$letter}\".",
         ];
 
         $archive = (new Post)
