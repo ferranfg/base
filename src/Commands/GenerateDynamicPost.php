@@ -57,6 +57,7 @@ class GenerateDynamicPost extends Command
 
         if ($post->keywords and config('services.unsplash.collections'))
         {
+            $keyword = collect(explode(', ', (string) $post->keywords))->random();
             $images = Unsplash::search($post->keywords, 1, 30, 'landscape');
 
             if ($images->count() >= 2)
