@@ -75,7 +75,8 @@ class Post extends Resource
             Number::make('Word Count')
                 ->onlyOnIndex(),
 
-            Text::make('Main Keyword'),
+            Text::make('Main Keyword')
+                ->rules('required'),
 
             Text::make('Keywords')
                 ->rules('required')
