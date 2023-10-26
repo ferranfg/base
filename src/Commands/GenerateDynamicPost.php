@@ -55,14 +55,11 @@ class GenerateDynamicPost extends Command
             "Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
         ];
 
-        $keywords = collect(explode(', ', (string) $post->keywords));
-
-        if ($keywords->count() and config('services.unsplash.collections'))
+        if ($post->keywords and config('services.unsplash.collections'))
         {
-            $keyword = $keywords->random();
-            $images = Unsplash::search($keyword, 1, 30, 'landscape');
+            $images = Unsplash::search($post->keywords, 1, 30, 'landscape');
 
-            if ($images->count())
+            if ($images->count() >= 2)
             {
                 $prompt[] = 'Here are some image URLs related to the topic. Add them into the article:';
 
