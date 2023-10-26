@@ -17,7 +17,7 @@ class GenerateDynamicImages extends Command
      *
      * @var string
      */
-    protected $signature = 'base:generate-dynamic-images {post} {--level=2} {--method=unsplash}';
+    protected $signature = 'base:generate-dynamic-images {post} {--method=unsplash} {--level=2} {--keyword=}';
 
     /**
      * The console command description.
@@ -43,39 +43,34 @@ class GenerateDynamicImages extends Command
         if (array_key_exists(1, $matches) and array_key_exists($this->option('level'), $matches[1]))
         {
             $replace = $matches[1][$this->option('level')];
+            $search = $this->option('keyword') ?? $replace;
 
             $image_name = Str::random(32) . '.webp';
             $image_url = Storage::url($image_name);
-            $image_content = null;
+            $image_raw = null;
 
             if ($this->option('method') == 'replicate')
             {
-                $prompt = $post->keywords ?? $replace;
-
-                $generate = Replicate::generate("{$prompt}, RAW candid cinema, 16mm, color graded portra 400 film, remarkable color, ultra realistic, textured skin, remarkable detailed pupils, realistic dull skin noise, visible skin detail, skin fuzz, dry skin, shot with cinematic camera", [
+                $replicate = Replicate::generate("{$search}, RAW candid cinema, 16mm, color graded portra 400 film, remarkable color, ultra realistic, textured skin, remarkable detailed pupils, realistic dull skin noise, visible skin detail, skin fuzz, dry skin, shot with cinematic camera", [
                     'width' => 1264,
                     'height' => 712
                 ]);
 
-                $image_content = ImageManagerStatic::make($generate->upscaled_photo_url)->encode('webp', 90);
+                $image_raw = $replicate->upscaled_photo_url;
             }
-            else if ($this->option('method') == 'unsplash')
+            else if ($this->option('method') == 'unsplash' and config('services.unsplash.collections'))
             {
-                if ( ! $post->keywords or ! config('services.unsplash.collections')) return Command::FAILURE;
+                $unsplash = Unsplash::search($search, 1, 30, 'landscape');
 
-                $images = Unsplash::search($post->keywords, 1, 30, 'landscape');
-
-                if ($images->count())
-                {
-                    $unsplash_url = $images->pluck('urls.regular')->random();
-
-                    $image_content = ImageManagerStatic::make($unsplash_url)->encode('webp', 90);
-                }
+                $image_raw = $unsplash->count() ? $unsplash->pluck('urls.regular')->random() : null;
             }
 
-            if (is_null($image_content)) return Command::FAILURE;
+            if (is_null($image_raw)) return Command::FAILURE;
 
-            Storage::put($image_name, $image_content);
+            Storage::put(
+                $image_name,
+                ImageManagerStatic::make($image_raw)->encode('webp', 90)
+            );
 
             $post->content = str_replace(
                 ".\r\n\r\n## {$replace}",
