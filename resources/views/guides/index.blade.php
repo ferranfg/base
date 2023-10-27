@@ -1,4 +1,4 @@
-@extends(config('base.blog_template', 'layouts.web'))
+@extends(config('base.blog_template'))
 
 @section('content')
     <section class="bg-half d-table w-100 lazy" data-bg="url({{ $photo_url }})">
