@@ -1,4 +1,4 @@
-@extends(config('base.blog_template', 'layouts.web'))
+@extends(config('base.blog_template'))
 
 @push('head')
 
@@ -64,9 +64,13 @@
                         <span><i class="fa fa-facebook-square"></i> <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($post->canonical_url) }}" class="alert-link" target="_blank" rel="noreferrer nofollow">Share</a></span>
                     </div>
 
+                    @includeWhen(config('base.blog_before_post'), config('base.blog_before_post'))
+
                     <div class="post">
                         @basedownExtended($post->content)
                     </div>
+
+                    @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
 
                     @if ($related->count() and $post->type == 'guide')
                         <h5 class="mt-5">Related Guides:</h5>

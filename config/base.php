@@ -47,6 +47,12 @@ return [
 
     'blog_path' => '/blog',
 
+    'blog_template' => 'layouts.web',
+
+    'blog_before_post' => null,
+
+    'blog_after_post' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Guides Information
