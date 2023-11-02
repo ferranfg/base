@@ -11,7 +11,7 @@
         <div class="bg-overlay"></div>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-9">
                     <div class="page-next-level">
                         <div class="title-heading text-center">
                             @if ($post->excerpt)
