@@ -55,7 +55,7 @@ class Product extends Model
      * @var array
      */
     public static $status = [
-        'out_stock' => 'Out of stock',
+        'out_of_stock' => 'Out of stock',
         'available' => 'Available',
         'private' => 'Private'
     ];
