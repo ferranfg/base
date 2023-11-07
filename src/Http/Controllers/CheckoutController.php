@@ -6,6 +6,7 @@ use Stripe\PaymentIntent;
 use Stripe\Checkout\Session;
 use Illuminate\Http\Request;
 use Ferranfg\Base\Models\Cart;
+use Stripe\Charge;
 use Stripe\Exception\InvalidRequestException;
 
 class CheckoutController extends ShopController
@@ -94,7 +95,7 @@ class CheckoutController extends ShopController
      */
     public function success(Request $request)
     {
-        abort_if(is_null($request->session_id), 404);
+        abort_unless($request->session_id, 404);
 
         try
         {
@@ -107,18 +108,16 @@ class CheckoutController extends ShopController
             return redirect('cancel');
         }
 
+        if ($session->payment_status == 'unpaid') return redirect('cancel');
+
         if (Cart::clear()) view()->share('cart', Cart::init('cart'));
 
         $payment = PaymentIntent::retrieve($session->payment_intent);
+        $receipt = Charge::retrieve($payment->latest_charge);
 
         return view('base::checkout.success', [
             'session' => $session,
-            'payment' => $payment,
-            'receipt' => $payment->charges ? $payment->charges->first() : (object) [
-                'receipt_number' => '',
-                'created' => '',
-                'receipt_email' => '',
-            ],
+            'receipt' => $receipt,
         ]);
     }
 
@@ -137,11 +136,13 @@ class CheckoutController extends ShopController
         {
             report($e);
 
-            return redirect('cancel');
+            return abort(404);
         }
 
+        abort_unless($session->payment_status == 'paid', 404);
+
         $payment = PaymentIntent::retrieve($session->payment_intent);
-        $receipt = collect($payment->charges->data)->first();
+        $receipt = Charge::retrieve($payment->latest_charge);
 
         return redirect($receipt->receipt_url);
     }
