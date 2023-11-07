@@ -21,7 +21,7 @@ class ProductRepository
     {
         return Base::product()
             ->with('comments', 'metadata')
-            ->whereIn('status', ['available', 'in stock']);
+            ->whereIn('status', ['available', 'in_stock']);
     }
 
     public function whereAvailableByVisits()

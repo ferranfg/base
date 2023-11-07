@@ -31,6 +31,7 @@ class ShopController extends Controller
 
         $this->middleware(function (Request $request, Closure $next)
         {
+            abort_unless(config('base.shop_enabled'), 404);
             abort_unless(Schema::hasTable(Base::product()->getTable()), 404);
 
             return $next($request);
@@ -45,13 +46,20 @@ class ShopController extends Controller
      */
     public function list(Request $request)
     {
+        if ($request->has('guid'))
+        {
+            $product = $this->productRepository->findById($request->guid);
+
+            return redirect($product->canonical_url, 302);
+        }
+
         $products = $this->productRepository
             ->whereAvailable()
+            ->whereIn('type', ['simple', 'affiliate'])
+            ->orderByVisits()
             ->simplePaginate(12);
 
         $products->setPath(config('base.shop_path'));
-
-        abort_unless($products->count(), 404);
 
         view()->share([
             'meta_title' => meta_title(config('base.shop_title')),
@@ -85,6 +93,8 @@ class ShopController extends Controller
     public function show(Request $request)
     {
         $product = $this->productRepository->findBySlug($request->slug);
+
+        abort_unless(in_array($product->type, ['simple', 'affiliate']), 404);
 
         $product->trackVisit();
 

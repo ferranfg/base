@@ -41,6 +41,8 @@ return [
     |
     */
 
+    'shop_enabled' => false,
+
     'shop_title' => env('APP_NAME'),
 
     'shop_description' => env('BASE_SHOP_DESCRIPTION'),
