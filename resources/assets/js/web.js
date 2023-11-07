@@ -59,6 +59,8 @@ jQuery.event.special.touchmove = {
     }
 };
 
+$("[data-toggle=dropdown]").dropdown();
+
 $('.plus').on('click', function () {
     if ($(this).prev().val() < 999) {
         $(this).prev().val(+$(this).prev().val() + 1);

@@ -127,9 +127,9 @@ class ShopController extends Controller
             'price' => $product->amount,
             'quantity' => (int) $request->get('quantity', 1),
             'attributes' => [
+                'currency' => $product->currency,
                 'canonical_url' => $product->canonical_url,
                 'photo_url' => $product->photo_url,
-                'public_metrics' => $product->public_metrics,
             ],
             'associatedModel' => $product
         ]);

@@ -47,6 +47,8 @@ return [
 
     'shop_path' => '/shop',
 
+    'shop_currency' => 'EUR',
+
     'shop_template' => 'layouts.web',
 
     /*

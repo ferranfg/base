@@ -18,7 +18,7 @@
                                 <a href="{{ $product->canonical_url}}" class="btn btn-icon btn-pills btn-soft-primary" title="{{ $product->name }}"><i class="fa fa-eye"></i></a>
                             </li>
                             <li class="mt-2">
-                                <button type="submit" class="btn btn-icon btn-pills btn-soft-warning"><i class="fa fa-heart-o" title="Añadir {{ $product->name }} a Favoritos"></i></button>
+                                <button type="submit" class="btn btn-icon btn-pills btn-soft-warning"><i class="fa fa-shopping-cart" title="Añadir a Cesta de compra"></i></button>
                             </li>
                         </ul>
                     </form>
