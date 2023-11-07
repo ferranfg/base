@@ -157,7 +157,7 @@ class CheckoutController extends ShopController
             <h4 class="alert-heading">Tu solicitud no se ha completado 😥</h4>
             <p>El proceso no ha sido completado correctamente. Puede tratarse de una cancelación por tu parte o un problema relacionado con los datos introducidos.</p>
             <hr />
-            <p class="mb-0">Si crees que se trata de un error, por favor, contacta conmigo en ✉️ <a href="mailto:ferran@pistolmonkeys.com" class="text-white">ferran@pistolmonkeys.com</a></p>
+            <p class="mb-0">Si crees que se trata de un error, por favor, contacta conmigo en ✉️ <a href="mailto:hola@ferranfigueredo.com" class="text-white">hola@ferranfigueredo.com</a></p>
         ');
     }
 }
