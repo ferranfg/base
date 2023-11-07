@@ -4,18 +4,13 @@
     <script src="https://js.stripe.com/v3/"></script>
 @endpush
 
-@section('header')
-
-@endsection
-
 @section('content')
-    <script type="text/javascript">
-        Stripe("{{ config('cashier.key') }}").redirectToCheckout({
-            sessionId: "{{ $session->id }}"
-        });
-    </script>
-@endsection
-
-@section('footer')
-
+    <div class="bg-dark py-5">
+        <div class="text-center my-5 p-5 text-white">Estás siendo redirigido a la página de pago…</div>
+        <script type="text/javascript">
+            Stripe("{{ config('services.stripe.key') }}").redirectToCheckout({
+                sessionId: "{{ $session->id }}"
+            });
+        </script>
+    </div>
 @endsection

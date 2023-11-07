@@ -43,6 +43,8 @@ return [
 
     'shop_title' => env('APP_NAME'),
 
+    'shop_description' => env('BASE_SHOP_DESCRIPTION'),
+
     'shop_path' => '/shop',
 
     'shop_template' => 'layouts.web',

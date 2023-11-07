@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Repositories;
 
+use Carbon\Carbon;
 use Ferranfg\Base\Base;
 
 class ProductRepository

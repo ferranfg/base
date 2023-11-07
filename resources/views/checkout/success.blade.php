@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="bg-half bg-primary d-table w-100" style="background-image:url('/images/saas/home-shape.webp')">
+    <section class="bg-half bg-dark d-table w-100" style="background-image:url('/images/saas/home-shape.webp')">
         <div class="justify-content-center text-center text-white">
             <div class="page-next-level">
                 <h1 class="title">¡Gracias! 😍😍</h1>
@@ -50,9 +50,9 @@
                     <div class="form-group row mb-4">
                         <label class="col-md-4 mb-0 text-md-right">Dirección de entrega 🏠</label>
                         <div class="col-md-6">
-                            <div>{{ $session->shipping->name }}</div>
-                            <div>{{ $session->shipping->address->line1 }} {{ $session->shipping->address->line2 }}</div>
-                            <div>{{ $session->shipping->address->postal_code }} {{ $session->shipping->address->city }}</div>
+                            <div>{{ $payment->shipping->name }}</div>
+                            <div>{{ $payment->shipping->address->line1 }} {{ $payment->shipping->address->line2 }}</div>
+                            <div>{{ $payment->shipping->address->postal_code }} {{ $payment->shipping->address->city }}</div>
                         </div>
                     </div>
                     @php /*

@@ -49,9 +49,14 @@ class ShopController extends Controller
             ->whereAvailable()
             ->simplePaginate(12);
 
+        $products->setPath(config('base.shop_path'));
+
         abort_unless($products->count(), 404);
 
-        $products->setPath(config('base.shop_path'));
+        view()->share([
+            'meta_title' => meta_title(config('base.shop_title')),
+            'meta_description' => config('base.shop_description')
+        ]);
 
         return view('base::shop.list', [
             'products' => $products,
@@ -89,6 +94,16 @@ class ShopController extends Controller
                 'product' => $product
             ]);
         }
+
+        $photo_url = img_url($product->photo_url, [
+            ['width' => 1920, 'height' => 1280]
+        ]);
+
+        view()->share([
+            'meta_title' => meta_title($product->name),
+            'meta_description' => $product->excerpt,
+            'meta_image' => $photo_url
+        ]);
 
         return view('base::shop.show', [
             'product' => $product,

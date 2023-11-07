@@ -113,7 +113,12 @@ class CheckoutController extends ShopController
 
         return view('base::checkout.success', [
             'session' => $session,
-            'receipt' => $payment->charges->first()
+            'payment' => $payment,
+            'receipt' => $payment->charges ? $payment->charges->first() : (object) [
+                'receipt_number' => '',
+                'created' => '',
+                'receipt_email' => '',
+            ],
         ]);
     }
 

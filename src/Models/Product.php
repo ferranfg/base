@@ -13,7 +13,6 @@ use Ferranfg\Base\Traits\HasVisits;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -68,8 +67,7 @@ class Product extends Model
      */
     public static $types = [
         'simple' => 'Simple',
-        'bundle' => 'Bundle',
-        'downloadable' => 'Downloadable'
+        'affiliate' => 'Affiliate',
     ];
 
     /**
@@ -134,7 +132,7 @@ class Product extends Model
      */
     public function getHorizontalPhotoUrlAttribute()
     {
-        return img_url($this->attached_url ?: $this->photo_url, [
+        return img_url($this->photo_url, [
             ['width' => 1200, 'height' => 630]
         ]);
     }
@@ -144,7 +142,7 @@ class Product extends Model
      */
     public function getSquarePhotoUrlAttribute()
     {
-        return img_url($this->attached_url ?: $this->photo_url, [
+        return img_url($this->photo_url, [
             ['width' => 1080, 'height' => 1080]
         ]);
     }
@@ -234,7 +232,7 @@ class Product extends Model
             'name' => $this->name,
             'description' => empty($this->description) ? $this->name : $this->description,
             'images' => [
-                Storage::url($this->photo_url)
+                img_url($this->photo_url)
             ]
         ];
 

@@ -1,10 +1,12 @@
 @extends(config('base.shop_template'))
 
 @section('content')
-    <section class="bg-half bg-primary d-table w-100" style="background-image:url('/images/saas/home-shape.webp')">
-        <div class="justify-content-center text-center text-white">
+    <section class="bg-half d-table w-100 lazy" data-bg="url({{ hero_image() }})">
+        <div class="bg-overlay"></div>
+        <div class="justify-content-center text-center position-relative">
             <div class="page-next-level">
-                <h1 class="title">{{ config('base.shop_title') }}</h1>
+                <h1 class="text-white title-dark mb-3">{{ config('base.shop_title') }}</h1>
+                <p class="para-desc mx-auto text-white-50 mb-0">{{ config('base.shop_description') }}</p>
                 <div class="page-next">
                     <nav class="d-inline-block">
                         <ul class="breadcrumb bg-white rounded shadow mb-0">

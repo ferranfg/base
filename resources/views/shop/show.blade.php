@@ -11,7 +11,7 @@
                         <div class="page-next">
                             <nav class="d-inline-block">
                                 <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                                    <li class="breadcrumb-item"><a href="/shop">Tienda</a></li>
                                     <li class="breadcrumb-item active">{{ $product->name }}</li>
                                 </ul>
                             </nav>
