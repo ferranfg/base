@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Schema;
 use Ferranfg\Base\Base;
 use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
@@ -11,7 +12,6 @@ use Ferranfg\Base\Traits\HasVisits;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -45,7 +45,7 @@ class Product extends Model
      * @var array
      */
     public static $status = [
-        'out_stock' => 'Out of stock',
+        'out_of_stock' => 'Out of stock',
         'available' => 'Available',
         'private' => 'Private'
     ];
@@ -57,8 +57,7 @@ class Product extends Model
      */
     public static $types = [
         'simple' => 'Simple',
-        'bundle' => 'Bundle',
-        'downloadable' => 'Downloadable'
+        'affiliate' => 'Affiliate',
     ];
 
     /**
@@ -99,7 +98,7 @@ class Product extends Model
      */
     public function getCanonicalUrlAttribute()
     {
-        return url("product/{$this->slug}");
+        return url("shop/{$this->slug}");
     }
 
     /**
@@ -115,7 +114,7 @@ class Product extends Model
      */
     public function getHorizontalPhotoUrlAttribute()
     {
-        return img_url($this->attached_url ?: $this->photo_url, [
+        return img_url($this->photo_url, [
             ['width' => 1200, 'height' => 630]
         ]);
     }
@@ -125,7 +124,7 @@ class Product extends Model
      */
     public function getSquarePhotoUrlAttribute()
     {
-        return img_url($this->attached_url ?: $this->photo_url, [
+        return img_url($this->photo_url, [
             ['width' => 1080, 'height' => 1080]
         ]);
     }
@@ -139,12 +138,22 @@ class Product extends Model
     }
 
     /**
+     * Check if comments are disabled for this post.
+     */
+    public function getCommentsDisabledAttribute()
+    {
+        return ! Schema::hasTable(Base::comment()->getTable());
+    }
+
+    /**
      * Get the avg rating from the attached comments
      *
      * @var string
      */
     public function avgRating($type = 'review')
     {
+        if ($this->comments_disabled) return 5;
+
         return $this->comments->where('type', $type)->avg('rating');
     }
 
@@ -205,7 +214,7 @@ class Product extends Model
             'name' => $this->name,
             'description' => empty($this->description) ? $this->name : $this->description,
             'images' => [
-                Storage::url($this->photo_url)
+                img_url($this->photo_url)
             ]
         ];
 
@@ -328,5 +337,45 @@ class Product extends Model
                 'name' => $category[1]
             ];
         })->values();
+    }
+
+    /**
+     * Construye la URL de intent tweet para compartir directamente
+     * https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview
+     */
+    public function intentTweetUrl()
+    {
+        $params = [
+            'url' => $this->canonical_url,
+        ];
+
+        return 'https://twitter.com/intent/tweet?' . http_build_query($params);
+    }
+
+    /*
+     * Construye la URL de intent Facebook para compartir.
+     * https://developers.facebook.com/docs/sharing/reference/share-dialog
+     */
+    public function intentFacebookUrl()
+    {
+        return 'https://www.facebook.com/dialog/share?' . http_build_query([
+            'app_id' => config('services.facebook.client_id'),
+            'display' => 'popup',
+            'redirect_uri' => $this->canonical_url,
+            'href' => $this->canonical_url,
+        ]);
+    }
+
+    /**
+     * Construye la URL de intent Pinterest para compartir.
+     * https://developers.pinterest.com/docs/add-ons/save-button/
+     */
+    public function intentPinterestUrl()
+    {
+        return 'https://www.pinterest.com/pin/create/button?' . http_build_query([
+            'url' => $this->canonical_url,
+            'media' => img_url($this->photo_url),
+            'description' => $this->name,
+        ]);
     }
 }
