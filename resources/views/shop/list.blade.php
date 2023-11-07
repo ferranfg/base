@@ -28,6 +28,7 @@
 
     <section class="section">
         <div class="container">
+            <h5 class="mb-0">Productos más visitados</h5>
             @include('base::components.products', ['products' => $products])
             {{ $products->links('base::components.simple-pagination') }}
         </div>
