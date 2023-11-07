@@ -33,41 +33,43 @@
         <div class="container">
             @include('base::shop.detail', ['product' => $product])
         </div>
-        <div class="container">
-            <div class="container mt-100 mt-60">
-                <div class="row">
-                    <div class="col-12">
-                        <ul class="nav nav-pills shadow flex-column flex-sm-row d-md-inline-flex mb-0 p-1 bg-white rounded position-relative overflow-hidden" id="pills-tab">
-                            <li class="nav-item m-1">
-                                <a class="nav-link py-2 px-5 active rounded text-center" data-toggle="pill" href="#reviews">
-                                    <h6 class="mb-0">Valoraciones</h6>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content mt-5">
-                            <div class="card border-0 tab-pane fade show active" id="reviews">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        @if ( ! $product->comments_disabled and $product->comments->count())
-                                            <ul class="media-list list-unstyled mb-0">
-                                                @foreach ($product->comments as $comment)
-                                                    @include('base::components.comment', ['comment' => $comment])
-                                                @endforeach
-                                            </ul>
-                                        @else
-                                            <div class="text-center">
-                                                <div class="h3">🙈</div>
-                                                <div class="text-muted">Este producto no tiene ninguna valoración todavía.</div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-6 mt-4 mt-lg-0 pt-2 pt-lg-0" id="comment-submit">
-                                        <h5>Añade tu valoración:</h5>
-                                        @include('base::components.comment-submit', [
-                                            'action' => "{$product->canonical_url}/review#comment-submit",
-                                            'errors' => $errors,
-                                            'rating' => true
-                                        ])
+        @if ( ! $product->comments_disabled)
+            <div class="container">
+                <div class="container mt-100 mt-60">
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-pills shadow flex-column flex-sm-row d-md-inline-flex mb-0 p-1 bg-white rounded position-relative overflow-hidden" id="pills-tab">
+                                <li class="nav-item m-1">
+                                    <a class="nav-link py-2 px-5 active rounded text-center" data-toggle="pill" href="#reviews">
+                                        <h6 class="mb-0">Valoraciones</h6>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-5">
+                                <div class="card border-0 tab-pane fade show active" id="reviews">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            @if ($product->comments->count())
+                                                <ul class="media-list list-unstyled mb-0">
+                                                    @foreach ($product->comments as $comment)
+                                                        @include('base::components.comment', ['comment' => $comment])
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <div class="text-center">
+                                                    <div class="h3">🙈</div>
+                                                    <div class="text-muted">Este producto no tiene ninguna valoración todavía.</div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="col-lg-6 mt-4 mt-lg-0 pt-2 pt-lg-0" id="comment-submit">
+                                            <h5>Añade tu valoración:</h5>
+                                            @include('base::components.comment-submit', [
+                                                'action' => "{$product->canonical_url}/review#comment-submit",
+                                                'errors' => $errors,
+                                                'rating' => true
+                                            ])
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +77,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </section>
 
     <div class="container-fluid mt-60 px-0">
