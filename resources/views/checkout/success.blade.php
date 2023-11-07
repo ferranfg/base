@@ -50,9 +50,9 @@
                     <div class="form-group row mb-4">
                         <label class="col-md-4 mb-0 text-md-right">Dirección de entrega 🏠</label>
                         <div class="col-md-6">
-                            <div>{{ $payment->shipping->name }}</div>
-                            <div>{{ $payment->shipping->address->line1 }} {{ $payment->shipping->address->line2 }}</div>
-                            <div>{{ $payment->shipping->address->postal_code }} {{ $payment->shipping->address->city }}</div>
+                            <div>{{ $receipt->shipping->name }}</div>
+                            <div>{{ $receipt->shipping->address->line1 }} {{ $receipt->shipping->address->line2 }}</div>
+                            <div>{{ $receipt->shipping->address->postal_code }} {{ $receipt->shipping->address->city }}</div>
                         </div>
                     </div>
                     @php /*
@@ -88,7 +88,7 @@
                                     </tr>
                                     <tr>
                                         <td class="h6">📦 Gastos de envío</td>
-                                        <td class="text-center font-weight-bold">0,00 €</td>
+                                        <td class="text-center font-weight-bold">¡Gratis!</td>
                                     </tr>
                                     <tr class="bg-light">
                                         <td class="h5 font-weight-bold">Total (IVA incluído)</td>
