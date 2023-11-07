@@ -115,8 +115,15 @@ class ShopController extends Controller
             'meta_image' => $photo_url
         ]);
 
+        $related = $this->productRepository
+            ->whereAvailable()
+            ->whereIn('type', [$product->type])
+            ->orderByVisits()
+            ->simplePaginate(4);
+
         return view('base::shop.show', [
             'product' => $product,
+            'related' => $related,
             'previous' => $this->productRepository->previousProduct($product),
             'next' => $this->productRepository->nextProduct($product),
         ]);

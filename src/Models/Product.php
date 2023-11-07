@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Models;
 
 use Schema;
 use Ferranfg\Base\Base;
+use Illuminate\Support\Str;
 use Laravel\Cashier\Cashier;
 use Stripe\Price as StripePrice;
 use Ferranfg\Base\Traits\HasSlug;
@@ -92,6 +93,14 @@ class Product extends Model
     public function categories()
     {
         return $this->tags()->where('type', 'category');
+    }
+
+    /**
+     * Get the product excerpt.
+     */
+    public function getExcerptAttribute()
+    {
+        return Str::limit($this->description, 165);
     }
 
     /**

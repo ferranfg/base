@@ -17,7 +17,7 @@
             <h5 class="text-muted mb-4">{{ $product->formatAmount() }}</h5>
             <h5>Contenido:</h5>
             <div class="text-muted">
-                @basedown($product->description)
+                @basedown($product->excerpt)
             </div>
             @if ($product->status == 'out_of_stock')
                 <div class="alert alert-warning d-inline-block mb-4">
