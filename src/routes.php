@@ -53,7 +53,7 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 
     Route::get('/shop', '\Ferranfg\Base\Http\Controllers\ShopController@list');
-    Route::get('/shop/{slug}', '\Ferranfg\Base\Http\Controllers\ShopController@show');
+    Route::get('/shop/{slug}', '\Ferranfg\Base\Http\Controllers\ShopController@product');
     Route::post('/shop/{slug}', '\Ferranfg\Base\Http\Controllers\ShopController@add');
     Route::post('/shop/{slug}/review', '\Ferranfg\Base\Http\Controllers\ShopController@review');
     Route::get('/random', '\Ferranfg\Base\Http\Controllers\ShopController@random');

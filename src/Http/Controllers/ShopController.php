@@ -90,7 +90,7 @@ class ShopController extends Controller
      * @param  Product  $product
      * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function product(Request $request)
     {
         $product = $this->productRepository->findBySlug($request->slug);
 
@@ -121,8 +121,9 @@ class ShopController extends Controller
             ->orderByVisits()
             ->simplePaginate(4);
 
-        return view('base::shop.show', [
+        return view('base::shop.product', [
             'product' => $product,
+            'photo_url' => $photo_url,
             'related' => $related,
             'previous' => $this->productRepository->previousProduct($product),
             'next' => $this->productRepository->nextProduct($product),
