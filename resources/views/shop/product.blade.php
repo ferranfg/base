@@ -1,5 +1,11 @@
 @extends(config('base.shop_template'))
 
+@push('head')
+
+    @include('base::shop.product-meta')
+
+@endpush
+
 @section('content')
     <section class="bg-half d-table w-100 lazy" data-bg="url({{ hero_image() }})">
         <div class="bg-overlay"></div>
