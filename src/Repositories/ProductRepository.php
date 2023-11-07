@@ -18,12 +18,19 @@ class ProductRepository
 
     public function whereAvailable()
     {
-        return Base::product()->with('comments', 'metadata')->whereStatus('available')->orderBy('id', 'desc');
+        return Base::product()
+            ->with('comments', 'metadata')
+            ->whereIn('status', ['available', 'in stock']);
     }
 
     public function whereAvailableByVisits()
     {
-        return Base::product()->with('comments', 'metadata')->whereStatus('available')->orderByVisits();
+        return $this->whereAvailable()->orderByVisits();
+    }
+
+    public function randomAvailable()
+    {
+        return $this->whereAvailable()->inRandomOrder(Carbon::now()->format('Ymd'))->first();
     }
 
     public function findById($id)

@@ -45,12 +45,24 @@ Route::group(['middleware' => 'web'], function ()
     Route::post('/connect/upload', '\Ferranfg\Base\Http\Controllers\ConnectController@upload')
         ->middleware('auth:api')->withoutMiddleware('web');
 
-    Route::get('guides', '\Ferranfg\Base\Http\Controllers\GuidesController@index');
-    Route::get('guides/{id}', '\Ferranfg\Base\Http\Controllers\GuidesController@answer')->where('id', '[0-9]+');
-    Route::get('guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@show');
-    Route::post('guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@comment');
+    Route::get('/guides', '\Ferranfg\Base\Http\Controllers\GuidesController@index');
+    Route::get('/guides/{id}', '\Ferranfg\Base\Http\Controllers\GuidesController@answer')->where('id', '[0-9]+');
+    Route::get('/guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@show');
+    Route::post('/guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@comment');
 
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
+
+    Route::get('/shop', '\Ferranfg\Base\Http\Controllers\ShopController@list');
+    Route::get('/shop/{slug}', '\Ferranfg\Base\Http\Controllers\ShopController@show');
+    Route::post('/shop/{slug}', '\Ferranfg\Base\Http\Controllers\ShopController@add');
+    Route::post('/shop/{slug}/review', '\Ferranfg\Base\Http\Controllers\ShopController@review');
+    Route::get('/random', '\Ferranfg\Base\Http\Controllers\ShopController@random');
+
+    Route::any('/cart', '\Ferranfg\Base\Http\Controllers\CheckoutController@cart');
+    Route::get('/checkout', '\Ferranfg\Base\Http\Controllers\CheckoutController@redirect');
+    Route::post('/invoice', '\Ferranfg\Base\Http\Controllers\CheckoutController@invoice');
+    Route::get('/success', '\Ferranfg\Base\Http\Controllers\CheckoutController@success');
+    Route::get('/cancel', '\Ferranfg\Base\Http\Controllers\CheckoutController@cancel');
 
     Route::get('/feed/merchant.xml', '\Ferranfg\Base\Http\Controllers\FeedController@merchant');
 
