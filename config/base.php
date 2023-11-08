@@ -34,6 +34,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Shop Information
+    |--------------------------------------------------------------------------
+    |
+    | Información que se servirá para la plantilla del ecommerce.
+    |
+    */
+
+    'shop_enabled' => false,
+
+    'shop_title' => env('APP_NAME'),
+
+    'shop_description' => env('BASE_SHOP_DESCRIPTION'),
+
+    'shop_path' => '/shop',
+
+    'shop_currency' => 'EUR',
+
+    'shop_template' => 'layouts.web',
+
+    /*
+    |--------------------------------------------------------------------------
     | Blog Information
     |--------------------------------------------------------------------------
     |

@@ -66,12 +66,14 @@ class Product extends Resource
                 ->onlyOnDetail(),
 
             Number::make('Amount')
-                ->step(0.01)
+                ->step(1)
                 ->sortable()
+                ->rules('required')
                 ->onlyOnForms(),
 
             Select::make('Currency')
                 ->options(Base::product()::$currencies)
+                ->rules('required')
                 ->onlyOnForms()
                 ->displayUsingLabels(),
 
@@ -86,6 +88,7 @@ class Product extends Resource
 
             BelongsTo::make('Owner', 'owner', User::class)
                 ->sortable()
+                ->rules('required')
                 ->nullable(),
 
             Select::make('Type')
