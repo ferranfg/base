@@ -65,8 +65,11 @@ class Product extends Resource
             Number::make('Amount')
                 ->step(1)
                 ->sortable()
-                ->rules('required')
-                ->onlyOnForms(),
+                ->rules('required'),
+
+            Number::make('Sale Amount')
+                ->step(1)
+                ->sortable(),
 
             Select::make('Currency')
                 ->options(Base::product()::$currencies)
@@ -80,13 +83,13 @@ class Product extends Resource
             Text::make('Video Url')
                 ->onlyOnForms(),
 
-            File::make('Attached Url')
+            Text::make('Attached Url')
                 ->onlyOnForms(),
 
             BelongsTo::make('Owner', 'owner', User::class)
                 ->sortable()
                 ->rules('required')
-                ->nullable(),
+                ->onlyOnForms(),
 
             Select::make('Type')
                 ->rules('required')
