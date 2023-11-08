@@ -114,6 +114,14 @@ class Product extends Model
     }
 
     /**
+     * Añade el método orderByDiscount().
+     */
+    public function scopeOrderByDiscount($query)
+    {
+        return $query->selectRaw('products.*, (amount - sale_amount) as discount')->orderBy('discount', 'desc');
+    }
+
+    /**
      * Get the product excerpt.
      */
     public function getExcerptAttribute()

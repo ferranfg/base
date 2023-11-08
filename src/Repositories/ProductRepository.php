@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Repositories;
 
 use Carbon\Carbon;
 use Ferranfg\Base\Base;
+use Ferranfg\Base\Models\Metadata;
 
 class ProductRepository
 {
@@ -21,12 +22,8 @@ class ProductRepository
     {
         return Base::product()
             ->with('comments', 'metadata')
-            ->whereIn('status', ['available', 'in_stock']);
-    }
-
-    public function whereAvailableByVisits()
-    {
-        return $this->whereAvailable()->orderByVisits();
+            ->whereIn('status', ['available', 'in_stock'])
+            ->whereIn('type', ['simple', 'affiliate']);
     }
 
     public function randomAvailable()
@@ -68,5 +65,15 @@ class ProductRepository
             ->min($key_name);
 
         return Base::product()->find($next_id);
+    }
+
+    public function getBrands()
+    {
+        return Metadata::whereName('brand')->groupBy('value');
+    }
+
+    public function getGoogleCategories()
+    {
+        return Metadata::whereName('google_category')->groupBy('value');
     }
 }

@@ -55,12 +55,17 @@ class ShopController extends Controller
 
         $products = $this->productRepository
             ->whereAvailable()
-            ->whereIn('type', ['simple', 'affiliate'])
             ->orderByVisits()
-            ->simplePaginate(12);
+            ->simplePaginate(8);
 
         $products->setPath(config('base.shop_path'));
 
+        $offers = $this->productRepository
+            ->whereAvailable()
+            ->orderByDiscount()
+            ->take(8)
+            ->get();
+        
         view()->share([
             'meta_title' => meta_title(config('base.shop_title')),
             'meta_description' => config('base.shop_description')
@@ -68,6 +73,8 @@ class ShopController extends Controller
 
         return view('base::shop.list', [
             'products' => $products,
+            'brands' => $this->productRepository->getBrands()->take(6)->get(),
+            'offers' => $offers,
         ]);
     }
 
@@ -117,9 +124,9 @@ class ShopController extends Controller
 
         $related = $this->productRepository
             ->whereAvailable()
-            ->whereIn('type', [$product->type])
             ->orderByVisits()
-            ->simplePaginate(4);
+            ->take(4)
+            ->get();
 
         return view('base::shop.product', [
             'product' => $product,
