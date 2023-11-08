@@ -69,11 +69,11 @@ class ProductRepository
 
     public function getBrands()
     {
-        return Metadata::whereName('brand')->groupBy('value');
+        return Metadata::select('value')->whereName('brand')->groupBy('value');
     }
 
     public function getGoogleCategories()
     {
-        return Metadata::whereName('google_category')->groupBy('value');
+        return Metadata::select('value')->whereName('google_category')->groupBy('value');
     }
 }

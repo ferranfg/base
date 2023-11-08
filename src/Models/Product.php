@@ -238,7 +238,19 @@ class Product extends Model
      */
     public function formatAmount()
     {
+        if (is_null($this->amount)) return null;
+
         return Cashier::formatAmount($this->amount, $this->currency);
+    }
+
+    /**
+     * Get the product price formated with currency.
+     */
+    public function formatSaleAmount()
+    {
+        if (is_null($this->sale_amount)) return null;
+
+        return Cashier::formatAmount($this->sale_amount, $this->currency);
     }
 
     /**
@@ -335,6 +347,16 @@ class Product extends Model
     public function isPrivate()
     {
         return $this->status == 'private';
+    }
+
+    /**
+     * Determines if a product is discounted
+     *
+     * @var boolean
+     */
+    public function isDiscounted()
+    {
+        return ! is_null($this->sale_amount) and $this->sale_amount < $this->amount;
     }
 
     /**

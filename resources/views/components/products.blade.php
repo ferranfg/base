@@ -26,7 +26,7 @@
                         <a href="{{ $product->canonical_url}}" class="text-dark product-name h6">{{ $product->name }}</a>
                         <div class="d-flex justify-content-between mt-1">
                             <h6 class="text-muted small font-italic mb-0 mt-1">
-                                @if ($product->sale_amount != $product->amount)
+                                @if ($product->isDiscounted())
                                     {{ $product->formatSaleAmount() }} <del class="text-danger ml-2">{{ $product->formatAmount() }}</del>
                                 @else
                                     {{ $product->formatAmount() }}
