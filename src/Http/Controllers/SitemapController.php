@@ -35,6 +35,8 @@ abstract class SitemapController extends Controller
             ->whereIn('type', $type)
             ->get();
 
+        if ( ! $posts->count()) return;
+
         $tags = [];
 
         $this->urls[] = (object) [
@@ -78,6 +80,8 @@ abstract class SitemapController extends Controller
         $products = $products = $this->productRepository
             ->whereAvailable()
             ->get();
+
+        if ( ! $products->count()) return;
 
         $this->urls[] = (object) [
             'loc' => url('shop'),
