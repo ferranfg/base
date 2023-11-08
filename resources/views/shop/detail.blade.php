@@ -14,7 +14,13 @@
                 {!! $product->renderAvgRating('review') !!}
             </div>
             <h2 class="title">{{ $product->name }}</h2>
-            <h5 class="text-muted mb-4">{{ $product->formatAmount() }}</h5>
+            <h5 class="text-muted mb-4">
+                @if ($product->sale_amount != $product->amount)
+                    {{ $product->formatSaleAmount() }} <del class="text-danger ml-2">{{ $product->formatAmount() }}</del>
+                @else
+                    {{ $product->formatAmount() }}
+                @endif
+            </h5>
             <h5>Contenido:</h5>
             <div class="text-muted">
                 @basedown($product->excerpt)
