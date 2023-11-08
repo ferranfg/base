@@ -70,6 +70,16 @@
                         @basedownExtended($post->content)
                     </div>
 
+                    @if ($post->keywords)
+                        <p class="text-monospace mt-5">
+                            <span>Tags:</span>
+                            @foreach (explode(',', $post->keywords) as $keyword)
+                                @php $keyword = trim($keyword) @endphp
+                                <a href="/tag/{{ urlencode($keyword) }}" class="ml-2">{{ $keyword }}</a>@if ($loop->remaining),@endif
+                            @endforeach
+                        </p>
+                    @endif
+
                     @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
 
                     @if ($related->count() and $post->type == 'guide')
