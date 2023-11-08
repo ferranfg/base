@@ -60,6 +60,8 @@ class ShopController extends Controller
 
         $products->setPath(config('base.shop_path'));
 
+        abort_unless($products->count(), 404);
+
         $offers = $this->productRepository
             ->whereAvailable()
             ->orderByDiscount()
