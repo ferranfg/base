@@ -52,7 +52,7 @@
     "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "{{ $product->avgRating() }}",
-        "reviewCount": "{{ $product->comments ? $product->comments->count() : 0 }}"
+        "reviewCount": "{{ $product->comments_disabled ? 0 : $product->comments->count() }}"
     }
 }
 </script>
