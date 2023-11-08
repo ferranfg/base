@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Repositories\PostRepository;
+use Ferranfg\Base\Repositories\ProductRepository;
 
 abstract class SitemapController extends Controller
 {
@@ -11,11 +12,15 @@ abstract class SitemapController extends Controller
 
     protected $postRepository;
 
+    protected $productRepository;
+
     public function __construct(
-        PostRepository $postRepository
+        PostRepository $postRepository,
+        ProductRepository $productRepository
     )
     {
         $this->postRepository = $postRepository;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -57,6 +62,33 @@ abstract class SitemapController extends Controller
             $this->urls[] = (object) [
                 'loc' => url("/tag/{$tag}"),
                 'lastmod' => $lastmod,
+            ];
+        }
+    }
+
+    /**
+     * Hydrate the shop urls.
+     *
+     * @return void
+     */
+    protected function hydrateShopUrls()
+    {
+        if ( ! config('base.shop_enabled')) return;
+
+        $products = $products = $this->productRepository
+            ->whereAvailable()
+            ->get();
+
+        $this->urls[] = (object) [
+            'loc' => url('shop'),
+            'lastmod' => $products->last()->updated_at->tz('UTC')->toAtomString(),
+        ];
+
+        foreach ($products as $product)
+        {
+            $this->urls[] = (object) [
+                'loc' => $product->canonical_url,
+                'lastmod' => $product->updated_at->tz('UTC')->toAtomString(),
             ];
         }
     }
