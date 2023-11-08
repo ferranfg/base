@@ -40,9 +40,38 @@
             @include('base::components.products', ['products' => $products])
             {{ $products->links('base::components.simple-pagination') }}
         </div>
+
+        @if ($brands->count())
+            <div class="container mt-100 mt-60">
+                <h5 class="mb-0">Nuestras marcas</h5>
+                <div class="row">
+                    @foreach ($brands as $brand)
+                        <div class="col-lg-2 col-md-4 col-6 mt-4 pt-2">
+                            <div class="card explore-feature border-0 rounded text-center bg-white">
+                                <div class="card-body">
+                                    <div class="icon rounded-circle shadow-lg d-inline-block h2">
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="content mt-3">
+                                        <h6 class="mb-0">{{ $brand->value }}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        @section('shop-cta')
+
+        @show
+
+        @if ($offers->count())
+            <div class="container mt-100 mt-60">
+                <h5 class="mb-0">Mejores ofertas</h5>
+                @include('base::components.products', ['products' => $offers])
+            </div>
+        @endif
     </section>
-
-    @section('shop-cta')
-
-    @show
 @endsection
