@@ -31,6 +31,7 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/terms', '\Ferranfg\Base\Http\Controllers\LegalController@terms')->name('terms');
 
     Route::get('/blog', '\Ferranfg\Base\Http\Controllers\BlogController@list');
+    Route::get('/tag/{keyword}', '\Ferranfg\Base\Http\Controllers\BlogController@tag');
     Route::get('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@post');
     Route::post('/blog/{slug}', '\Ferranfg\Base\Http\Controllers\BlogController@comment');
 

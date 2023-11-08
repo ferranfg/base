@@ -124,6 +124,7 @@ class ShopController extends Controller
 
         $related = $this->productRepository
             ->whereAvailable()
+            ->where('products.id', '!=', $product->id)
             ->orderByVisits()
             ->take(4)
             ->get();

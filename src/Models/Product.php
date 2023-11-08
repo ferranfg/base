@@ -164,6 +164,14 @@ class Product extends Model
     }
 
     /**
+     * Get the product discount.
+     */
+    public function getDiscountAttribute()
+    {
+        return $this->amount - $this->sale_amount;
+    }
+
+    /**
      * Get the avg rating from the attached comments
      *
      * @var string
@@ -186,7 +194,7 @@ class Product extends Model
         $render = [];
 
         // NORMAL
-        array_push($render, '<ul class="list-unstyled text-warning mb-0 d-none d-sm-block">');
+        array_push($render, '<ul class="list-unstyled text-warning mb-0 d-none d-sm-inline-block">');
 
         for ($i = 1; $i <= 5; $i++):
             if ($i <= $rating):
@@ -233,6 +241,16 @@ class Product extends Model
         if (is_null($this->sale_amount)) return null;
 
         return Cashier::formatAmount($this->sale_amount, $this->currency);
+    }
+
+    /**
+     * Get the product discount formated with currency.
+     */
+    public function formatDiscount()
+    {
+        if (is_null($this->discount)) return null;
+
+        return Cashier::formatAmount($this->discount, $this->currency);
     }
 
     /**

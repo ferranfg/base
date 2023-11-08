@@ -12,8 +12,8 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-7 title-heading text-center">
-                    <h1 class="text-white title-dark mb-3">{{ config('base.blog_title') }}</h1>
-                    <p class="para-desc mx-auto text-white-50 mb-0">{{ config('base.blog_description') }}</p>
+                    <h1 class="text-white title-dark mb-3">{{ $hero_title }}</h1>
+                    <p class="para-desc mx-auto text-white-50 mb-0">{{ $hero_description }}</p>
                 </div>
             </div>
         </div>

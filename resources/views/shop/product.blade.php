@@ -39,7 +39,7 @@
         <div class="container">
             @include('base::shop.detail', ['product' => $product])
         </div>
-        <div class="container mt-100 mt-60">
+        <div class="container mt-100 mt-60" id="more-details">
             <ul class="nav nav-pills shadow flex-column flex-sm-row d-md-inline-flex mb-0 p-1 bg-white rounded position-relative overflow-hidden" id="pills-tab">
                 <li class="nav-item m-1">
                     <a class="nav-link py-2 px-5 active rounded text-center" data-toggle="pill" href="#description">
