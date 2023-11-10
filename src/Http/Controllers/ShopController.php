@@ -5,6 +5,7 @@ namespace Ferranfg\Base\Http\Controllers;
 use Schema;
 use Closure;
 use Ferranfg\Base\Base;
+use Ferranfg\Base\Models\BaseProfile;
 use Ferranfg\Base\Models\Cart;
 use Ferranfg\Base\Models\Product;
 use Ferranfg\Base\Repositories\CommentRepository;
@@ -33,6 +34,10 @@ class ShopController extends Controller
         {
             abort_unless(config('base.shop_enabled'), 404);
             abort_unless(Schema::hasTable(Base::product()->getTable()), 404);
+
+            view()->share([
+                'base_profile' => new BaseProfile($request)
+            ]);
 
             return $next($request);
         });

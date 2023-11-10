@@ -36,9 +36,11 @@
 
     <section class="section">
         <div class="container">
-            <h5 class="mb-0">Productos más visitados</h5>
-            @include('base::components.products', ['products' => $products])
-            {{ $products->links('base::components.simple-pagination') }}
+            @if ($base_profile->grade > 6)
+                @include('base::shop.products-by-visits', ['products' => $products])
+            @else
+                @include('base::shop.products-by-discount', ['offers' => $offers])
+            @endif
         </div>
 
         @if ($brands->count())
@@ -67,11 +69,12 @@
 
         @show
 
-        @if ($offers->count())
-            <div class="container mt-100 mt-60">
-                <h5 class="mb-0">Mejores ofertas</h5>
-                @include('base::components.products', ['products' => $offers])
-            </div>
-        @endif
+        <div class="container mt-100 mt-60">
+            @if ($base_profile->grade > 6)
+                @include('base::shop.products-by-discount', ['offers' => $offers])
+            @else
+                @include('base::shop.products-by-visits', ['products' => $products])
+            @endif
+        </div>
     </section>
 @endsection
