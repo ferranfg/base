@@ -27,7 +27,7 @@
 @endif
 <meta name="twitter:site" content="{{ config('base.twitter_username') }}" />
 <meta property="og:image:width" content="1920" />
-<meta property="og:image:height" content="1280" />
+<meta property="og:image:height" content="1080" />
 
 <meta property="article:published_time" content="{{ $post->created_at->toISOString() }}" />
 <meta property="article:modified_time" content="{{ $post->updated_at->toISOString() }}" />
@@ -43,7 +43,7 @@
             "@type": "ImageObject",
             "url": "{{ config('base.meta_image') }}",
             "width": 1920,
-            "height": 1280
+            "height": 1080
         }
     },
     @if ($post->author)
@@ -66,7 +66,7 @@
         "@type": "ImageObject",
         "url": "{{ $photo_url }}",
         "width": 1920,
-        "height": 1280
+        "height": 1080
     },
     "description": "{{ $post->excerpt }}",
     "mainEntityOfPage": {
