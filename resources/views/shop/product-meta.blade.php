@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="{{ $photo_url }}" />
 <meta name="twitter:site" content="{{ config('base.twitter_username') }}" />
 <meta property="og:image:width" content="1920" />
-<meta property="og:image:height" content="1280" />
+<meta property="og:image:height" content="1080" />
 
 <script type="application/ld+json">
 {

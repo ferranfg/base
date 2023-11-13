@@ -120,7 +120,7 @@ class ShopController extends Controller
         }
 
         $photo_url = img_url($product->photo_url, [
-            ['width' => 1920, 'height' => 1280]
+            ['width' => 1920, 'height' => 1080]
         ]);
 
         view()->share([

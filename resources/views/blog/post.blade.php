@@ -7,7 +7,10 @@
 @endpush
 
 @section('content')
-    <section class="bg-half d-table w-100 lazy" data-bg="url({{ $photo_url }})">
+    <section class="bg-half d-table w-100">
+        <div class="position-absolute" style="top:0;bottom:0;left:0;right:0">
+            <img src="{{ $photo_url }}" alt="{{ $post->name }}" class="w-100 h-100" style="object-fit:cover;object-position:center" />
+        </div>
         <div class="bg-overlay"></div>
         <div class="container">
             <div class="row justify-content-center">

@@ -85,7 +85,7 @@ class BlogController extends Controller
             'posts' => $posts,
             'featured' => $featured,
             'featured_photo_url' => $featured ? img_url($featured->photo_url, [
-                ['width' => 1920, 'height' => 1280]
+                ['width' => 1920, 'height' => 1080]
             ]) : hero_image(),
         ]);
     }
@@ -138,7 +138,7 @@ class BlogController extends Controller
         }
 
         $photo_url = img_url($post->photo_url, [
-            ['width' => 1920, 'height' => 1280]
+            ['width' => 1920, 'height' => 1080]
         ]);
 
         view()->share([
