@@ -240,6 +240,7 @@ class Post extends Model implements Feedable
         $status = $include_private ? ['published', 'private'] : ['published'];
 
         $feed = self::whereIn('status', $status)
+            ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
             ->orderBy('created_at', 'desc')
             ->paginate(null, ['*'], 'paged');
 
