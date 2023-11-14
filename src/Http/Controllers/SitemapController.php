@@ -37,8 +37,6 @@ abstract class SitemapController extends Controller
 
         if ( ! $posts->count()) return;
 
-        $tags = [];
-
         $this->urls[] = (object) [
             'loc' => url($base_path),
             'lastmod' => $posts->last()->updated_at->tz('UTC')->toAtomString(),
@@ -51,20 +49,13 @@ abstract class SitemapController extends Controller
                 'lastmod' => $post->updated_at->tz('UTC')->toAtomString(),
             ];
 
-            foreach (explode(',', $post->keywords) as $keyword)
+            foreach ($post->getKeywords() as $keyword)
             {
-                $keyword = urlencode(trim($keyword));
-
-                if ($keyword) $tags[$keyword] = $post->updated_at->tz('UTC')->toAtomString();
+                $this->urls[] = (object) [
+                    'loc' => $keyword->canonical_url,
+                    'lastmod' => $keyword->updated_at->tz('UTC')->toAtomString(),
+                ];
             }
-        }
-
-        foreach ($tags as $tag => $lastmod)
-        {
-            $this->urls[] = (object) [
-                'loc' => url("/tag/{$tag}"),
-                'lastmod' => $lastmod,
-            ];
         }
     }
 

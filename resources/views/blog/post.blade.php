@@ -76,9 +76,8 @@
                     @if ( ! $post->keywords_disabled and $post->keywords)
                         <p class="text-monospace mt-5">
                             <span>Tags:</span>
-                            @foreach (explode(',', $post->keywords) as $keyword)
-                                @php $keyword = trim($keyword) @endphp
-                                <a href="/tag/{{ urlencode($keyword) }}" class="ml-2">{{ $keyword }}</a>@if ($loop->remaining),@endif
+                            @foreach ($post->getKeywords() as $keyword)
+                                <a href="{{ $keyword->canonical_url }}" class="ml-2">{{ $keyword->name }}</a>@if ($loop->remaining),@endif
                             @endforeach
                         </p>
                     @endif
