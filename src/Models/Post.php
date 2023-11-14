@@ -197,6 +197,14 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Check if keywords are disabled for this post.
+     */
+    public function getKeywordsDisabledAttribute()
+    {
+        return $this->type == 'page' or ! config('base.blog_keywords');
+    }
+
+    /**
      * Get the main keyword for the post.
      */
     public function getMainKeywordAttribute($value)
