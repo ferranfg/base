@@ -73,7 +73,7 @@
                         @basedownExtended($post->content)
                     </div>
 
-                    @if ($post->keywords)
+                    @if ( ! $post->keywords_disabled and $post->keywords)
                         <p class="text-monospace mt-5">
                             <span>Tags:</span>
                             @foreach (explode(',', $post->keywords) as $keyword)

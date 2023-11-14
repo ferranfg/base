@@ -70,6 +70,8 @@ return [
 
     'blog_template' => 'layouts.web',
 
+    'blog_keywords' => true,
+
     'blog_before_post' => null,
 
     'blog_after_post' => null,
