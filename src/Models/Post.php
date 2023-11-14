@@ -236,7 +236,10 @@ class Post extends Model implements Feedable
             'content' => (string) $this->content,
             'updated' => $this->updated_at,
             'link' => $this->canonical_url,
-            'authorName' => $this->author->name
+            'authorName' => $this->author->name,
+            'image' => img_url($this->photo_url, [
+                ['width' => 1920, 'height' => 1080]
+            ]),
         ]);
     }
 
