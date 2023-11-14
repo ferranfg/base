@@ -311,4 +311,27 @@ class Post extends Model implements Feedable
         }
     }
 
+    /**
+     * Returns the post keywords as array
+     *
+     * @return array
+     */
+    public function getKeywords()
+    {
+        $keywords = [];
+
+        foreach (explode(',', $this->keywords) as $keyword)
+        {
+            $keyword = trim($keyword);
+
+            if ($keyword) $keywords[] = (object) [
+                'name' => $keyword,
+                'canonical_url' => url('/tag/' . rawurlencode($keyword)),
+                'updated_at' => $this->updated_at,
+            ];
+        }
+
+        return $keywords;
+    }
+
 }

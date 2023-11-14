@@ -97,7 +97,7 @@ class BlogController extends Controller
      */
     public function tag(Request $request)
     {
-        $keyword = urldecode($request->keyword);
+        $keyword = rawurldecode($request->keyword);
         $posts = $this->postRepository
             ->whereStatus('published')
             ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
