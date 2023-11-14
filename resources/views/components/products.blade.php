@@ -8,7 +8,7 @@
                             <span class="text-center d-block shadow small h6 font-weight-bold">{{ $product->getMetadata('flag') }}</span>
                         </div>
                     @endif
-                    <form method="POST" action="{{ $product->canonical_url}}" class="shop-image position-relative overflow-hidden rounded shadow">
+                    <form method="POST" action="{{ $product->canonical_url}}" class="shop-image position-relative overflow-hidden rounded shadow p-3">
                         @csrf
                         <a href="{{ $product->canonical_url}}" data-toggle="modal" data-target="#ajax-modal" title="{{ $product->name }}">
                             {!! img($product->photo_url, 350, 350, true, 'img-fluid lazy', $product->name, 350, 350) !!}

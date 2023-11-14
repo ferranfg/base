@@ -22,8 +22,8 @@
             <item>
                 <title>{{ $item->title }}</title>
                 <link>{{ url($item->link) }}</link>
-                <description>{{ $item->summary }}</description>
-                <content:encoded><![CDATA[@basedown($item->content)]]></content:encoded>
+                <description><![CDATA[<img src="{{ $item->image }}" alt="{{ $item->title }}" />{{ $item->summary }}]]></description>
+                <content:encoded><![CDATA[<img src="{{ $item->image }}" alt="{{ $item->title }}" />@basedown($item->content)]]></content:encoded>
                 <dc:creator><![CDATA[{{ $item->authorName }}]]></dc:creator>
                 <guid isPermaLink="false">{{ url($item->id) }}</guid>
                 <pubDate>{{ $item->updated->toRssString() }}</pubDate>
