@@ -42,16 +42,41 @@ class GenerateDynamicPost extends Command
         $post->save();
 
         $prompt = [
-            "Write a long post content for an article titled: \"{$post->name}\".",
+            "Write a long blog post content for an article titled: \"{$post->name}\".",
             "The article should be about: \"{$post->excerpt}\".",
-            "Language: \"" . strtoupper(config('app.locale')) . "\".",
-            "Response must be in Markdown format. Use bold, italics, lists, etc.",
-            "Response must contain more than 2000 words.",
-            "If available, use the \"Context sections\" to add links to other articles in the blog.",
-            "Do not include an h1 title; start with text.",
-            "Do not include the word \"Section\" in the title of the sections.",
-            "Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
         ];
+
+        if ($post->content)
+        {
+            $prompt = array_merge($prompt, [
+                (string) null,
+                "Outline:",
+                "- The content you write must complete the following outline structure.",
+                "- Ignore and remove any h1 heading present in the outline.",
+                "- Do not remove any h2 or h3 headings from the outline.",
+                "- Outline structure: \"{$post->content}\".",
+            ]);
+        }
+        else
+        {
+            $prompt[] = "The content you write should have a minimum of 6-8 h2, h3 heading sections.";
+        }
+
+        $prompt = array_merge($prompt, [
+            (string) null,
+            "Response:",
+            "- Language: \"" . strtoupper(config('app.locale')) . "\".",
+            "- Response must be in Markdown format. Use bold, italics, lists, links, etc.",
+            "- Response must contain more than 2000 words.",
+            (string) null,
+            "Conditions:",
+            "- If available, use the \"Context sections\" to add links to other articles in the blog.",
+            "- Do not include an h1 title; start with text.",
+            "- Do not include the word \"Section\" in the title of the sections.",
+            "- Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
+            "- Add an introductory paragraph before the first h2 heading.",
+            "- Write at least two paragraphs for every h3 subsection.",
+        ]);
 
         if ($post->main_keyword and config('services.unsplash.collections'))
         {
@@ -59,23 +84,14 @@ class GenerateDynamicPost extends Command
 
             if ($images->count() >= 2)
             {
-                $prompt[] = 'Here are 2 image URLs related to the topic. Add them in the middle and 3/4 of the article:';
+                $prompt[] = (string) null;
+                $prompt[] = 'Here are some image URLs related to the topic. Add them into the article:';
 
                 foreach ($images->pluck('urls.regular')->random(2) as $url)
                 {
                     $prompt[] = "- ![]({$url})";
                 }
             }
-        }
-
-        if ($post->content)
-        {
-            $prompt[] = "Complete the following outline with the content you have written:";
-            $prompt[] = $post->content;
-        }
-        else
-        {
-            $prompt[] = "It should have a minimum of 6-8 h2, h3 heading sections.";
         }
 
         $assistance = Assistance::completion(implode("\n", $prompt), [
@@ -121,6 +137,7 @@ class GenerateDynamicPost extends Command
             (string) null,
             'Conditions:',
             '- Be very specific about the topic.',
+            '- Do not include a h1 heading in the outline.',
             '- Language: "' . strtoupper(config('app.locale')) . '".',
             "- Post type: \"{$post_type}\".",
             "- The title must start with: \"{$letter}\".",
