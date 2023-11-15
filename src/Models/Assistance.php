@@ -127,7 +127,7 @@ class Assistance extends Model
         }
 
         // Context
-        if ($match_count)
+        if ($match_count and app()->isProduction())
         {
             $assistance = self::embeddingFromInput($query);
             $assistances = self::match($assistance->embedding, $match_threshold, $match_count);
