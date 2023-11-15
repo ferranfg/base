@@ -48,7 +48,6 @@ class GenerateDynamicPost extends Command
             "Response must be in Markdown format. Use bold, italics, lists, etc.",
             "Response must contain more than 2000 words.",
             "If available, use the \"Context sections\" to add links to other articles in the blog.",
-            "It should have a minimum of 4 h2-level sections.",
             "Do not include an h1 title; start with text.",
             "Do not include the word \"Section\" in the title of the sections.",
             "Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
@@ -56,17 +55,27 @@ class GenerateDynamicPost extends Command
 
         if ($post->main_keyword and config('services.unsplash.collections'))
         {
-            $images = Unsplash::search($post->main_keyword, 1, 30, 'landscape');
+            $images = Unsplash::search($post->main_keyword, 1, 15, 'landscape');
 
             if ($images->count() >= 2)
             {
-                $prompt[] = 'Here are some image URLs related to the topic. Add them into the article:';
+                $prompt[] = 'Here are 2 image URLs related to the topic. Add them in the middle and 3/4 of the article:';
 
                 foreach ($images->pluck('urls.regular')->random(2) as $url)
                 {
                     $prompt[] = "- ![]({$url})";
                 }
             }
+        }
+
+        if ($post->content)
+        {
+            $prompt[] = "Complete the following outline with the content you have written:";
+            $prompt[] = $post->content;
+        }
+        else
+        {
+            $prompt[] = "It should have a minimum of 6-8 h2, h3 heading sections.";
         }
 
         $assistance = Assistance::completion(implode("\n", $prompt), [
@@ -104,10 +113,11 @@ class GenerateDynamicPost extends Command
             'Suggest the following fields for the imagined blog post:',
             '- Title: It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
-            '- Keywords: Provide a list of 3-5 one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
+            '- Keywords: Provide a list of 3-5 comma-separated one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
+            '- Outline: Provide a list of 6-8 h2, h3 headings that the article should include. These headings should reflect a friendly and conversational tone with a story-telling approach.',
             (string) null,
             'Response must be in JSON format and follow the structure:',
-            '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
+            '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords", "outline": "Replace with post outline in markdown format"}',
             (string) null,
             'Conditions:',
             '- Be very specific about the topic.',
@@ -174,6 +184,7 @@ class GenerateDynamicPost extends Command
             $post->type = 'dynamic';
             $post->status = 'draft';
             $post->keywords = $response->keywords;
+            $post->content = $response->outline;
             $post->save();
         }
 
