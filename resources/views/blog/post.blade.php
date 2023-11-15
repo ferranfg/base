@@ -70,10 +70,10 @@
                         @basedownExtended($post->content)
                     </div>
 
-                    @if ( ! $post->keywords_disabled and $post->keywords)
+                    @if ($keywords = $post->getKeywords() and $keywords->count())
                         <p class="text-monospace mt-5">
                             <span>Tags:</span>
-                            @foreach ($post->getKeywords() as $keyword)
+                            @foreach ($keywords as $keyword)
                                 <a href="{{ $keyword->canonical_url }}" class="ml-2">{{ $keyword->name }}</a>@if ($loop->remaining),@endif
                             @endforeach
                         </p>
