@@ -41,6 +41,7 @@ class Basedown extends Parsedown
             ],
             'table_of_contents' => [
                 'position' => 'before-headings',
+                'max_heading_level' => 2,
             ],
         ]);
 

@@ -321,11 +321,15 @@ class Post extends Model implements Feedable
      */
     public function getKeywords()
     {
+        if ($this->keywords_disabled) return collect();
+
         $keywords = [];
 
         foreach (explode(',', $this->keywords) as $keyword)
         {
-            $keyword = trim($keyword);
+            $keyword = strtolower(
+                trim($keyword)
+            );
 
             if ($keyword) $keywords[] = (object) [
                 'name' => $keyword,
@@ -334,7 +338,7 @@ class Post extends Model implements Feedable
             ];
         }
 
-        return $keywords;
+        return collect($keywords);
     }
 
 }
