@@ -111,7 +111,7 @@ class Assistance extends Model
         // Options
         $match_threshold = Arr::get($options, 'match_threshold', 0.78);
         $match_count     = Arr::get($options, 'match_count', 0);
-        $model           = Arr::get($options, 'model', 'gpt-3.5-turbo');
+        $model           = Arr::get($options, 'model', config('base.assistance_model'));
         $max_tokens      = Arr::get($options, 'max_tokens', null);
         $temperature     = Arr::get($options, 'temperature', 0);
         $system          = Arr::get($options, 'system', '');

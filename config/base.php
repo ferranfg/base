@@ -116,6 +116,8 @@ return [
     |
     */
 
+    'assistance_model' => 'gpt-4',
+
     'assistance_system' => null,
 
     'assistance_embeddings' => null,
