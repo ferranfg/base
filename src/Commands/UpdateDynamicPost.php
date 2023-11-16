@@ -14,7 +14,7 @@ class UpdateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:update-dynamic-post {post?} {--debug=false}';
+    public $signature = 'base:update-dynamic-post {post?} {--level=3} {--debug=false}';
 
     /**
      * The console command description.
@@ -46,15 +46,16 @@ class UpdateDynamicPost extends Command
 
         if (is_null($post)) return Command::FAILURE;
 
+        $level = $this->option('level');
         $pieces = collect(
-                (new markdownSplit)->splitMarkdownAtLevel((string) $post->content, true, 3)
+                (new markdownSplit)->splitMarkdownAtLevel((string) $post->content, true, $level)
             )
-            ->reject(function($piece)
+            ->reject(function($piece) use ($level)
             {
                 // Wrong piece format
                 if ( ! array_key_exists('level', $piece)) return true;
-                // We only want level 3 headings
-                if ($piece['level'] != 3) return true;
+                // We only want level {$level} headings
+                if ($piece['level'] != $level) return true;
                 // Long text to rewrite
                 if (mb_strlen($piece['body']) < 200) return true;
 
