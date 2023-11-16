@@ -69,23 +69,22 @@ class UpdateDynamicPost extends Command
 
         foreach ($pieces as $piece)
         {
-            $words = count(explode(' ', $piece['body'])) * 2;
+            $tokens = ceil(count(explode(' ', $piece['body']))) * 1.5;
             $prompt = [
                 "Rewrite the following subsection taken from a blog post.",
                 "This subsection is titled: \"{$piece['header']}\".",
-                "The content you write must keep the same meaning and structure as the original, but longer.",
+                "The content you write must keep the same meaning and structure as the original.",
                 "The response must be in markdown format; using only paragraphs, bold, italics, lists or links.",
                 "Keep the original elements such as links, images, code blocks, etc.",
                 "Do not include the subsection title in your response; start writing from the first paragraph.",
-                "The response should have at least {$words} words.",
+                "Limit your response to {$tokens} tokens or less.",
                 (string) null,
                 "Original content:",
                 $piece['body'],
             ];
 
             $assistance = Assistance::completion(implode("\n", $prompt), [
-                'temperature' => 0.5,
-                'max_tokens' => $words * 1.5,
+                'temperature' => 0.5
             ]);
 
             $content_updated = $assistance->choices[0]->message->content;
