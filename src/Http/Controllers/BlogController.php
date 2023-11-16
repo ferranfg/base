@@ -67,7 +67,7 @@ class BlogController extends Controller
             ->whereStatus('published')
             ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
             ->whereFeatured(false)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->simplePaginate(8);
 
         $posts->setPath(config('base.blog_path'));
@@ -103,7 +103,7 @@ class BlogController extends Controller
             ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
             ->whereFeatured(false)
             ->where('keywords', 'like', "%{$keyword}%")
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->simplePaginate(8);
 
         abort_unless($posts->count(), 404);
