@@ -234,7 +234,7 @@ class Post extends Model implements Feedable
 
         $feed = self::whereIn('status', $status)
             ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate(null, ['*'], 'paged');
 
         return collect($feed->items());
