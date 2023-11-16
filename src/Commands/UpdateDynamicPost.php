@@ -14,7 +14,7 @@ class UpdateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:update-dynamic-post {post?}';
+    public $signature = 'base:update-dynamic-post {post?} {--debug=false}';
 
     /**
      * The console command description.
@@ -89,12 +89,16 @@ class UpdateDynamicPost extends Command
 
             $content_updated = $assistance->choices[0]->message->content;
 
-            $post->content = str_replace($piece['body'], $content_updated, $post->content);
-            $post->save();
+            if ($this->option('debug') == 'false')
+            {
+                $post->content = str_replace($piece['body'], $content_updated, $post->content);
+                $post->save();
+            }
 
             $this->info("Post Updated ID: {$post->id}");
             $this->info("Old Content: {$piece['body']}");
             $this->info("New Content: {$content_updated}");
+            $this->info("Debug Mode: {$this->option('debug')}");
         }
     }
 }
