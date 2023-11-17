@@ -14,7 +14,7 @@ class GenerateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:generate-dynamic-post {action=generate} {--topic=}';
+    public $signature = 'base:generate-dynamic-post {action=generate} {--topic=} {--type=}';
 
     /**
      * The console command description.
@@ -121,7 +121,7 @@ class GenerateDynamicPost extends Command
         $letter = strtoupper($letters[array_rand($letters)]);
 
         $post_type = ['question', 'listicle', 'how-to', 'case-study', 'tutorial', 'checklist', 'statistics', 'facts', 'historical', 'faqs', 'glossary', 'comparative analysis', 'inspiration and motivation'];
-        $post_type = $post_type[array_rand($post_type)];
+        $post_type = $this->argument('type') ?? $post_type[array_rand($post_type)];
 
         $prompt = [
             "Imagine a new blog post to write about {$topic}.",
@@ -130,14 +130,12 @@ class GenerateDynamicPost extends Command
             '- Title: It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
             '- Keywords: Provide a list of 3-5 comma-separated one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
-            '- Outline: Provide a list of 6-8 h2, h3 headings that the article should include. These headings should reflect a friendly and conversational tone with a story-telling approach.',
             (string) null,
             'Response must be in JSON format and follow the structure:',
-            '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords", "outline": "Replace with post outline in markdown format"}',
+            '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
             (string) null,
             'Conditions:',
             '- Be very specific about the topic.',
-            '- Do not include a h1 heading in the outline.',
             '- Language: "' . strtoupper(config('app.locale')) . '".',
             "- Post type: \"{$post_type}\".",
             "- The title must start with: \"{$letter}\".",
@@ -201,7 +199,6 @@ class GenerateDynamicPost extends Command
             $post->type = 'dynamic';
             $post->status = 'draft';
             $post->keywords = $response->keywords;
-            $post->content = $response->outline;
             $post->save();
         }
 
