@@ -51,6 +51,15 @@ class Post extends Model implements Feedable
     public $translatable = ['name', 'slug', 'excerpt', 'content'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    public $casts = [
+        'showcase_product_ids' => 'json',
+    ];
+
+    /**
      * The available status values.
      *
      * @var array

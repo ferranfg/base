@@ -4,6 +4,7 @@ namespace Ferranfg\Base\Commands;
 
 use Ferranfg\Base\Clients\Unsplash;
 use Ferranfg\Base\Models\Post;
+use Ferranfg\Base\Models\Product;
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
 
@@ -78,7 +79,34 @@ class GenerateDynamicPost extends Command
             "- Write at least two paragraphs for every h3 subsection.",
         ]);
 
-        if ($post->main_keyword and config('services.unsplash.collections'))
+        if ($post->showcase_product_ids)
+        {
+            $product_ids = collect($post->showcase_product_ids)->values();
+            $products = Product::whereIn('id', $product_ids)->get();
+
+            if ($products->count())
+            {
+                $prompt = array_merge($prompt, [
+                    (string) null,
+                    "Product showcase:",
+                    "- Include the following products in the article.",
+                    "- Add a section for each product, in the order they appear below.",
+                    "- Include the following information for each product: name, URL, image, price.",
+                    "- List:",
+                ]);
+
+                foreach ($products as $product)
+                {
+                    $prompt[] = "  - " . implode(". ", [
+                        "Name: \"{$product->name}\"",
+                        "URL: \"{$product->attached_url}\"",
+                        "Image: \"{$product->photo_url}\"",
+                        "Price: \"{$product->amount}{$product->currency}\"",
+                    ]);
+                }
+            }
+        }
+        else if ($post->main_keyword and config('services.unsplash.collections'))
         {
             $images = Unsplash::search($post->main_keyword, 1, 15, 'landscape');
 
