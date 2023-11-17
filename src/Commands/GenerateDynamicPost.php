@@ -14,7 +14,7 @@ class GenerateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:generate-dynamic-post {action=generate} {--topic=} {--type=} {--start=}';
+    public $signature = 'base:generate-dynamic-post {action=generate} {--topic=} {--type=} {--title=}';
 
     /**
      * The console command description.
@@ -118,7 +118,7 @@ class GenerateDynamicPost extends Command
         $topic = $this->option('topic') ? '"' . $this->option('topic') . '"' : 'one topic of your system knowledge';
 
         $letters = ['e', 'a', 'o', 'i', 'n', 'r', 's', 'd', 'u', 'c', 'l', 't', 'b', 'p', '3', '5', '7'];
-        $letter = $this->argument('start') ?? strtoupper($letters[array_rand($letters)]);
+        $letter = $this->argument('title') ?? strtoupper($letters[array_rand($letters)]);
 
         $post_type = ['question', 'listicle', 'how-to', 'case-study', 'tutorial', 'checklist', 'statistics', 'facts', 'historical', 'faqs', 'glossary', 'comparative analysis', 'inspiration and motivation'];
         $post_type = $this->argument('type') ?? $post_type[array_rand($post_type)];
