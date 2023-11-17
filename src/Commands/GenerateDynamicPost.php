@@ -118,10 +118,10 @@ class GenerateDynamicPost extends Command
         $topic = $this->option('topic') ? '"' . $this->option('topic') . '"' : 'one topic of your system knowledge';
 
         $letters = ['e', 'a', 'o', 'i', 'n', 'r', 's', 'd', 'u', 'c', 'l', 't', 'b', 'p', '3', '5', '7'];
-        $letter = $this->argument('title') ?? strtoupper($letters[array_rand($letters)]);
+        $letter = $this->option('title') ?? strtoupper($letters[array_rand($letters)]);
 
         $post_type = ['question', 'listicle', 'how-to', 'case-study', 'tutorial', 'checklist', 'statistics', 'facts', 'historical', 'faqs', 'glossary', 'comparative analysis', 'inspiration and motivation'];
-        $post_type = $this->argument('type') ?? $post_type[array_rand($post_type)];
+        $post_type = $this->option('type') ?? $post_type[array_rand($post_type)];
 
         $prompt = [
             "Imagine a new blog post to write about {$topic}.",
