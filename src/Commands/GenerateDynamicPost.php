@@ -85,7 +85,7 @@ class GenerateDynamicPost extends Command
             if ($images->count() >= 2)
             {
                 $prompt[] = (string) null;
-                $prompt[] = 'Here are some image URLs related to the topic. Add them into the article:';
+                $prompt[] = 'Here are 2 image URLs related to the topic. Spread them, one at a time, between sections of the article:';
 
                 foreach ($images->pluck('urls.regular')->random(2) as $url)
                 {
