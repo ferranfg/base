@@ -140,7 +140,7 @@ img.emoji {
 }
 
 // Post
-.post h2, .blog h2.h5 {
+.blog h2.h5 {
     font-size: 1.25rem !important;
     line-height: 1.2;
 }
@@ -148,15 +148,17 @@ img.emoji {
 .post {
     p {
         line-height: 2;
+        margin-bottom: 1.5em;
     }
 
     h2 {
-        margin: 2em 0 1em;
+        font-size: 28px !important;
+        margin: 0 0 16px;
     }
 
     h3 {
-        font-size: 1.1rem !important;
-        color: #777;
+        font-size: 24px !important;
+        margin-bottom: 16px;
     }
 
     li {
@@ -224,6 +226,7 @@ img.emoji {
 
     .heading-permalink {
         margin-right: 6px;
+        opacity: 0.3;
     }
 }
 
