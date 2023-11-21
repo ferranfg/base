@@ -15,7 +15,7 @@ class GenerateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:generate-dynamic-post {action=generate} {--topic=} {--type=} {--title=}';
+    public $signature = 'base:generate-dynamic-post {action=generate} {--title=} {--type=} {--topic=}';
 
     /**
      * The console command description.
@@ -143,13 +143,7 @@ class GenerateDynamicPost extends Command
      */
     public function suggestDynamicPost($create_post = true)
     {
-        $topic = $this->option('topic') ? '"' . $this->option('topic') . '"' : 'one topic of your system knowledge';
-
-        $letters = ['e', 'a', 'o', 'i', 'n', 'r', 's', 'd', 'u', 'c', 'l', 't', 'b', 'p', '3', '5', '7'];
-        $letter = $this->option('title') ?? strtoupper($letters[array_rand($letters)]);
-
-        $post_type = ['question', 'listicle', 'how-to', 'case-study', 'tutorial', 'checklist', 'statistics', 'facts', 'historical', 'faqs', 'glossary', 'comparative analysis', 'inspiration and motivation'];
-        $post_type = $this->option('type') ?? $post_type[array_rand($post_type)];
+        list($title, $type, $topic) = $this->getTitleTypeAndTopic($create_post);
 
         $prompt = [
             "Imagine a new blog post to write about {$topic}.",
@@ -165,8 +159,8 @@ class GenerateDynamicPost extends Command
             'Conditions:',
             '- Be very specific about the topic.',
             '- Language: "' . strtoupper(config('app.locale')) . '".',
-            "- Post type: \"{$post_type}\".",
-            "- The title must start with: \"{$letter}\".",
+            "- Post type: \"{$type}\".",
+            "- The title must start with: \"{$title}\".",
         ];
 
         $archive = (new Post)
@@ -231,5 +225,82 @@ class GenerateDynamicPost extends Command
         }
 
         return $post;
+    }
+
+    /**
+     * Get the title, type and topic for the dynamic post
+     *
+     * @return array
+     */
+    public function getTitleTypeAndTopic($create_post = true)
+    {
+        $title = null;
+        $type  = null;
+        $topic = null;
+
+        // Get title, type and topic from options
+        if ($this->option('title') or $this->option('type') or $this->option('topic'))
+        {
+            $title = $this->option('title') ?? null;
+            $type  = $this->option('type')  ?? null;
+            $topic = $this->option('topic') ?? null;
+        }
+        // Get title, type and topic from config
+        else if (config('base.blog_dynamic_posts'))
+        {
+            $json = file_get_contents(config('base.blog_dynamic_posts'));
+            $json = json_decode($json, true);
+
+            $post = collect($json)->whereNull('created_at')->first();
+
+            if ($post and array_key_exists('title', $post)) $title = $post['title'];
+            if ($post and array_key_exists('type', $post))  $type = $post['type'];
+            if ($post and array_key_exists('topic', $post)) $topic = $post['topic'];
+        }
+
+        // Random title
+        if (is_null($title))
+        {
+            $letters = ['E', 'A', 'O', 'I', 'N', 'R', 'S', 'D', 'U', 'C', 'L', 'T', 'B', 'P', '3', '5', '7'];
+            $title = $letters[array_rand($letters)];
+        }
+
+        // Random type
+        if (is_null($type))
+        {
+            $types = ['question', 'listicle', 'how-to', 'case-study', 'tutorial', 'checklist', 'statistics', 'faqs', 'glossary', 'comparative analysis'];
+            $type = $types[array_rand($types)];
+        }
+
+        // Random topic
+        if (is_null($topic)) $topic = 'one topic of your system knowledge';
+
+        // Update JSON file
+        if ($create_post and config('base.blog_dynamic_posts') and $post)
+        {
+            $json = file_get_contents(config('base.blog_dynamic_posts'));
+            $json = json_decode($json, true);
+
+            $update = collect($json)->flatMap(function ($item) use ($post)
+            {
+                if ($item['title'] == $post['title'])
+                {
+                    $item['created_at'] = now()->toDateTimeString();
+                }
+
+                return [$item];
+            });
+
+            file_put_contents(
+                config('base.blog_dynamic_posts'),
+                json_encode($update, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+            );
+        }
+
+        return ([
+            $title,
+            $type,
+            $topic,
+        ]);
     }
 }
