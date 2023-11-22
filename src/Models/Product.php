@@ -34,7 +34,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'photo_url', 'video_url', 'attached_url', 'currency', 'amount', 'sale_amount', 'type', 'status'];
+    protected $fillable = ['owner_id', 'name', 'slug', 'description', 'photo_url', 'video_url', 'attached_url', 'currency', 'amount', 'sale_amount', 'type', 'status'];
 
     /**
      * The accessors to append to the model's array form.
