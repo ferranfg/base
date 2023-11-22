@@ -47,7 +47,7 @@ class ImportProductsOutscraper extends Command
                 'attached_url' => Arr::get($product, 'short_url'),
                 'photo_url' => Arr::get($product, 'image_1'),
                 'currency' => 'eur',
-                'amount' => bcmul(Arr::get($product, 'price', 0), 100),
+                'amount' => bcmul((float) Arr::get($product, 'price', 0), 100),
                 'type' => 'affiliate',
                 'status' => 'in_stock',
             ]);
