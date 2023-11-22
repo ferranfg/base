@@ -46,6 +46,7 @@ class ImportProductsOutscraper extends Command
             $product = Base::product()->updateOrCreate([
                 'slug' => Arr::get($product, 'asin'),
             ], [
+                'owner_id' => 1,
                 'name' => Arr::get($product, 'name'),
                 'description' => $description,
                 'attached_url' => Arr::get($product, 'short_url'),
