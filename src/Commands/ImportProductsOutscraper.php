@@ -39,11 +39,15 @@ class ImportProductsOutscraper extends Command
 
         foreach ($products as $product)
         {
+            $description = Arr::get($product, 'description');
+
+            if ( ! $description) $description = Arr::get($product, 'about');
+
             $product = Base::product()->updateOrCreate([
                 'slug' => Arr::get($product, 'asin'),
             ], [
                 'name' => Arr::get($product, 'name'),
-                'description' => Arr::get($product, 'about'),
+                'description' => $description,
                 'attached_url' => Arr::get($product, 'short_url'),
                 'photo_url' => Arr::get($product, 'image_1'),
                 'currency' => 'eur',
