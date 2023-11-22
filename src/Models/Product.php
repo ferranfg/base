@@ -120,6 +120,19 @@ class Product extends Model
     }
 
     /**
+     * Get the product attached URL.
+     */
+    public function getAttachedUrlAttribute($value)
+    {
+        if (str_contains($value, 'amazon.es') and ! str_contains($value, 'tag='))
+        {
+            $value .= (str_contains($value, '?') ? '&' : '?') . 'tag=ferranfg-21';
+        }
+
+        return $value;
+    }
+
+    /**
      * Get the product checkout URL.
      */
     public function getCheckoutUrlAttribute()
