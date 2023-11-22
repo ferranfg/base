@@ -51,7 +51,7 @@ class FeedController extends Controller
             $item->setTitle((string) $product->name);
             $item->setDescription((string) $product->description);
             $item->setLink((string) $product->canonical_url);
-            if ($product->photo_url) $item->setImage((string) $product->photo_url);
+            if ($product->photo_url) $item->setImage((string) img_url($product->photo_url));
             if ($product->attached_url) $item->setAdditionalImage((string) $product->attached_url);
             $item->setAttribute('availability', 'in stock', false);
             $item->setPrice("{$product->amount}{$product->currency}");

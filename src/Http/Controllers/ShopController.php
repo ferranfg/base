@@ -162,7 +162,7 @@ class ShopController extends Controller
             'attributes' => [
                 'currency' => $product->currency,
                 'canonical_url' => $product->canonical_url,
-                'photo_url' => $product->photo_url,
+                'photo_url' => img_url($product->photo_url),
             ],
             'associatedModel' => $product
         ]);
