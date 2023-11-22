@@ -100,8 +100,8 @@ class GenerateDynamicPost extends Command
                     $prompt[] = "  - " . implode(". ", [
                         "Name: \"{$product->name}\"",
                         "URL: \"{$product->attached_url}\"",
-                        "Image: \"{$product->photo_url}\"",
-                        "Price: \"{$product->amount}{$product->currency}\"",
+                        "Image: \"" . img_url($product->photo_url) . "\"",
+                        "Price: \"{$product->formatAmount()}\"",
                     ]);
                 }
             }
