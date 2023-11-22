@@ -14,7 +14,9 @@ use Ferranfg\Base\Commands\InternalLinking;
 use Ferranfg\Base\Commands\EmbeddingsCommand;
 use Ferranfg\Base\Commands\GenerateDynamicImages;
 use Ferranfg\Base\Commands\GenerateDynamicPost;
+use Ferranfg\Base\Commands\ImportProductsOutscraper;
 use Ferranfg\Base\Commands\SendPostNewsletter;
+use Ferranfg\Base\Commands\UpdateDynamicPost;
 
 class BaseServiceProvider extends ServiceProvider
 {
@@ -54,10 +56,12 @@ class BaseServiceProvider extends ServiceProvider
                 EmbeddingsCommand::class,
                 GenerateDynamicImages::class,
                 GenerateDynamicPost::class,
+                ImportProductsOutscraper::class,
                 InstallCommand::class,
                 InternalLinking::class,
                 PublishCommand::class,
                 SendPostNewsletter::class,
+                UpdateDynamicPost::class,
             ]);
         }
 
