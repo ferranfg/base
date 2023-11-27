@@ -1,13 +1,31 @@
 @php
-    $showcase = \Ferranfg\Base\Base::post()
-        ->whereNotNull('showcase_product_ids')
-        ->latest()
-        ->first();
+    use Ferranfg\Base\Base;
+
+    $display_showcase = request()->routeIs('blog.*');
+
+    if ($display_showcase)
+    {
+        try
+        {
+            $showcase = Base::post()
+                ->whereNotNull('showcase_product_ids')
+                ->latest()
+                ->first();
+        }
+        catch (Exception $e)
+        {
+            $display_showcase = false;
+        }
+    }
 @endphp
-@if ($showcase)
+@if ($display_showcase)
     <style>
-        div:where(.swal2-container) img:where(.swal2-image) {
-            margin: 0;
+        .swal2-close {
+            position: absolute;
+            top: 0;
+        }
+        .swal2-image {
+            margin-bottom: 0;
         }
     </style>
     <template id="showcase-template">
@@ -22,13 +40,27 @@
         </swal-html>
     </template>
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            Swal.fire({
-                template: "#showcase-template",
-                toast: true,
-                position: "bottom-end",
-                showConfirmButton: false,
-            });
-        });
+        var displayedShowcase = false;
+
+        function displayShowcase() {
+            if (displayedShowcase) {
+                window.removeEventListener('scroll', displayShowcase);
+
+                return;
+            }
+
+            if (window.scrollY > 1400) {
+                displayedShowcase = true;
+                Swal.fire({
+                    template: "#showcase-template",
+                    toast: true,
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                });
+            }
+        }
+
+        window.addEventListener('scroll', displayShowcase);
     </script>
 @endif
