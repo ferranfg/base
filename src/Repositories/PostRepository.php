@@ -20,12 +20,12 @@ class PostRepository
 
     public function whereType($type)
     {
-        return Base::post()->with('metadata')->whereType($type);
+        return Base::post()->with('author', 'metadata')->whereType($type);
     }
 
     public function whereStatus($status)
     {
-        return Base::post()->with('metadata')->whereStatus($status);
+        return Base::post()->with('author', 'metadata')->whereStatus($status);
     }
 
     public function closePost($post, $comparison, $sort)
