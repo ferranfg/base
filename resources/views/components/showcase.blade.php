@@ -1,16 +1,19 @@
 @php
-    use Ferranfg\Base\Base;
+    use Ferranfg\Base\Repositories\PostRepository;
 
-    $display_showcase = request()->routeIs('blog.*');
+    $display_showcase = isset($route_is) ? request()->routeIs($route_is) : false;
 
     if ($display_showcase)
     {
         try
         {
-            $showcase = Base::post()
+            $showcase = (new PostRepository)
+                ->whereStatus('published')
                 ->whereNotNull('showcase_product_ids')
                 ->latest()
                 ->first();
+
+            $display_showcase = ! is_null($showcase);
         }
         catch (Exception $e)
         {
