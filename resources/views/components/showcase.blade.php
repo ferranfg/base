@@ -9,11 +9,13 @@
         {
             $showcase = (new PostRepository)
                 ->whereStatus('published')
-                ->whereNotNull('showcase_product_ids')
+                ->where(function($query) {
+                    $query->whereNotnull('showcase_product_ids')->where('showcase_product_ids', '!=', '[]');
+                })
                 ->latest()
                 ->first();
 
-            $display_showcase = ! is_null($showcase);
+            $display_showcase = ($showcase and $showcase->canonical_url != request()->url());
         }
         catch (Exception $e)
         {
