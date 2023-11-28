@@ -108,7 +108,7 @@ class GenerateDynamicPost extends Command
         }
         else if ($post->main_keyword and config('services.unsplash.collections'))
         {
-            $images = Unsplash::search($post->main_keyword, 1, 15, 'landscape');
+            $images = Unsplash::search($post->main_keyword, 1, 15);
 
             if ($images->count() >= 2)
             {
