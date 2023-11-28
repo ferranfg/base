@@ -14,6 +14,7 @@ use Ferranfg\Base\Commands\InternalLinking;
 use Ferranfg\Base\Commands\EmbeddingsCommand;
 use Ferranfg\Base\Commands\GenerateDynamicImages;
 use Ferranfg\Base\Commands\GenerateDynamicPost;
+use Ferranfg\Base\Commands\ImportProductsAmazon;
 use Ferranfg\Base\Commands\ImportProductsOutscraper;
 use Ferranfg\Base\Commands\SendPostNewsletter;
 use Ferranfg\Base\Commands\UpdateDynamicPost;
@@ -56,6 +57,7 @@ class BaseServiceProvider extends ServiceProvider
                 EmbeddingsCommand::class,
                 GenerateDynamicImages::class,
                 GenerateDynamicPost::class,
+                ImportProductsAmazon::class,
                 ImportProductsOutscraper::class,
                 InstallCommand::class,
                 InternalLinking::class,

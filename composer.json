@@ -36,6 +36,7 @@
         "geoip2/geoip2": "^2.0",
         "imagekit/imagekit": "^1.2",
         "intervention/image": "^2.5",
+        "jakiboy/apaapi": "^1.1",
         "jenssegers/agent": "^2.6",
         "laravel/nova": "^3.32",
         "laravel/socialite": "^5.8",
