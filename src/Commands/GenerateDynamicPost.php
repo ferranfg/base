@@ -149,7 +149,7 @@ class GenerateDynamicPost extends Command
             "Imagine a new blog post to write about {$topic}.",
             (string) null,
             'Suggest the following fields for the imagined blog post:',
-            '- Title: It should be concise, ideally between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
+            '- Title: It should be concise, between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
             '- Keywords: Provide a list of 3-5 comma-separated one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
             (string) null,
@@ -160,7 +160,7 @@ class GenerateDynamicPost extends Command
             '- Be very specific about the topic.',
             '- Language: "' . strtoupper(config('app.locale')) . '".',
             "- Post type: \"{$type}\".",
-            "- The title must start with: \"{$title}\".",
+            "- The title \"{$title}\".",
         ];
 
         $archive = (new Post)
@@ -258,11 +258,15 @@ class GenerateDynamicPost extends Command
             if ($post and array_key_exists('topic', $post)) $topic = $post['topic'];
         }
 
-        // Random title
-        if (is_null($title))
+        // Format or random title
+        if ( ! is_null($title))
+        {
+            $title = "will be: \"{$title}\"";
+        }
+        else
         {
             $letters = ['E', 'A', 'O', 'I', 'N', 'R', 'S', 'D', 'U', 'C', 'L', 'T', 'B', 'P', '3', '5', '7'];
-            $title = $letters[array_rand($letters)];
+            $title = "must start with \"{$letters[array_rand($letters)]}\"";
         }
 
         // Random type
