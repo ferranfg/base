@@ -55,9 +55,9 @@ class FeedController extends Controller
             if ($product->attached_url) $item->setAdditionalImage((string) $product->attached_url);
             $item->setAttribute('availability', 'in stock', false);
             $item->setPrice("{$product->amount}{$product->currency}");
+            if ($product->sale_amount) $item->setSalePrice("{$product->sale_amount}{$product->currency}");
             $item->setBrand((string) $product->brand);
             $item->setCondition('new');
-            $item->setAttribute('is_bundle', $product->type == 'bundle' ? 'yes' : 'no', false);
 
             // https://support.google.com/merchants/answer/6324436
             if ($product->google_category) $item->setGoogleCategory($product->google_category);
