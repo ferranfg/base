@@ -49,7 +49,10 @@ class NewsletterController extends Controller
         $user->unsubscribed_at = null;
         $user->save();
 
-        $user->notify(new (config('base.newsletter_notification')));
+        if (config('base.newsletter_notification'))
+        {
+            $user->notify(new (config('base.newsletter_notification')));
+        }
 
         event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
 
