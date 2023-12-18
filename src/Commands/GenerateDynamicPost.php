@@ -15,7 +15,7 @@ class GenerateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:generate-dynamic-post {action=generate} {--title=} {--type=} {--topic=}';
+    public $signature = 'base:generate-dynamic-post {action=generate} {--title=} {--type=} {--topic=} {--keyword=}';
 
     /**
      * The console command description.
@@ -143,7 +143,7 @@ class GenerateDynamicPost extends Command
      */
     public function suggestDynamicPost($create_post = true)
     {
-        list($title, $type, $topic) = $this->getTitleTypeAndTopic($create_post);
+        list($is_random, $title, $type, $topic, $keyword) = $this->getSuggestion($create_post);
 
         $prompt = [
             "Imagine a new blog post to write about {$topic}.",
@@ -157,26 +157,28 @@ class GenerateDynamicPost extends Command
             '{"name": "Replace with post title", "excerpt": "Replace with post excerpt", "keywords": "Replace with post keywords"}',
             (string) null,
             'Conditions:',
-            '- Be very specific about the topic.',
-            '- Language: "' . strtoupper(config('app.locale')) . '".',
-            "- Post type: \"{$type}\".",
-            "- The title \"{$title}\".",
+            '- Language: ' . strtoupper(config('app.locale')) . '.',
+            "- Post type: {$type}.",
+            "- The title {$title}.",
         ];
 
-        $archive = (new Post)
-            ->whereStatus('published')
-            ->whereIn('type', ['entry', 'dynamic'])
-            ->orderBy('updated_at', 'desc')
-            ->take(8);
-
-        if ($archive->count())
+        if ($is_random)
         {
-            $prompt[] = (string) null;
-            $prompt[] = 'Here are the last posts published in the blog as a reference. Do not repeat the same topic.';
+            $archive = (new Post)
+                ->whereStatus('published')
+                ->whereIn('type', ['entry', 'dynamic'])
+                ->orderBy('updated_at', 'desc')
+                ->take(8);
 
-            foreach ($archive->get() as $post)
+            if ($archive->count())
             {
-                $prompt[] = "{\"name\": \"{$post->name}\", \"excerpt\": \"{$post->excerpt}\"}";
+                $prompt[] = (string) null;
+                $prompt[] = 'Here are the last posts published in the blog as a reference. Do not repeat the same topic.';
+
+                foreach ($archive->get() as $post)
+                {
+                    $prompt[] = "{\"name\": \"{$post->name}\", \"excerpt\": \"{$post->excerpt}\"}";
+                }
             }
         }
 
@@ -220,7 +222,7 @@ class GenerateDynamicPost extends Command
             $post->content = (string) null;
             $post->type = 'dynamic';
             $post->status = 'draft';
-            $post->keywords = $response->keywords;
+            $post->keywords = $keyword ? "{$keyword}, {$response->keywords}" : $response->keywords;
             $post->save();
         }
 
@@ -228,22 +230,26 @@ class GenerateDynamicPost extends Command
     }
 
     /**
-     * Get the title, type and topic for the dynamic post
+     * Get the title, type, topic and keyword for the dynamic post
      *
      * @return array
      */
-    public function getTitleTypeAndTopic($create_post = true)
+    public function getSuggestion($create_post = true)
     {
-        $title = null;
-        $type  = null;
-        $topic = null;
+        $is_random = false;
+
+        $title   = null;
+        $type    = null;
+        $topic   = null;
+        $keyword = null;
 
         // Get title, type and topic from options
-        if ($this->option('title') or $this->option('type') or $this->option('topic'))
+        if ($this->option('title') or $this->option('type') or $this->option('topic') or $this->option('keyword'))
         {
-            $title = $this->option('title') ?? null;
-            $type  = $this->option('type')  ?? null;
-            $topic = $this->option('topic') ?? null;
+            $title   = $this->option('title')   ?? null;
+            $type    = $this->option('type')    ?? null;
+            $topic   = $this->option('topic')   ?? null;
+            $keyword = $this->option('keyword') ?? null;
         }
         // Get title, type and topic from config
         else if (config('base.blog_dynamic_posts'))
@@ -253,26 +259,29 @@ class GenerateDynamicPost extends Command
 
             $post = collect($json)->whereNull('created_at')->first();
 
-            if ($post and array_key_exists('title', $post)) $title = $post['title'];
-            if ($post and array_key_exists('type', $post))  $type = $post['type'];
-            if ($post and array_key_exists('topic', $post)) $topic = $post['topic'];
+            if ($post and array_key_exists('title', $post))   $title = $post['title'];
+            if ($post and array_key_exists('type', $post))    $type  = $post['type'];
+            if ($post and array_key_exists('topic', $post))   $topic = $post['topic'];
+            if ($post and array_key_exists('keyword', $post)) $topic = $post['keyword'];
         }
 
         // Format or random title
-        if ( ! is_null($title))
+        if (is_null($title))
         {
-            $title = "will be: \"{$title}\"";
+            $is_random = true;
+
+            $letters = ['E', 'A', 'O', 'I', 'N', 'R', 'S', 'D', 'U', 'C', 'L', 'T', 'B', 'P', '3', '5', '7'];
+            $title = "must start with \"{$letters[array_rand($letters)]}\"";
         }
         else
         {
-            $letters = ['E', 'A', 'O', 'I', 'N', 'R', 'S', 'D', 'U', 'C', 'L', 'T', 'B', 'P', '3', '5', '7'];
-            $title = "must start with \"{$letters[array_rand($letters)]}\"";
+            $title = "will be: \"{$title}\"";
         }
 
         // Random type
         if (is_null($type))
         {
-            $types = ['question', 'listicle', 'how-to', 'case-study', 'tutorial', 'checklist', 'statistics', 'faqs', 'glossary', 'comparative analysis'];
+            $types = ['question', 'listicle', 'how-to', 'checklist', 'comparison'];
             $type = $types[array_rand($types)];
         }
 
@@ -302,9 +311,11 @@ class GenerateDynamicPost extends Command
         }
 
         return ([
+            $is_random,
             $title,
             $type,
             $topic,
+            $keyword,
         ]);
     }
 }
