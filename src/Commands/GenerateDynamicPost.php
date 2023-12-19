@@ -149,7 +149,13 @@ class GenerateDynamicPost extends Command
             "Imagine a new blog post to write about {$topic}.",
             (string) null,
             'Suggest the following fields for the imagined blog post:',
+        ];
+
+        if ($is_random) $prompt = array_merge($prompt, [
             '- Title: It should be concise, between 40-60 characters in length. It should incorporate relevant keywords and encourage readers to explore the article further.',
+        ]);
+
+        $prompt = array_merge($prompt, [
             '- Excerpt: It should be between 150-160 characters in length and should be optimized for search engines. Make sure it provides a clear and compelling preview of what the page offers to encourage clicks from users in search engine results.',
             '- Keywords: Provide a list of 3-5 comma-separated one-word keywords. Aim for a mix of popular, moderately popular, and niche-specific keywords.',
             (string) null,
@@ -159,8 +165,8 @@ class GenerateDynamicPost extends Command
             'Conditions:',
             '- Language: ' . strtoupper(config('app.locale')) . '.',
             "- Post type: {$type}.",
-            "- The title {$title}.",
-        ];
+            "- Post title {$title}.",
+        ]);
 
         if ($is_random)
         {
