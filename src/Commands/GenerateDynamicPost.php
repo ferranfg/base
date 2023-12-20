@@ -7,6 +7,7 @@ use Ferranfg\Base\Models\Post;
 use Ferranfg\Base\Models\Product;
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class GenerateDynamicPost extends Command
 {
@@ -263,12 +264,12 @@ class GenerateDynamicPost extends Command
             $json = file_get_contents(config('base.blog_dynamic_posts'));
             $json = json_decode($json, true);
 
-            $post = collect($json)->whereNull('created_at')->first();
+            $post = collect($json)->whereNull('created_at')->random();
 
-            if ($post and array_key_exists('title', $post))   $title = $post['title'];
-            if ($post and array_key_exists('type', $post))    $type  = $post['type'];
-            if ($post and array_key_exists('topic', $post))   $topic = $post['topic'];
-            if ($post and array_key_exists('keyword', $post)) $topic = $post['keyword'];
+            if ($post and array_key_exists('title',   $post)) $title   = $post['title'];
+            if ($post and array_key_exists('type',    $post)) $type    = $post['type'];
+            if ($post and array_key_exists('topic',   $post)) $topic   = $post['topic'];
+            if ($post and array_key_exists('keyword', $post)) $keyword = Str::snake((string) $post['keyword'], ' ');
         }
 
         // Format or random title
