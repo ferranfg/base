@@ -42,27 +42,11 @@ abstract class SitemapController extends Controller
             'lastmod' => $posts->last()->updated_at->tz('UTC')->toAtomString(),
         ];
 
-        $kewyords = [];
-
         foreach ($posts as $post)
         {
             $this->urls[] = (object) [
                 'loc' => $post->canonical_url,
                 'lastmod' => $post->updated_at->tz('UTC')->toAtomString(),
-            ];
-
-            foreach ($post->getKeywords() as $keyword)
-            {
-                // Avoid duplicated keywords (last keyword is the most recent)
-                $kewyords[$keyword->name] = $keyword;
-            }
-        }
-
-        foreach ($kewyords as $keyword)
-        {
-            $this->urls[] = (object) [
-                'loc' => $keyword->canonical_url,
-                'lastmod' => $keyword->updated_at->tz('UTC')->toAtomString(),
             ];
         }
     }
