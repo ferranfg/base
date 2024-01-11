@@ -53,8 +53,10 @@ class Facebook
         {
             $media = self::graphApi("{$media->id}", [
                 'access_token' => $access_token,
-                'fields' => 'status_code'
+                'fields' => 'id,status_code'
             ]);
+
+            sleep(2);
 
             $pending = (property_exists($media, 'status_code') and $media->status_code != 'FINISHED');
         }
