@@ -104,6 +104,8 @@ return [
 
     'newsletter_notification' => WelcomeNewsletter::class,
 
+    'newsletter_action' => env('BASE_NEWSLETTER_ACTION'),
+
     /*
     |--------------------------------------------------------------------------
     | Embeddings Information

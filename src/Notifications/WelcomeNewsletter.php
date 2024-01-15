@@ -34,9 +34,9 @@ class WelcomeNewsletter extends Notification
             ->bcc(Base::$developers)
             ->subject(__('Welcome to :app_name', ['app_name' => config('app.name')]))
             ->line(__("You're all set."))
-            ->line(__("Your email is now confirmed and now you're the newest member of the community. Check your email for future messages from me."))
-            ->line(__("In the meantime, go ahead and follow me on Twitter."))
-            ->action(__("Follow @ferranfigueredo"), 'https://twitter.com/ferranfigueredo')
+            ->line(__("Your email is now confirmed and now you're the newest member of the community. Check your email for future messages from us."))
+            ->line(__("In the meantime, go ahead and follow us on our social networks."))
+            ->action(__("Follow :app_name", ['app_name' => config('app.name')]), config('base.newsletter_action'))
             ->line(__("With that, welcome to the community."))
             ->line(__("Now that you're signed up, you'll start to receive our insanely valuable content right in your inbox."))
             ->line(__("Talk soon."));
