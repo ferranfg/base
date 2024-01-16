@@ -2,8 +2,8 @@
 
 namespace Ferranfg\Base\Commands;
 
+use Ferranfg\Base\Base;
 use Ferranfg\Base\Clients\Unsplash;
-use Ferranfg\Base\Models\Post;
 use Ferranfg\Base\Models\Product;
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
@@ -34,7 +34,7 @@ class GenerateDynamicPost extends Command
     {
         if ($this->argument('action') == 'suggest') return $this->suggestDynamicPost(false);
 
-        $post = Post::whereStatus('draft')->whereType('dynamic')->first();
+        $post = Base::post()->whereStatus('draft')->whereType('dynamic')->first();
 
         if (is_null($post)) $post = $this->suggestDynamicPost();
 
@@ -171,7 +171,7 @@ class GenerateDynamicPost extends Command
 
         if ($is_random)
         {
-            $archive = (new Post)
+            $archive = Base::post()
                 ->whereStatus('published')
                 ->whereIn('type', ['entry', 'dynamic'])
                 ->orderBy('updated_at', 'desc')
@@ -216,7 +216,7 @@ class GenerateDynamicPost extends Command
         );
 
         // Create new post
-        $post = new Post;
+        $post = Base::post();
 
         // Not able to get JSON from string
         if ( ! is_object($response)) return $post;
