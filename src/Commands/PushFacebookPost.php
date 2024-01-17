@@ -28,7 +28,13 @@ class PushFacebookPost extends Command
      */
     public function handle()
     {
-        $post = Base::post()->whereStatus('published')->inRandomOrder()->first();
+        $post = Base::post()
+            ->whereStatus('published')
+            ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
+            ->whereFeatured(false)
+            ->inRandomOrder()
+            ->first();
+
         $post->publishFacebook();
 
         return Command::SUCCESS;
