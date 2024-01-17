@@ -6,14 +6,14 @@ use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
-class EmbeddingsCommand extends Command
+class GenerateEmbeddingsPost extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    public $signature = 'base:embeddings';
+    public $signature = 'base:generate-embeddings-post';
 
     /**
      * The console command description.

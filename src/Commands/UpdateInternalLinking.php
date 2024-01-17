@@ -5,14 +5,14 @@ namespace Ferranfg\Base\Commands;
 use Ferranfg\Base\Base;
 use Illuminate\Console\Command;
 
-class InternalLinking extends Command
+class UpdateInternalLinking extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'base:internal-linking {--debug=false}';
+    protected $signature = 'base:update-internal-linking {--debug=false}';
 
     /**
      * The console command description.
