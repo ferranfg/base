@@ -39,6 +39,7 @@ class ImportProductsOutscraper extends Command
 
         foreach ($products as $product)
         {
+            $name = Arr::get($product, 'name');
             $description = Arr::get($product, 'description');
 
             if ( ! $description) $description = Arr::get($product, 'about');
@@ -47,8 +48,8 @@ class ImportProductsOutscraper extends Command
                 'slug' => Arr::get($product, 'asin'),
             ], [
                 'owner_id' => 1,
-                'name' => Arr::get($product, 'name'),
-                'description' => $description,
+                'name' => strtok($name, ','),
+                'description' => "{$name}. {$description}",
                 'attached_url' => Arr::get($product, 'short_url'),
                 'photo_url' => Arr::get($product, 'image_1'),
                 'currency' => 'eur',
