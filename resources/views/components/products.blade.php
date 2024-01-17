@@ -17,9 +17,15 @@
                             <li class="mt-2">
                                 <a href="{{ $product->canonical_url}}" class="btn btn-icon btn-pills btn-soft-primary" title="{{ $product->name }}"><i class="fa fa-eye"></i></a>
                             </li>
-                            <li class="mt-2">
-                                <button type="submit" class="btn btn-icon btn-pills btn-soft-warning"><i class="fa fa-shopping-cart" title="Añadir a Cesta de compra"></i></button>
-                            </li>
+                            @if ($product->type == 'affiliate')
+                                <li class="mt-2">
+                                    <a href="{{ $product->attached_url }}" class="btn btn-icon btn-pills btn-soft-secondary"><i class="fa fa-external-link" rel="noreferrer nofollow" title="Ver Producto"></i></a>
+                                </li>
+                            @else
+                                <li class="mt-2">
+                                    <button type="submit" class="btn btn-icon btn-pills btn-soft-warning"><i class="fa fa-shopping-cart" title="Añadir a Cesta de compra"></i></button>
+                                </li>
+                            @endif
                         </ul>
                     </form>
                     <div class="card-body content pt-4 p-2">
