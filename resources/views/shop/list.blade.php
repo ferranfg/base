@@ -10,17 +10,19 @@
     @section('shop-hero')
         <section class="bg-half d-table w-100 lazy" data-bg="url({{ hero_image() }})">
             <div class="bg-overlay"></div>
-            <div class="justify-content-center text-center position-relative">
-                <div class="page-next-level">
-                    <h1 class="text-white title-dark mb-3">{{ config('base.shop_title') }}</h1>
-                    <p class="para-desc mx-auto text-white-50 mb-0">{{ config('base.shop_description') }}</p>
-                    <div class="page-next">
-                        <nav class="d-inline-block">
-                            <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
-                                <li class="breadcrumb-item active">Tienda</li>
-                            </ul>
-                        </nav>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 page-next-level title-heading text-center">
+                        <h1 class="text-white title-dark mb-3">{{ config('base.shop_title') }}</h1>
+                        <p class="para-desc mx-auto text-white-50 mb-0">{{ config('base.shop_description') }}</p>
+                        <div class="page-next">
+                            <nav class="d-inline-block">
+                                <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                                    <li class="breadcrumb-item active">Tienda</li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
