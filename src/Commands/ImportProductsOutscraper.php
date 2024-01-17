@@ -49,7 +49,7 @@ class ImportProductsOutscraper extends Command
                 "slug->{$locale}" => Arr::get($product, 'asin'),
             ], [
                 'owner_id' => 1,
-                'name' => strtok($name, ','),
+                'name' => implode(' ', array_slice(explode(' ', $name), 0, 7)),
                 'description' => "{$name}. {$description}",
                 'attached_url' => Arr::get($product, 'short_url'),
                 'photo_url' => Arr::get($product, 'image_1'),
