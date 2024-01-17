@@ -2,7 +2,7 @@
 
 namespace Ferranfg\Base\Commands;
 
-use Ferranfg\Base\Models\Post;
+use Ferranfg\Base\Base;
 use Illuminate\Console\Command;
 
 class SendPostNewsletter extends Command
@@ -28,7 +28,7 @@ class SendPostNewsletter extends Command
      */
     public function handle()
     {
-        $post = Post::find($this->argument('postId'));
+        $post = Base::post()->find($this->argument('postId'));
 
         if (is_null($post)) return Command::FAILURE;
 

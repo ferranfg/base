@@ -2,12 +2,13 @@
 
 namespace Ferranfg\Base\Models;
 
+use Ferranfg\Base\Base;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use OpenAI;
 use Pgvector\Laravel\Vector;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 
 class Assistance extends Model
 {
@@ -47,7 +48,8 @@ class Assistance extends Model
      */
     public function hydrateDefaultEmbeddings()
     {
-        return Post::whereIn('type', ['entry', 'dynamic', 'guide'])
+        return Base::post()
+            ->whereIn('type', ['entry', 'dynamic', 'guide'])
             ->whereStatus('published')
             ->get()
             ->map(function ($post)
