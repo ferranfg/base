@@ -10,14 +10,15 @@ use Illuminate\Support\ServiceProvider;
 use Spatie\NovaTranslatable\Translatable;
 use Ferranfg\Base\Commands\PublishCommand;
 use Ferranfg\Base\Commands\InstallCommand;
-use Ferranfg\Base\Commands\InternalLinking;
-use Ferranfg\Base\Commands\EmbeddingsCommand;
 use Ferranfg\Base\Commands\GenerateDynamicImages;
 use Ferranfg\Base\Commands\GenerateDynamicPost;
+use Ferranfg\Base\Commands\GenerateEmbeddingsPost;
 use Ferranfg\Base\Commands\ImportProductsAmazon;
 use Ferranfg\Base\Commands\ImportProductsOutscraper;
+use Ferranfg\Base\Commands\PushFacebookPost;
 use Ferranfg\Base\Commands\SendPostNewsletter;
 use Ferranfg\Base\Commands\UpdateDynamicPost;
+use Ferranfg\Base\Commands\UpdateInternalLinking;
 
 class BaseServiceProvider extends ServiceProvider
 {
@@ -54,16 +55,17 @@ class BaseServiceProvider extends ServiceProvider
             }
 
             $this->commands([
-                EmbeddingsCommand::class,
                 GenerateDynamicImages::class,
                 GenerateDynamicPost::class,
+                GenerateEmbeddingsPost::class,
                 ImportProductsAmazon::class,
                 ImportProductsOutscraper::class,
                 InstallCommand::class,
-                InternalLinking::class,
                 PublishCommand::class,
+                PushFacebookPost::class,
                 SendPostNewsletter::class,
                 UpdateDynamicPost::class,
+                UpdateInternalLinking::class,
             ]);
         }
 
