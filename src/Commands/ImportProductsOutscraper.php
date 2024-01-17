@@ -30,6 +30,7 @@ class ImportProductsOutscraper extends Command
      */
     public function handle()
     {
+        $locale = app()->getLocale();
         $filename = "outscraper-" . time() . ".json";
 
         Storage::put($filename, file_get_contents($this->argument('url')));
@@ -45,7 +46,7 @@ class ImportProductsOutscraper extends Command
             if ( ! $description) $description = Arr::get($product, 'about');
 
             $product = Base::product()->updateOrCreate([
-                'slug' => Arr::get($product, 'asin'),
+                "slug->{$locale}" => Arr::get($product, 'asin'),
             ], [
                 'owner_id' => 1,
                 'name' => strtok($name, ','),
