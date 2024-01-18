@@ -32,6 +32,10 @@ return [
 
     'hero_image' => env('BASE_HERO_IMAGE'),
 
+    'tracking_api' => env('BASE_TRACKING_API'),
+
+    'tracking_domain' => env('BASE_TRACKING_DOMAIN'),
+
     /*
     |--------------------------------------------------------------------------
     | Shop Information
