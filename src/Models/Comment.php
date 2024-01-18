@@ -22,7 +22,6 @@ class Comment extends Model
     protected $fillable = [
         'author_name',
         'author_email',
-        'author_url',
         'author_IP',
         'content',
         'rating',
