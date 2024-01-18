@@ -2,8 +2,11 @@
 
 namespace Ferranfg\Base\Traits;
 
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 
 trait HasVisits
 {
@@ -45,6 +48,8 @@ trait HasVisits
 
         if (Str::contains(request()->userAgent(), $crawlers)) return $this;
 
+        if (config('base.tracking_api')) $this->trackVisitWithApi();
+
         $visits = $this->getMetadata('_visits');
 
         if (is_null($visits)) $visits = 0;
@@ -54,5 +59,34 @@ trait HasVisits
         $this->setMetadata('_visits', $visits);
 
         return $this;
+    }
+
+    /**
+     * Tracks the visit with an external API
+     */
+    public function trackVisitWithApi()
+    {
+        try
+        {
+            (new Client())->request('POST', config('base.tracking_api'), [
+                RequestOptions::HEADERS => [
+                    'User-Agent' => request()->userAgent(),
+                    'X-Forwarded-For' => request()->ip(),
+                ],
+                RequestOptions::JSON => [
+                    'domain' => config('base.tracking_domain'),
+                    'name' => 'pageview',
+                    'url' => request()->url(),
+                    'referrer' => request()->header('referer'),
+                    'props' => [
+                        'site' => config('app.url'),
+                    ]
+                ]
+            ]);
+        }
+        catch (Exception $e)
+        {
+            //
+        }
     }
 }
