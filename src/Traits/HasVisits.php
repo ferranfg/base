@@ -74,7 +74,7 @@ trait HasVisits
             (new Client())->request('POST', config('base.tracking_api'), [
                 RequestOptions::HEADERS => [
                     'User-Agent' => request()->userAgent(),
-                    'X-Forwarded-For' => request()->ip(),
+                    'X-Plausible-IP' => request()->ip(),
                 ],
                 RequestOptions::JSON => [
                     'domain' => config('base.tracking_domain'),
