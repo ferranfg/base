@@ -30,6 +30,11 @@ class NewsletterController extends Controller
      */
     public function subscribe(Request $request)
     {
+        if ($request->has('from')) $request->merge([
+            'email' => $request->from,
+            'terms' => true,
+        ]);
+
         $this->validate($request, [
             'email' => 'required|email|unique:users,email',
             'terms' => 'accepted'
