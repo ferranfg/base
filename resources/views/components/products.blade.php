@@ -3,9 +3,9 @@
         @foreach ($products as $product)
             <div class="col-lg-3 col-md-6 col-12 mt-4 pt-2">
                 <div class="card shop-list border-0 position-relative">
-                    @if ($product->getMetadata('flag'))
+                    @if ($product->isDiscounted())
                         <div class="ribbon ribbon-left ribbon-danger overflow-hidden">
-                            <span class="text-center d-block shadow small h6 font-weight-bold">{{ $product->getMetadata('flag') }}</span>
+                            <span class="text-center d-block shadow small h6 font-weight-bold">-{{ $product->formatDiscount() }}</span>
                         </div>
                     @endif
                     <form method="POST" action="{{ $product->canonical_url}}" class="shop-image position-relative overflow-hidden rounded shadow p-3">
@@ -28,18 +28,14 @@
                             @endif
                         </ul>
                     </form>
-                    <div class="card-body content pt-4 p-2">
+                    <div class="card-body content text-center pt-3 p-2">
                         <a href="{{ $product->canonical_url}}" class="text-dark product-name h6">{{ $product->name }}</a>
-                        <div class="d-flex justify-content-between mt-1">
-                            <h6 class="text-muted small font-italic mb-0 mt-1">
-                                @if ($product->isDiscounted())
-                                    {{ $product->formatSaleAmount() }} <del class="text-danger ml-2">{{ $product->formatAmount() }}</del>
-                                @else
-                                    {{ $product->formatAmount() }}
-                                @endif
-                            </h6>
-                            {!! $product->renderAvgRating('review') !!}
-                        </div>
+                        <h6 class="small mb-0 mt-1">
+                            @if ($product->isDiscounted())
+                                <del class="text-muted mr-2">{{ $product->formatAmount() }}</del>
+                            @endif
+                            {{ $product->formatAmount() }}
+                        </h6>
                     </div>
                 </div>
             </div>
