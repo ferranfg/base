@@ -67,9 +67,7 @@
             </div>
         @endif
 
-        @section('shop-cta')
-
-        @show
+        @includeWhen(config('base.shop_banner'), 'base::shop.banner')
 
         <div class="container mt-100 mt-60">
             @if ($base_profile->grade > 6)
