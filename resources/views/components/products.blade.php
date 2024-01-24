@@ -32,9 +32,10 @@
                         <a href="{{ $product->canonical_url}}" class="text-dark product-name h6">{{ $product->name }}</a>
                         <h6 class="small mb-0 mt-1">
                             @if ($product->isDiscounted())
-                                <del class="text-muted mr-2">{{ $product->formatAmount() }}</del>
+                                <del class="text-muted mr-2">{{ $product->formatAmount() }}</del> {{ $product->formatSaleAmount() }}
+                            @else
+                                {{ $product->formatAmount() }}
                             @endif
-                            {{ $product->formatAmount() }}
                         </h6>
                     </div>
                 </div>

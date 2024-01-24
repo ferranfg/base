@@ -70,6 +70,7 @@ class ShopController extends Controller
         $offers = $this->productRepository
             ->whereAvailable()
             ->orderByDiscount()
+            ->orderBy('id', 'desc')
             ->take(8)
             ->get();
         
