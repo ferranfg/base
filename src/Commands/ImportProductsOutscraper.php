@@ -52,6 +52,7 @@ class ImportProductsOutscraper extends Command
             ], [
                 'owner_id' => 1,
                 'name' => implode(' ', array_slice(explode(' ', $name), 0, 7)),
+                'slug' => Arr::get($product, 'asin'),
                 'description' => "{$name}. {$description}",
                 'attached_url' => Arr::get($product, 'short_url'),
                 'photo_url' => $image,
