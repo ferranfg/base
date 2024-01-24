@@ -21,6 +21,18 @@
 
     <title>@yield('title', isset($meta_title) ? $meta_title : config('app.name'))</title>
 
+    @if (config('base.headers_font_family'))
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family={{ urlencode('config.headers_font_family')) }}&display=swap" rel="stylesheet">
+        <style>
+            .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6,
+            .logo, .logo-footer {
+                font-family: "{{ config('base.headers_font_family') }}";
+                font-weight: 400;
+            }
+        </style>
+    @endif
+
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.css" integrity="sha512-l1vPIxNzx1pUOKdZEe4kEnWCBzFVVYX5QziGS7zRZE4Gi5ykXrfvUgnSBttDbs0kXe2L06m9+51eadS+Bg6a+A==" crossorigin="anonymous" />
@@ -36,6 +48,8 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://ik.imagekit.io">
     <link rel="preconnect" href="https://kit.fontawesome.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <div id="spark-app" v-cloak>

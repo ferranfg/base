@@ -32,6 +32,8 @@ return [
 
     'hero_image' => env('BASE_HERO_IMAGE'),
 
+    'headers_font_family' => env('BASE_HEADING_FONT_FAMILY'),
+
     'tracking_api' => env('BASE_TRACKING_API'),
 
     'tracking_domain' => env('BASE_TRACKING_DOMAIN'),

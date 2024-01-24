@@ -17,7 +17,7 @@ class BaseProfile
     public function __construct(Request $request)
     {
         $this->userAgent = $this->parseUserAgent($request->userAgent(), $request->headers->all());
-        $this->location = $this->parseLocation($request->ip());
+        $this->location = null; // $this->parseLocation($request->ip());
 
         $this->grade = $this->estimateGrade();
     }
