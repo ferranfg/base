@@ -41,8 +41,10 @@ class ImportProductsOutscraper extends Command
         {
             $name = Arr::get($product, 'name');
             $description = Arr::get($product, 'description');
+            $image = Arr::get($product, 'image_1');
 
             if ( ! $description) $description = Arr::get($product, 'about');
+            if (str_contains($image, 'pixel')) $image = Arr::get($product, 'image_2');
 
             $product = Base::product()->updateOrCreate([
                 'slug' => Arr::get($product, 'asin'),
@@ -51,7 +53,7 @@ class ImportProductsOutscraper extends Command
                 'name' => implode(' ', array_slice(explode(' ', $name), 0, 7)),
                 'description' => "{$name}. {$description}",
                 'attached_url' => Arr::get($product, 'short_url'),
-                'photo_url' => Arr::get($product, 'image_1'),
+                'photo_url' => $image,
                 'currency' => 'eur',
                 'amount' => bcmul((float) Arr::get($product, 'price', 0), 100),
                 'type' => 'affiliate',
