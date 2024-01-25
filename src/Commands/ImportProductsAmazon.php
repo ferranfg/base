@@ -57,7 +57,7 @@ class ImportProductsAmazon extends Command
                 'attached_url' => $product->DetailPageURL,
                 'photo_url' => $product->Images->Primary->Large->URL,
                 'currency' => 'eur',
-                'amount' => bcmul((float) $product->Offers->Listings[0]->Price->Amount, 100),
+                'amount' => $product->Offers->Listings[0]->Price->Amount,
                 'type' => 'affiliate',
                 'status' => 'in_stock',
             ]);

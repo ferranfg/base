@@ -203,6 +203,46 @@ class Product extends Model
     }
 
     /**
+     * Set the amount attribute.
+     */
+    public function setAmountAttribute($value)
+    {
+        if ( ! $value) return null;
+
+        $amount = (float) self::floatval($value);
+
+        return $this->attributes['amount'] = bcmul($amount, 100);
+    }
+
+    /**
+     * Set the sale amount attribute.
+     */
+    public function setSaleAmountAttribute($value)
+    {
+        if ( ! $value) return null;
+
+        $amount = (float) self::floatval($value);
+
+        return $this->attributes['sale_amount'] = bcmul($amount, 100);
+    }
+
+    /**
+     * Get the amount attribute.
+     */
+    public function getAmountAttribute($value)
+    {
+        return is_numeric($value) ? bcdiv($value, 100, 2) : null;
+    }
+
+    /**
+     * Get the sale amount attribute.
+     */
+    public function getSaleAmountAttribute($value)
+    {
+        return is_numeric($value) ? bcdiv($value, 100, 2) : null;
+    }
+
+    /**
      * Get the avg rating from the attached comments
      *
      * @var string
@@ -466,5 +506,16 @@ class Product extends Model
             'media' => img_url($this->photo_url),
             'description' => $this->name,
         ]);
+    }
+
+    /**
+     * Converts the value to float
+     */
+    public static function floatval($val)
+    {
+        $val = str_replace(",", ".", $val);
+        $val = preg_replace('/\.(?=.*\.)/', '', $val);
+
+        return floatval($val);
     }
 }
