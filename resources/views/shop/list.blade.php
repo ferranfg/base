@@ -45,6 +45,8 @@
             @endif
         </div>
 
+        @includeWhen(config('base.shop_banner'), 'base::shop.banner')
+
         @if ($brands->count())
             <div class="container mt-100 mt-60">
                 <h5 class="mb-0">Nuestras marcas</h5>
@@ -66,8 +68,6 @@
                 </div>
             </div>
         @endif
-
-        @includeWhen(config('base.shop_banner'), 'base::shop.banner')
 
         <div class="container mt-100 mt-60">
             @if ($base_profile->grade > 6)
