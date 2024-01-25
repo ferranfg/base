@@ -401,7 +401,7 @@ class Product extends Model
         {
             $price = StripePrice::create([
                 'product' => $product_id,
-                'unit_amount' => $this->amount_unit,
+                'unit_amount' => $this->sale_amount_unit ?? $this->amount_unit,
                 'currency' => $this->currency,
             ]);
 
