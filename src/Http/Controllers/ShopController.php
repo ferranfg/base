@@ -158,7 +158,7 @@ class ShopController extends Controller
         Cart::add('cart', [
             'id' => $product->id,
             'name' => $product->name,
-            'price' => $product->amount,
+            'price' => $product->sale_amount_unit ?? $product->amount_unit,
             'quantity' => (int) $request->get('quantity', 1),
             'attributes' => [
                 'currency' => $product->currency,

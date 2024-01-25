@@ -203,6 +203,14 @@ class Product extends Model
     }
 
     /**
+     * Get the product discount unit.
+     */
+    public function getDiscountUnitAttribute()
+    {
+        return $this->amount_unit - $this->sale_amount_unit;
+    }
+
+    /**
      * Set the amount attribute.
      */
     public function setAmountAttribute($value)
@@ -235,11 +243,27 @@ class Product extends Model
     }
 
     /**
+     * Get the amount unit attribute.
+     */
+    public function getAmountUnitAttribute()
+    {
+        return $this->getRawOriginal('amount');
+    }
+
+    /**
      * Get the sale amount attribute.
      */
     public function getSaleAmountAttribute($value)
     {
         return is_numeric($value) ? bcdiv($value, 100, 2) : null;
+    }
+
+    /**
+     * Get the amount unit attribute.
+     */
+    public function getSaleAmountUnitAttribute()
+    {
+        return $this->getRawOriginal('sale_amount');
     }
 
     /**
@@ -299,9 +323,9 @@ class Product extends Model
      */
     public function formatAmount()
     {
-        if (is_null($this->amount)) return null;
+        if (is_null($this->amount_unit)) return null;
 
-        return Cashier::formatAmount($this->amount, $this->currency);
+        return Cashier::formatAmount($this->amount_unit, $this->currency);
     }
 
     /**
@@ -309,9 +333,9 @@ class Product extends Model
      */
     public function formatSaleAmount()
     {
-        if (is_null($this->sale_amount)) return null;
+        if (is_null($this->sale_amount_unit)) return null;
 
-        return Cashier::formatAmount($this->sale_amount, $this->currency);
+        return Cashier::formatAmount($this->sale_amount_unit, $this->currency);
     }
 
     /**
@@ -319,9 +343,9 @@ class Product extends Model
      */
     public function formatDiscount()
     {
-        if (is_null($this->discount)) return null;
+        if (is_null($this->discount_unit)) return null;
 
-        return Cashier::formatAmount($this->discount, $this->currency);
+        return Cashier::formatAmount($this->discount_unit, $this->currency);
     }
 
     /**
@@ -377,7 +401,7 @@ class Product extends Model
         {
             $price = StripePrice::create([
                 'product' => $product_id,
-                'unit_amount' => $this->amount,
+                'unit_amount' => $this->amount_unit,
                 'currency' => $this->currency,
             ]);
 
