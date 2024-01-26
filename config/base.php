@@ -55,9 +55,11 @@ return [
 
     'shop_path' => '/shop',
 
-    'shop_currency' => 'EUR',
-
     'shop_template' => 'layouts.web',
+
+    'shop_banner' => null,
+
+    'shop_currency' => 'EUR',
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +78,9 @@ return [
 
     'blog_template' => 'layouts.web',
 
-    'blog_keywords' => true,
+    'blog_halfway' => true,
+
+    'blog_keywords' => false,
 
     'blog_before_post' => null,
 

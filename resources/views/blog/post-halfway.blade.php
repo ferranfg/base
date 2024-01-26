@@ -1,1 +1,1 @@
-@includeWhen($related->count(), 'base::blog.related-posts', ['related' => $related->take(1)])
+@includeWhen(config('base.blog_halfway') and $related->count(), 'base::blog.related-posts', ['related' => $related->take(1)])
