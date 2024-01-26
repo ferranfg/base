@@ -1,0 +1,1 @@
+@includeWhen($related->count(), 'base::blog.related-posts', ['related' => $related->take(1)])

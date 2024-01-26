@@ -3,7 +3,7 @@
 <div class="card blog rounded border-0 shadow overflow-hidden mb-4">
     <div class="row align-items-center no-gutters">
         <div class="col-lg-4">
-            {!! img($post->photo_url, 690, 462, true, 'img-fluid lazy', $post->name, 690, 462) !!}
+            {!! img($post->photo_url, 690, 462, true, 'img-fluid m-0 lazy', $post->name, 690, 462) !!}
             <div class="overlay bg-dark"></div>
             <div class="author">
                 <small class="text-light user d-block"><i class="fa fa-user"></i> {{ $post->author->name }}</small>
