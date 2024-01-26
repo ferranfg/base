@@ -22,9 +22,11 @@
 <meta name="twitter:url" content="{{ $post->canonical_url }}" />
 <meta name="twitter:image" content="{{ $photo_url }}" />
 @if ($post->author)
-    <meta name="twitter:label1" content="By" />
+    <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="{{ $post->author->name }}" />
 @endif
+<meta name="twitter:label2" content="Est. reading time" />
+<meta name="twitter:data2" content="{{ $post->reading_time }} minutes" />
 <meta name="twitter:site" content="{{ config('base.twitter_username') }}" />
 <meta property="og:image:width" content="1920" />
 <meta property="og:image:height" content="1080" />
