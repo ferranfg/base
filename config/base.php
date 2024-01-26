@@ -78,8 +78,6 @@ return [
 
     'blog_template' => 'layouts.web',
 
-    'blog_halfway' => true,
-
     'blog_keywords' => false,
 
     'blog_before_post' => null,

@@ -72,6 +72,15 @@
                         )
                     </div>
 
+                    @if ($keywords = $post->getKeywords() and $keywords->count())
+                        <p class="text-monospace mt-5">
+                            <span>Tags:</span>
+                            @foreach ($keywords as $keyword)
+                                <a href="{{ $keyword->canonical_url }}" class="ml-2">{{ $keyword->name }}</a>@if ($loop->remaining),@endif
+                            @endforeach
+                        </p>
+                    @endif
+
                     @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
 
                     @includeWhen($related->count(), 'base::blog.related-posts', [
