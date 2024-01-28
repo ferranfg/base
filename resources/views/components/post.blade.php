@@ -13,10 +13,12 @@
         </div>
         <div class="col-lg-8">
             <div class="card-body content" style="padding:1.25rem">
-                <h2 class="h5 text-truncate">
+                <h2 class="h5 mt-0 mb-2 text-truncate">
                     <a href="{{ $post->canonical_url }}" class="card-title title text-dark" title="{{ $post->name }}">{{ $post->name }}</a>
                 </h2>
-                <p class="text-muted mb-0 {{ $compact ? 'small' : '' }}">{{ (mb_strlen($post->excerpt) > 165) ? mb_substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}</p>
+                <p class="text-muted mb-0 {{ $compact ? 'small' : '' }}" style="line-height:1.6">
+                    {{ (mb_strlen($post->excerpt) > 165) ? mb_substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}
+                </p>
                 @if ( ! $compact)
                     <div class="post-meta d-flex justify-content-between mt-3">
                         @if ( ! $post->comments_disabled)
