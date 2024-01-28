@@ -1,4 +1,4 @@
-<section class="section">
+<section class="section pb-0">
     <div class="container-fluid">
         <div class="rounded shadow py-5 lazy" data-bg="url({{ hero_image() }})" style="background-position:center">
             <div class="container">
