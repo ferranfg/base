@@ -26,6 +26,8 @@
         </div>
     </div>
 
+    @includeWhen(config('base.banner_path'), 'base::components.banner')
+
     @if ($posts->count())
         <section class="section">
             <div class="container">

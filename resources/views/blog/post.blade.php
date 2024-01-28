@@ -67,26 +67,26 @@
                     @includeWhen(config('base.blog_before_post'), config('base.blog_before_post'))
 
                     <div class="post">
-                        @basedownExtended($post->content)
+                        @basedownExtended(
+                            extended_post_content($post->content, $related)
+                        )
                     </div>
+
+                    @if ($keywords = $post->getKeywords() and $keywords->count())
+                        <p class="text-monospace mt-5">
+                            <span>Tags:</span>
+                            @foreach ($keywords as $keyword)
+                                <a href="{{ $keyword->canonical_url }}" class="ml-2">{{ $keyword->name }}</a>@if ($loop->remaining),@endif
+                            @endforeach
+                        </p>
+                    @endif
 
                     @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
 
-                    @if ($related->count() and $post->type == 'guide')
-                        <h5 class="mt-5">Related Guides:</h5>
-                        <ul class="list-unstyled mt-4 mb-0">
-                            @foreach ($related as $question)
-                                <li class="mt-2">
-                                    <a href="{{ $question->canonical_url }}" class="text-muted"><span class="fa fa-arrow-right text-primary"></span> {{ $question->name }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @elseif ($related->count())
-                        <h5 class="mt-5">Related Posts:</h5>
-                        @foreach ($related as $related_post)
-                            @include('base::components.post', ['post' => $related_post, 'compact' => true])
-                        @endforeach
-                    @endif
+                    @includeWhen($related->count(), 'base::blog.related-posts', [
+                        'post' => $post,
+                        'related' => $related
+                    ])
 
                     @includeUnless($post->type == 'page', 'base::components.previous-next')
 

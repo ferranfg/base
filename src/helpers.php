@@ -199,3 +199,37 @@ if ( ! function_exists('clean_accents'))
         return preg_replace(array_keys($utf8), array_values($utf8), $text);
     }
 }
+
+/**
+ * Extends the content of a post with related posts.
+ *
+ * @param  string  $content
+ * @param  array  $related
+ * @return string
+ */
+if ( ! function_exists('extended_post_content'))
+{
+    function extended_post_content($content, $related = null)
+    {
+        // Buscamos un punto final, salto de linea y el segundo h2
+        $content = str_replace("\r", '', $content);
+        $h_index = 1;
+
+        preg_match_all('/\.\n\n## (.+)/i', $content, $matches);
+
+        // Si hay un segundo h2, lo reemplazamos por el post-halfway
+        if (array_key_exists(1, $matches) and array_key_exists($h_index, $matches[1]))
+        {
+            $replace = $matches[1][$h_index];
+            $halfway = view('base::blog.post-halfway', ['related' => $related])->render();
+
+            if ($halfway) $content = str_replace(
+                ".\n\n## {$replace}",
+                ".\n\n{$halfway}\n\n## {$replace}",
+                $content
+            );
+        }
+
+        return $content;
+    }
+}

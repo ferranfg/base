@@ -45,7 +45,7 @@
             @endif
         </div>
 
-        @includeWhen(config('base.shop_banner'), 'base::shop.banner')
+        @includeWhen(config('base.banner_path'), 'base::components.banner')
 
         @if ($brands->count())
             <div class="container mt-100 mt-60">
