@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="rounded p-4 bg-light">
-                        @include(config('base.shop_banner'))
+                        @include(config('base.banner_path'))
                     </div>
                 </div>
             </div>

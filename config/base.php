@@ -34,6 +34,8 @@ return [
 
     'headers_font_family' => env('BASE_HEADING_FONT_FAMILY'),
 
+    'banner_path' => env('BASE_BANNER_PATH'),
+
     'tracking_api' => env('BASE_TRACKING_API'),
 
     'tracking_domain' => env('BASE_TRACKING_DOMAIN'),
@@ -56,8 +58,6 @@ return [
     'shop_path' => '/shop',
 
     'shop_template' => 'layouts.web',
-
-    'shop_banner' => null,
 
     'shop_currency' => 'EUR',
 

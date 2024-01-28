@@ -26,9 +26,11 @@
         </div>
     </div>
 
-    @if ($posts->count())
-        <section class="section">
-            <div class="container">
+    <section class="section">
+        @includeWhen(config('base.banner_path'), 'base::components.banner')
+
+        @if ($posts->count())
+            <div class="container mt-100 mt-60">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-xl-10">
                         @foreach ($posts as $post)
@@ -38,8 +40,8 @@
                     </div>
                 </div>
             </div>
-        </section>
-    @endif
+        @endif
+    </section>
 
     @if ($featured)
         <section class="bg-half pt-5 pb-5 d-table w-100 lazy" data-bg="url({{ $featured_photo_url }})">
