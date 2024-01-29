@@ -83,10 +83,11 @@
 
                     @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
 
-                    @includeWhen($related->count(), 'base::blog.related-posts', [
-                        'post' => $post,
-                        'related' => $related
-                    ])
+                    @if ($related->count())
+                        <div class="mt-5">
+                            @include('base::blog.related-posts', ['post' => $post, 'related' => $related])
+                        </div>
+                    @endif
 
                     @includeUnless($post->type == 'page', 'base::components.previous-next')
 
