@@ -31,7 +31,6 @@ class PushFacebookPost extends Command
         $post = Base::post()
             ->whereStatus('published')
             ->whereIn('type', ['entry', 'dynamic'])
-            ->whereFeatured(false)
             ->inRandomOrder()
             ->first();
 
