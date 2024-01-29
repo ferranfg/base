@@ -57,11 +57,19 @@ class BlogController extends Controller
             return redirect($post->canonical_url, 302);
         }
 
+        $pinned = null;
+
+        if (config('base.blog_pinned_id'))
+        {
+            $pinned = $this->postRepository->findById(config('base.blog_pinned_id'));
+        }
+
         $featured = $this->postRepository
             ->whereStatus('published')
+            ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
             ->whereFeatured(true)
-            ->latest()
-            ->first();
+            ->take(3)
+            ->get();
 
         $posts = $this->postRepository
             ->whereStatus('published')
@@ -84,7 +92,8 @@ class BlogController extends Controller
             'hero_description' => config('base.blog_description'),
             'posts' => $posts,
             'featured' => $featured,
-            'featured_photo_url' => $featured ? img_url($featured->photo_url, [
+            'pinned' => $pinned,
+            'pinned_photo_url' => $pinned ? img_url($pinned->photo_url, [
                 ['width' => 1920, 'height' => 1080]
             ]) : hero_image(),
         ]);
@@ -117,7 +126,8 @@ class BlogController extends Controller
             'hero_title' => $keyword,
             'hero_description' => null,
             'posts' => $posts,
-            'featured' => false,
+            'featured' => collect(),
+            'pinned' => false,
         ]);
     }
 

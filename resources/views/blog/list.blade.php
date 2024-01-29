@@ -26,11 +26,49 @@
         </div>
     </div>
 
-    @includeWhen(config('base.banner_path'), 'base::components.banner')
+    <section class="section pt-0">
+        @if ($featured->count())
+            <div class="container mt-100 mt-60">
+                <div class="row">
+                    @foreach($featured as $post)
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card blog rounded border-0 shadow overflow-hidden">
+                                <div class="position-relative">
+                                    {!! img($post->photo_url, 690, 462, true, 'card-img-top img-fluid lazy', $post->name, 690, 462) !!}
+                                    <div class="overlay rounded-top bg-dark"></div>
+                                </div>
+                                <div class="card-body content">
+                                    <h2 class="h5">
+                                        <a href="{{ $post->canonical_url }}" class="card-title title text-dark" title="{{ $post->name }}">{{ $post->name }}</a>
+                                    </h2>
+                                    <p class="text-muted">
+                                        {{ (mb_strlen($post->excerpt) > 165) ? mb_substr($post->excerpt, 0, 160) . '…' : $post->excerpt }}
+                                    </p>
+                                    <div class="post-meta d-flex justify-content-between mt-3">
+                                        @if ( ! $post->comments_disabled)
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="list-inline-item"><a href="{{ $post->canonical_url }}#comments" class="text-muted comments"><i class="fa fa-comments mr-1"></i>{{ $post->comments()->count() }}</a></li>
+                                            </ul>
+                                        @endif
+                                        <a href="{{ $post->canonical_url }}" class="text-muted readmore">Read More <i class="fa fa-chevron-right"></i></a>
+                                    </div>
+                                </div>
+                                <div class="author">
+                                    <small class="text-light user d-block"><i class="fa fa-user"></i> {{ $post->author->name }}</small>
+                                    <small class="text-light date"><i class="fa fa-calendar"></i> Updated {{ $post->updated_at_diff }}</small>
+                                    <time class="updated" datetime="{{ $post->updated_at }}"></time>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
 
-    @if ($posts->count())
-        <section class="section">
-            <div class="container">
+        @includeWhen(config('base.banner_path'), 'base::components.banner')
+
+        @if ($posts->count())
+            <div class="container mt-100 mt-60">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-xl-10">
                         @foreach ($posts as $post)
@@ -40,20 +78,20 @@
                     </div>
                 </div>
             </div>
-        </section>
-    @endif
+        @endif
+    </section>
 
-    @if ($featured)
-        <section class="bg-half pt-5 pb-5 d-table w-100 lazy" data-bg="url({{ $featured_photo_url }})">
+    @if ($pinned)
+        <section class="bg-half pt-5 pb-5 d-table w-100 lazy" data-bg="url({{ $pinned_photo_url }})">
             <div class="bg-overlay"></div>
             <div class="container">
                 <div class="row position-relative align-items-center pt-4">
                     <div class="col-lg-7 offset-lg-5">
                         <div class="title-heading studio-home rounded bg-white shadow">
-                            <h3 class="heading mb-3">{{ $featured->name }}</h3>
-                            <p class="para-desc text-muted">{{ $featured->excerpt }}</p>
+                            <h3 class="heading mb-3">{{ $pinned->name }}</h3>
+                            <p class="para-desc text-muted">{{ $pinned->excerpt }}</p>
                             <div class="mt-4">
-                                <a href="{{ $featured->canonical_url }}" class="btn btn-primary mt-2 mr-2">Seguir leyendo</a>
+                                <a href="{{ $pinned->canonical_url }}" class="btn btn-primary mt-2 mr-2">Seguir leyendo</a>
                             </div>
                         </div>
                     </div>

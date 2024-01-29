@@ -36,8 +36,8 @@
         </div>
     @show
 
-    <section class="section">
-        <div class="container">
+    <section class="section pt-0">
+        <div class="container mt-100 mt-60">
             @if ($base_profile->grade > 6)
                 @include('base::shop.products-by-visits', ['products' => $products])
             @else

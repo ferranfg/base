@@ -78,6 +78,8 @@ return [
 
     'blog_template' => 'layouts.web',
 
+    'blog_pinned_id' => null,
+
     'blog_keywords' => false,
 
     'blog_before_post' => null,
