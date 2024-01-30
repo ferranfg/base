@@ -198,11 +198,19 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Check if the post is a page.
+     */
+    public function getIsPageAttribute()
+    {
+        return $this->type == 'page';
+    }
+
+    /**
      * Check if comments are disabled for this post.
      */
     public function getCommentsDisabledAttribute()
     {
-        return $this->type == 'page' or $this instanceof Note;
+        return $this->is_page or $this instanceof Note;
     }
 
     /**
@@ -210,7 +218,7 @@ class Post extends Model implements Feedable
      */
     public function getKeywordsDisabledAttribute()
     {
-        return $this->type == 'page' or ! config('base.blog_keywords');
+        return $this->is_page or ! config('base.blog_keywords');
     }
 
     /**
