@@ -88,6 +88,8 @@ return [
 
     'blog_after_post' => null,
 
+    'blog_extended_post' => true,
+
     /*
     |--------------------------------------------------------------------------
     | Guides Information

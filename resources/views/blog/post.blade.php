@@ -22,21 +22,23 @@
                             @endif
                         </div>
                         @section('post-breadcrumb')
-                            <div class="page-next text-center">
-                                <nav class="d-inline-block">
-                                    <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                        @if ($post->author)
-                                            @if ($post->author->name == 'Ferran Figueredo')
-                                                <li class="breadcrumb-item"><i class="fa fa-user"></i> <a href="https://ferranfigueredo.com" target="_blank" rel="noopener nofollow">Ferran Figueredo</a></li>
-                                            @else
-                                                <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
+                            @if ( ! $post->is_page)
+                                <div class="page-next text-center">
+                                    <nav class="d-inline-block">
+                                        <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                            @if ($post->author)
+                                                @if ($post->author->name == 'Ferran Figueredo')
+                                                    <li class="breadcrumb-item"><i class="fa fa-user"></i> <a href="https://ferranfigueredo.com" target="_blank" rel="noopener nofollow">Ferran Figueredo</a></li>
+                                                @else
+                                                    <li class="breadcrumb-item"><i class="fa fa-user"></i> {{ $post->author->name }}</li>
+                                                @endif
                                             @endif
-                                        @endif
-                                        <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at->toFormattedDateString() }}</li>
-                                    </ul>
-                                    <time class="updated" datetime="{{ $post->updated_at }}"></time>
-                                </nav>
-                            </div>
+                                            <li class="breadcrumb-item"><i class="fa fa-calendar"></i> {{ $post->updated_at->toFormattedDateString() }}</li>
+                                        </ul>
+                                        <time class="updated" datetime="{{ $post->updated_at }}"></time>
+                                    </nav>
+                                </div>
+                            @endif
                         @show
                     </div>
                 </div>
@@ -56,7 +58,9 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="alert alert-light text-center border-0">
-                        <span class="mr-4"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</span>
+                        @if ( ! $post->is_page)
+                            <span class="mr-4"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</span>
+                        @endif
                         @if ( ! $post->comments_disabled)
                             <span class="d-none d-md-inline mr-4"><i class="fa fa-comment"></i> <a href="#comments" class="alert-link">{{ $post->comments->count() }} comments</a></span>
                         @endif
@@ -64,51 +68,58 @@
                         <span><i class="fa fa-facebook-square"></i> <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($post->canonical_url) }}" class="alert-link" target="_blank" rel="noreferrer nofollow">Share</a></span>
                     </div>
 
-                    @includeWhen(config('base.blog_before_post'), config('base.blog_before_post'))
+                    @if ( ! $post->is_page)
 
-                    <div class="post">
-                        @basedownExtended(
-                            extended_post_content($post->content, $related)
-                        )
-                    </div>
+                        @includeWhen(config('base.blog_before_post'), config('base.blog_before_post'))
 
-                    @if ($keywords = $post->getKeywords() and $keywords->count())
-                        <p class="text-monospace mt-5">
-                            <span>Tags:</span>
-                            @foreach ($keywords as $keyword)
-                                <a href="{{ $keyword->canonical_url }}" class="ml-2">{{ $keyword->name }}</a>@if ($loop->remaining),@endif
-                            @endforeach
-                        </p>
-                    @endif
-
-                    @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
-
-                    @if ($related->count())
-                        <div class="mt-5">
-                            @include('base::blog.related-posts', ['post' => $post, 'related' => $related])
-                        </div>
-                    @endif
-
-                    @includeUnless($post->type == 'page', 'base::components.previous-next')
-
-                    @if ( ! $post->comments_disabled)
-                        <div id="comments">
-                            @if ($post->comments->count())
-                                <h5 class="mt-4">Comments:</h5>
-                                <ul class="media-list list-unstyled mb-0">
-                                    @foreach ($post->comments as $comment)
-                                        @include('base::components.comment', ['comment' => $comment])
-                                    @endforeach
-                                </ul>
-                            @endif
+                        <div class="post">
+                            @basedownExtended(
+                                blog_extended_post($post->content, $related)
+                            )
                         </div>
 
-                        <h5 class="mt-4" id="comment-submit">Leave a comment:</h5>
+                        @if ($keywords = $post->getKeywords() and $keywords->count())
+                            <p class="text-monospace mt-5">
+                                <span>Tags:</span>
+                                @foreach ($keywords as $keyword)
+                                    <a href="{{ $keyword->canonical_url }}" class="ml-2">{{ $keyword->name }}</a>@if ($loop->remaining),@endif
+                                @endforeach
+                            </p>
+                        @endif
 
-                        @include('base::components.comment-submit', [
-                            'action' => "{$post->canonical_url}#comment-submit",
-                            'errors' => $errors
-                        ])
+                        @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
+
+                        @if ($related->count())
+                            <div class="mt-5">
+                                @include('base::blog.related-posts', ['post' => $post, 'related' => $related])
+                            </div>
+                        @endif
+
+                        @include('base::components.previous-next')
+
+                        @if ( ! $post->comments_disabled)
+                            <div id="comments">
+                                @if ($post->comments->count())
+                                    <h5 class="mt-4">Comments:</h5>
+                                    <ul class="media-list list-unstyled mb-0">
+                                        @foreach ($post->comments as $comment)
+                                            @include('base::components.comment', ['comment' => $comment])
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+
+                            <h5 class="mt-4" id="comment-submit">Leave a comment:</h5>
+
+                            @include('base::components.comment-submit', [
+                                'action' => "{$post->canonical_url}#comment-submit",
+                                'errors' => $errors
+                            ])
+                        @endif
+                    @else
+                        <div class="post">
+                            @basedownExtended($post->content)
+                        </div>
                     @endif
                 </div>
             </div>

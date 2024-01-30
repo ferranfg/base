@@ -207,10 +207,12 @@ if ( ! function_exists('clean_accents'))
  * @param  array  $related
  * @return string
  */
-if ( ! function_exists('extended_post_content'))
+if ( ! function_exists('blog_extended_post'))
 {
-    function extended_post_content($content, $related = null)
+    function blog_extended_post($content, $related = null)
     {
+        if ( ! config('base.blog_extended_post')) return $content;
+
         // Buscamos un punto final, salto de linea y el segundo h2
         $content = str_replace("\r", '', $content);
         $h_index = 1;
