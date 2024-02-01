@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->string('status')->index();
             $table->boolean('featured')->default(false);
             $table->string('comment_status')->nullable();
+            $table->timestamp('scheduled_at')->nullable();
             $table->timestamps();
         });
     }

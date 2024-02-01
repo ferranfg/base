@@ -7,6 +7,7 @@ use Ferranfg\Base\Clients\Unsplash;
 use Ferranfg\Base\Models\Product;
 use Ferranfg\Base\Models\Assistance;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class GenerateDynamicPost extends Command
@@ -34,7 +35,16 @@ class GenerateDynamicPost extends Command
     {
         if ($this->argument('action') == 'suggest') return $this->suggestDynamicPost(false);
 
-        $post = Base::post()->whereStatus('draft')->whereType('dynamic')->first();
+        $post = null;
+
+        if (Schema::hasColumn(Base::post()->getTable(), 'scheduled_at')) $post = Base::post()
+            ->whereStatus('scheduled')
+            ->whereType('dynamic')
+            ->where('scheduled_at', '<=', now())
+            ->orderBy('scheduled_at', 'asc')
+            ->first();
+
+        if (is_null($post)) $post = Base::post()->whereStatus('draft')->whereType('dynamic')->first();
 
         if (is_null($post)) $post = $this->suggestDynamicPost();
 
