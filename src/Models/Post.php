@@ -56,6 +56,7 @@ class Post extends Model implements Feedable
      * @var array
      */
     public $casts = [
+        'scheduled_at' => 'datetime',
         'showcase_product_ids' => 'json',
     ];
 

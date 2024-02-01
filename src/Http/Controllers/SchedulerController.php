@@ -2,7 +2,6 @@
 
 namespace Ferranfg\Base\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Routing\Controller;
 use Ferranfg\Base\Repositories\PostRepository;
 
@@ -69,9 +68,7 @@ class SchedulerController extends Controller
 
         foreach ($posts as $post)
         {
-            $scheduled_at = $post->getMetadata('scheduled_at');
-
-            if ($scheduled_at > Carbon::now()) $post->publish();
+            if ($post->scheduled_at and $post->scheduled_at->isPast()) $post->publish();
         }
     }
 

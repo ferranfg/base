@@ -67,9 +67,6 @@ class Post extends Resource
                 Markdown::make('Content'),
             ]),
 
-            DateTime::make('Created At')
-                ->rules('required'),
-
             Number::make('Excerpt Length')
                 ->onlyOnIndex(),
 
@@ -77,10 +74,9 @@ class Post extends Resource
                 ->onlyOnIndex(),
 
             Text::make('Main Keyword')
-                ->rules('required'),
+                ->hideFromIndex(),
 
             Text::make('Keywords')
-                ->rules('required')
                 ->hideFromIndex(),
 
             Boolean::make('Featured')
@@ -106,6 +102,11 @@ class Post extends Resource
                 ->rules('required')
                 ->options(Base::post()::$status)
                 ->displayUsingLabels(),
+
+            DateTime::make('Scheduled At'),
+
+            DateTime::make('Created At')
+                ->rules('required'),
 
             KeyValue::make('Showcase Product Ids')
                 ->rules('json'),
