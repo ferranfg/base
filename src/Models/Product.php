@@ -14,13 +14,14 @@ use Ferranfg\Base\Traits\HasVisits;
 use Stripe\TaxRate as StripeTaxRate;
 use Stripe\Product as StripeProduct;
 use Ferranfg\Base\Traits\HasMetadata;
+use Ferranfg\Base\Traits\IsShareable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Product extends Model
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, LogsActivity;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, IsShareable, LogsActivity;
 
     /**
      * The database table used by the model.
@@ -490,46 +491,6 @@ class Product extends Model
                 'name' => $category[1]
             ];
         })->values();
-    }
-
-    /**
-     * Construye la URL de intent tweet para compartir directamente
-     * https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview
-     */
-    public function intentTweetUrl()
-    {
-        $params = [
-            'url' => $this->canonical_url,
-        ];
-
-        return 'https://twitter.com/intent/tweet?' . http_build_query($params);
-    }
-
-    /*
-     * Construye la URL de intent Facebook para compartir.
-     * https://developers.facebook.com/docs/sharing/reference/share-dialog
-     */
-    public function intentFacebookUrl()
-    {
-        return 'https://www.facebook.com/dialog/share?' . http_build_query([
-            'app_id' => config('services.facebook.client_id'),
-            'display' => 'popup',
-            'redirect_uri' => $this->canonical_url,
-            'href' => $this->canonical_url,
-        ]);
-    }
-
-    /**
-     * Construye la URL de intent Pinterest para compartir.
-     * https://developers.pinterest.com/docs/add-ons/save-button/
-     */
-    public function intentPinterestUrl()
-    {
-        return 'https://www.pinterest.com/pin/create/button?' . http_build_query([
-            'url' => $this->canonical_url,
-            'media' => img_url($this->photo_url),
-            'description' => $this->name,
-        ]);
     }
 
     /**

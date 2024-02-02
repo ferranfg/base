@@ -17,10 +17,11 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Ferranfg\Base\Notifications\PostNewsletter;
+use Ferranfg\Base\Traits\IsShareable;
 
 class Post extends Model implements Feedable
 {
-    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, LogsActivity;
+    use HasTags, HasTranslations, HasSlug, HasMetadata, HasVisits, IsShareable, LogsActivity;
 
     /**
      * The database table used by the model.
