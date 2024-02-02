@@ -14,10 +14,11 @@ use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
 use Illuminate\Database\Eloquent\Model;
 use Ferranfg\Base\Notifications\PostNewsletter;
+use Ferranfg\Base\Traits\IsShareable;
 
 class Post extends Model implements Feedable
 {
-    use HasTags, HasSlug, HasMetadata, HasVisits;
+    use HasTags, HasSlug, HasMetadata, HasVisits, IsShareable;
 
     /**
      * The database table used by the model.

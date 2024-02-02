@@ -56,18 +56,14 @@
     <section class="section">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-7">
-                    <div class="alert alert-light text-center border-0">
-                        @if ( ! $post->is_page)
-                            <span class="mr-4"><i class="fa fa-clock"></i> {{ $post->reading_time }} min read</span>
-                        @endif
-                        @if ( ! $post->comments_disabled)
-                            <span class="d-none d-md-inline mr-4"><i class="fa fa-comment"></i> <a href="#comments" class="alert-link">{{ $post->comments->count() }} comments</a></span>
-                        @endif
-                        <span class="mr-4"><i class="fa fa-twitter"></i> <a href="https://twitter.com/intent/tweet?text={{ urlencode($post->name) }}&url={{ urlencode($post->canonical_url) }}" class="alert-link" target="_blank" rel="noreferrer nofollow">Share</a></span>
-                        <span><i class="fa fa-facebook-square"></i> <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($post->canonical_url) }}" class="alert-link" target="_blank" rel="noreferrer nofollow">Share</a></span>
-                    </div>
-
+                <div class="col-md-1 d-none d-md-block">
+                    <ul class="list-unstyled text-center social-icon">
+                        <li><a href="{{ $post->intentFacebookUrl() }}" class="rounded"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="{{ $post->intentTweetUrl() }}" class="rounded"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="{{ $post->intentWhatsAppUrl() }}" class="rounded"><i class="fa fa-whatsapp"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-7 col-md-11">
                     @if ( ! $post->is_page)
 
                         @includeWhen(config('base.blog_before_post'), config('base.blog_before_post'))
