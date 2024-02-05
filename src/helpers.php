@@ -249,7 +249,7 @@ if ( ! function_exists('dialect_redirect_url'))
     {
         if ( ! function_exists('dialect')) return $url;
 
-        if ($locale == config('app.fallback_locale')) $locale = null;
+        if ($locale == tongue()->current() and $locale == config('app.fallback_locale')) $locale = null;
 
         return dialect()->redirectUrl($url, $locale);
     }
