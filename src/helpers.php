@@ -249,8 +249,13 @@ if ( ! function_exists('dialect_redirect_url'))
     {
         if ( ! function_exists('dialect')) return $url;
 
-        if ($locale == tongue()->current() and $locale == config('app.fallback_locale')) $locale = null;
+        $redirect_url = dialect()->redirectUrl($url, $locale);
 
-        return dialect()->redirectUrl($url, $locale);
+        if ($locale == config('app.fallback_locale'))
+        {
+            $redirect_url = str_replace($locale . '.', '', $redirect_url);
+        }
+
+        return $redirect_url;
     }
 }
