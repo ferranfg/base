@@ -111,7 +111,7 @@
         @section('footer')
             <footer class="footer footer-bar">
                 <div class="container">
-                    <p class="mb-0">© {{ date('Y') }} {{ config('app.name') }} by <a href="https://ferranfigueredo.com" target="_blank" rel="noopener nofollow">ferranfigueredo.com</a> 🚀 {{__('All rights reserved.')}}</p>
+                    <p class="mb-0">© {{ date('Y') }} {{ config('app.name') }} by <a href="{{ config('base.copyrigth_url') }}" target="_blank" rel="noopener nofollow">{{ config('base.copyrigth_url') }}</a>. {{__('All rights reserved.')}}</p>
                 </div>
             </footer>
 

@@ -169,6 +169,8 @@ return [
 
     'feedback_username' => env('BASE_FEEDBACK_USERNAME'),
 
+    'copyrigth_url' => env('BASE_COPYRIGTH_URL', 'https://ferranfigueredo.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Incoming Discord Webhooks
