@@ -235,3 +235,22 @@ if ( ! function_exists('blog_extended_post'))
         return $content;
     }
 }
+
+/**
+ * Get the URL in the desired locale.
+ *
+ * @param  string  $url
+ * @param  string  $locale
+ * @return string
+ */
+if ( ! function_exists('dialect_redirect_url'))
+{
+    function dialect_redirect_url($url = null, string $locale = null)
+    {
+        if ( ! function_exists('dialect')) return $url;
+
+        if ($locale == config('app.fallback_locale')) $locale = null;
+
+        return dialect()->redirectUrl($url, $locale);
+    }
+}
