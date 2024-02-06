@@ -5,14 +5,14 @@ namespace Ferranfg\Base\Commands;
 use Ferranfg\Base\Base;
 use Illuminate\Console\Command;
 
-class PushFacebookPost extends Command
+class UpdatePublishedPost extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'base:push-facebook-post';
+    protected $signature = 'base:update-published-post';
 
     /**
      * The console command description.
@@ -28,11 +28,21 @@ class PushFacebookPost extends Command
      */
     public function handle()
     {
-        $post = Base::post()
+        $posts = Base::post()
             ->whereStatus('published')
             ->whereIn('type', ['entry', 'dynamic'])
-            ->inRandomOrder()
-            ->first();
+            ->whereFeatured(false)
+            ->where('updated_at', '<', now()->subDays(30))
+            ->orderBy('updated_at', 'asc')
+            ->take(5)
+            ->get();
+
+        if ($posts->isEmpty()) return Command::SUCCESS;
+
+        $post = $posts->random();
+
+        $post->updated_at = now();
+        $post->save();
 
         $post->publishFacebook();
 

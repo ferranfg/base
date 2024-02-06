@@ -62,10 +62,10 @@ class BaseServiceProvider extends ServiceProvider
                 ImportProductsOutscraper::class,
                 InstallCommand::class,
                 PublishCommand::class,
-                PushFacebookPost::class,
                 SendPostNewsletter::class,
                 UpdateDynamicPost::class,
                 UpdateInternalLinking::class,
+                UpdatePublishedPost::class,
             ]);
         }
 
