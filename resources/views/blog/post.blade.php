@@ -70,7 +70,7 @@
 
                         <div class="post">
                             @basedownExtended(
-                                blog_extended_post($post->content, $related)
+                                blog_extended_post($post, $related)
                             )
                         </div>
 

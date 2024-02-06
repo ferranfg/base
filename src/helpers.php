@@ -209,8 +209,10 @@ if ( ! function_exists('clean_accents'))
  */
 if ( ! function_exists('blog_extended_post'))
 {
-    function blog_extended_post($content, $related = null)
+    function blog_extended_post($post, $related = null)
     {
+        $content = $post->content;
+
         if ( ! config('base.blog_extended_post')) return $content;
 
         // Buscamos un punto final, salto de linea y el segundo h2
@@ -230,6 +232,21 @@ if ( ! function_exists('blog_extended_post'))
                 ".\n\n{$halfway}\n\n## {$replace}",
                 $content
             );
+        }
+
+        // Buscamos las imagenes que no tienen alt y les añadimos el alt
+        preg_match_all('/!\[\]\((.+)\)/i', $content, $matches);
+
+        if (array_key_exists(0, $matches))
+        {
+            foreach ($matches[1] as $match)
+            {
+                $content = str_replace(
+                    "![]({$match})",
+                    "![{$post->name}]({$match})",
+                    $content
+                );
+            }
         }
 
         return $content;
