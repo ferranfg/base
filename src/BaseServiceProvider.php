@@ -15,10 +15,10 @@ use Ferranfg\Base\Commands\GenerateDynamicPost;
 use Ferranfg\Base\Commands\GenerateEmbeddingsPost;
 use Ferranfg\Base\Commands\ImportProductsAmazon;
 use Ferranfg\Base\Commands\ImportProductsOutscraper;
-use Ferranfg\Base\Commands\PushFacebookPost;
 use Ferranfg\Base\Commands\SendPostNewsletter;
 use Ferranfg\Base\Commands\UpdateDynamicPost;
 use Ferranfg\Base\Commands\UpdateInternalLinking;
+use Ferranfg\Base\Commands\UpdatePublishedPost;
 
 class BaseServiceProvider extends ServiceProvider
 {
