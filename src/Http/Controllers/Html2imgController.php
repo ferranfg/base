@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Http\Controllers;
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -20,6 +21,8 @@ class Html2imgController extends Controller
      */
     public function preview(Request $request)
     {
+        Debugbar::disable();
+
         abort_unless($request->filename, 422, 'Filename is required.');
 
         return view('base::html2img.default', [
