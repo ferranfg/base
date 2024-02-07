@@ -38,7 +38,7 @@
         class="relative bg-white p-8 mx-auto bg-cover bg-center bg-repeat"
         style="width:{{ $width }}px;height:{{ $height }}px;background-image:url({{ $background }})">
         <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
-        @includeFirst([$template, 'base::html2img.default'])
+        @includeFirst(['html2img.square', 'base::html2img.square'])
     </div>
     <script>
         html2canvas(document.getElementById("capture"), {
