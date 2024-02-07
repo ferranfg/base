@@ -24,13 +24,14 @@ class Html2imgController extends Controller
 
         return view('base::html2img.default', [
             'filename' => $request->filename,
-            'background' => $request->background,
-            'pre_title' => $request->pre_title,
+            'background' => $request->get('background', img_url(hero_image(), [
+                ['width' => 1080, 'height' => 1080]
+            ])),
+            'pre_title' => $request->get('pre_title', config('app.name')),
             'title' => $request->title,
             'description' => $request->description,
-            'text_color' => $request->get('text_color', 'slate'),
-            'width' => $request->get('width', 960),
-            'height' => $request->get('height', 540),
+            'width' => 540,
+            'height' => 540,
         ]);
     }
 

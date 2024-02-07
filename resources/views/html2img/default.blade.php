@@ -35,26 +35,12 @@
 </head>
 <body class="flex flex-col bg-black text-center">
     <div id="capture"
-        class="relative bg-white px-32 flex flex-col place-content-center mx-auto bg-cover bg-center bg-repeat"
-        style="
-            width:{{ $width }}px;
-            height:{{ $height }}px;
-            @if ($background)
-                background-image:url({{ $background }})
-            @endif
-        ">
-        @if ($background)
-            <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
-        @endif
-        @if ($pre_title)
-            <div id="pre-title" class="relative text-{{ $text_color }} text-xl mb-2">{{ $pre_title }}</div>
-        @endif
-        @if ($title)
-            <div id="title" class="relative text-{{ $text_color }} text-5xl font-black mb-4">{{ $title }}</div>
-        @endif
-        @if ($description)
-            <div id="description" class="relative text-{{ $text_color }} text-2xl font-light">{{ $description }}</div>
-        @endif
+        class="relative bg-white px-8 flex flex-col place-content-center mx-auto bg-cover bg-center bg-repeat"
+        style="width:{{ $width }}px;height:{{ $height }}px;background-image:url({{ $background }})">
+        <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
+        <div id="pre-title" class="relative text-white text-xl mb-2">{{ $pre_title }}</div>
+        <div id="title" class="relative text-white text-5xl font-black mb-4">{{ $title }}</div>
+        <div id="description" class="relative text-white text-2xl font-light">{{ $description }}</div>
     </div>
     <script>
         html2canvas(document.getElementById("capture"), {
