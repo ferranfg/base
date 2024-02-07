@@ -27,10 +27,9 @@ class Html2imgController extends Controller
 
         return view('base::html2img.preview', [
             'filename' => $request->filename,
-            'template' => $request->template,
-            'background' => $request->get('background', img_url(hero_image(), [
+            'background' => img_url($request->get('background', hero_image()), [
                 ['width' => 1080, 'height' => 1080]
-            ])),
+            ]),
             'pre_title' => $request->get('pre_title', config('app.name')),
             'title' => $request->title,
             'description' => $request->description,

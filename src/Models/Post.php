@@ -367,17 +367,14 @@ class Post extends Model implements Feedable
      *
      * @return string
      */
-    public function getBannerUrl($template = null)
+    public function getSquareBannerUrl()
     {
         $endpoint = 'https://us-central1-ferran-figueredo.cloudfunctions.net/crawler';
-        $filename = "banner-{$template}-{$this->id}.png";
+        $filename = "banner-{$this->id}.png";
 
         $params = [
             'filename' => $filename,
-            'template' => $template,
-            'background' => img_url($this->photo_url, [
-                ['width' => 1080, 'height' => 1080]
-            ]),
+            'background' => $this->photo_url,
             'title' => $this->name,
             'description' => $this->excerpt,
         ];
