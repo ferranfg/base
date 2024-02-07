@@ -25,8 +25,9 @@ class Html2imgController extends Controller
 
         abort_unless($request->filename, 422, 'Filename is required.');
 
-        return view('base::html2img.default', [
+        return view('base::html2img.preview', [
             'filename' => $request->filename,
+            'template' => $request->template,
             'background' => $request->get('background', img_url(hero_image(), [
                 ['width' => 1080, 'height' => 1080]
             ])),
