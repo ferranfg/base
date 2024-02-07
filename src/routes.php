@@ -52,6 +52,9 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@show');
     Route::post('/guides/{slug}', '\Ferranfg\Base\Http\Controllers\GuidesController@comment');
 
+    Route::get('/html2img', '\Ferranfg\Base\Http\Controllers\Html2imgController@preview')->name('html2img.preview');
+    Route::post('/html2img', '\Ferranfg\Base\Http\Controllers\Html2imgController@generate')->name('html2img.generate');
+
     Route::get('/notes/{slug?}', '\Ferranfg\Base\Http\Controllers\NoteController@index');
 
     Route::get('/shop', '\Ferranfg\Base\Http\Controllers\ShopController@list');

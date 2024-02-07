@@ -3,6 +3,7 @@
 namespace Ferranfg\Base\Models;
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Ferranfg\Base\Base;
 use Ferranfg\Base\Clients\Facebook;
 use Ferranfg\Base\Clients\Unsplash;
@@ -12,6 +13,7 @@ use Ferranfg\Base\Traits\HasTags;
 use Ferranfg\Base\Traits\HasSlug;
 use Ferranfg\Base\Traits\HasVisits;
 use Ferranfg\Base\Traits\HasMetadata;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Ferranfg\Base\Notifications\PostNewsletter;
 use Ferranfg\Base\Traits\IsShareable;
@@ -360,4 +362,30 @@ class Post extends Model implements Feedable
         return collect($keywords);
     }
 
+    /**
+     * Generate the Open Graph image for the post.
+     *
+     * @return string
+     */
+    public function getSquareBannerUrl()
+    {
+        $endpoint = 'https://us-central1-ferran-figueredo.cloudfunctions.net/crawler';
+        $filename = "square-banner-{$this->id}.png";
+
+        $params = [
+            'filename' => $filename,
+            'background' => img_url($this->photo_url, [
+                ['width' => 1080, 'height' => 1080]
+            ]),
+            'title' => $this->name,
+            'description' => $this->excerpt,
+        ];
+
+        (new Client)->get("{$endpoint}?" . http_build_query([
+            'url' => route('html2img.preview', $params),
+            'wait' => 2000,
+        ]));
+
+        return Storage::url($filename);
+    }
 }
