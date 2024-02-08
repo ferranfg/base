@@ -142,7 +142,7 @@ class GenerateDynamicPost extends Command
         $post->status = 'published';
         $post->save();
 
-        $post->publishFacebook();
+        $post->publishMeta();
 
         return Command::SUCCESS;
     }

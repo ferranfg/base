@@ -16,13 +16,17 @@ class ConnectController extends Controller
     use ValidatesRequests;
 
     /**
-     * The scopes to request.
+     * The scopes to request from the user.
+     *
+     * @var array
      */
     protected $scopes = [
         'business_management',
         'pages_show_list',
         'pages_manage_posts',
         'pages_read_engagement',
+        'instagram_basic',
+        'instagram_content_publish',
     ];
 
     /**

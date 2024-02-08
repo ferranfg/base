@@ -308,7 +308,7 @@ class Post extends Model implements Feedable
     /**
      * Publishes a post on Facebook if page_id is set.
      */
-    public function publishFacebook()
+    public function publishMeta()
     {
         if ($author = $this->author and $author->facebook_id and $author->facebook_token)
         {
