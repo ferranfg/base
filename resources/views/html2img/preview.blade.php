@@ -14,31 +14,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
 
     <style>
-        html {
-            box-sizing: border-box;
-        }
-
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: "Nunito Sans", sans-serif;
+            line-height: 0.5 !important;
         }
     </style>
 </head>
 <body class="flex flex-col bg-black">
-    <div id="capture"
-        class="relative bg-white p-8 mx-auto bg-cover bg-center bg-repeat"
-        style="width:{{ $width }}px;height:{{ $height }}px;background-image:url({{ $background }})">
-        <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
-        @includeFirst(['html2img.square', 'base::html2img.square'])
+    <div id="capture" class="mx-auto text-base" style="width:{{ $width }}px;height:{{ $height }}px;">
+        <div class="relative h-full p-8 bg-cover bg-center bg-repeat" style="background-image:url({{ $background }})">
+            <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
+            @includeFirst(['html2img.square', 'base::html2img.square'])
+        </div>
     </div>
     <script>
         html2canvas(document.getElementById("capture"), {
