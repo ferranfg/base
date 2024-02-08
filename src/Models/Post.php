@@ -184,6 +184,35 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Generate the html2img image for the post.
+     */
+    public function getSquareBannerUrlAttribute()
+    {
+        $endpoint = 'https://us-central1-ferran-figueredo.cloudfunctions.net/crawler';
+        $filename = "banner-{$this->id}.png";
+
+        // Check if exists and has less than 5 minutes
+        if (Storage::exists($filename) and Storage::lastModified($filename) < (time() - 300))
+        {
+            return Storage::url($filename);
+        }
+
+        $params = [
+            'filename' => $filename,
+            'background' => $this->photo_url,
+            'title' => $this->name,
+            'description' => $this->excerpt,
+        ];
+
+        (new Client)->get("{$endpoint}?" . http_build_query([
+            'url' => route('html2img.preview', $params),
+            'wait' => 2000,
+        ]));
+
+        return Storage::url($filename);
+    }
+
+    /**
      * Check if the post is a page.
      */
     public function getIsPageAttribute()
@@ -306,33 +335,73 @@ class Post extends Model implements Feedable
     }
 
     /**
-     * Publishes a post on Facebook if page_id is set.
+     * Publishes a post on Meta platforms.
+     *
+     * @return void
      */
     public function publishMeta()
     {
-        if ($author = $this->author and $author->facebook_id and $author->facebook_token)
+        if ($this->author and $this->author->facebook_token)
         {
-            $message = $this->excerpt . "\n\n👉 " . $this->canonical_url;
-
-            // Convert coma separated keywords to hashtags
-            if ($this->keywords)
-            {
-                $hashtags = clean_accents($this->keywords);
-                $hashtags = preg_replace("/[^a-zA-Z0-9,]/", '', $hashtags);
-                $hashtags = str_replace(',', ' #', $hashtags);
-
-                $message .= "\n\n" . "#" . $hashtags;
-            }
-
-            $res = Facebook::uploadPost($author->facebook_id, $author->facebook_token, [
-                'url' => $this->horizontal_photo_url,
-                'link' => $this->canonical_url,
-                'message' => $message,
-                'published' => true,
-            ]);
-
-            logger(json_encode($res));
+            if ($this->author->facebook_id) $this->publishFacebook();
+            if ($this->author->instagram_id) $this->publishInstagram();
         }
+    }
+
+    /**
+     * Publishes a post on Facebook if facebook_id is set.
+     *
+     * @return void
+     */
+    public function publishFacebook()
+    {
+        $message = $this->excerpt . "\n\n👉 " . $this->canonical_url;
+
+        if ($this->keywords) $message .= "\n\n" . $this->getKeywordsAsHashtags();
+
+        $res = Facebook::uploadPost($this->author->facebook_id, $this->author->facebook_token, [
+            'url' => $this->square_banner_url,
+            'link' => $this->canonical_url,
+            'message' => $message,
+            'published' => true,
+        ]);
+
+        logger(json_encode($res));
+    }
+
+    /**
+     * Publishes a post on Instagram if instagram_id is set.
+     *
+     * @return void
+     */
+    public function publishInstagram()
+    {
+        $caption = $this->excerpt . "\n\n👉 Link in bio ➡️";
+
+        if ($this->keywords) $caption .= "\n\n" . $this->getKeywordsAsHashtags();
+
+        $res = Facebook::uploadMedia($this->author->instagram_id, $this->author->facebook_token, [
+            'image_url' => $this->square_banner_url,
+            'caption' => $caption,
+        ]);
+
+        logger(json_encode($res));
+    }
+
+    /**
+     * Convert coma separated keywords to hashtags
+     *
+     * @return string
+     */
+    public function getKeywordsAsHashtags()
+    {
+        if ( ! $this->keywords) return (string) null;
+
+        $hashtags = clean_accents($this->keywords);
+        $hashtags = preg_replace("/[^a-zA-Z0-9,]/", '', $hashtags);
+        $hashtags = str_replace(',', ' #', $hashtags);
+
+        return "#" . $hashtags;
     }
 
     /**
@@ -360,30 +429,5 @@ class Post extends Model implements Feedable
         }
 
         return collect($keywords);
-    }
-
-    /**
-     * Generate the Open Graph image for the post.
-     *
-     * @return string
-     */
-    public function getSquareBannerUrl()
-    {
-        $endpoint = 'https://us-central1-ferran-figueredo.cloudfunctions.net/crawler';
-        $filename = "banner-{$this->id}.png";
-
-        $params = [
-            'filename' => $filename,
-            'background' => $this->photo_url,
-            'title' => $this->name,
-            'description' => $this->excerpt,
-        ];
-
-        (new Client)->get("{$endpoint}?" . http_build_query([
-            'url' => route('html2img.preview', $params),
-            'wait' => 2000,
-        ]));
-
-        return Storage::url($filename);
     }
 }
