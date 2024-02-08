@@ -44,7 +44,7 @@ class UpdatePublishedPost extends Command
         $post->updated_at = now();
         $post->save();
 
-        $post->publishFacebook();
+        $post->publishMeta();
 
         return Command::SUCCESS;
     }
