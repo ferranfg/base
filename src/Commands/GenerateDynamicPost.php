@@ -83,12 +83,11 @@ class GenerateDynamicPost extends Command
             (string) null,
             "Conditions:",
             "- If available, use the \"Context sections\" to add links to other articles in the blog.",
-            "- Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
             "- Do not include an h1 title; start with text.",
             "- Do not include the word \"Section\" in the title of the sections.",
+            "- Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
             "- Add an introductory paragraph before the first h2 heading.",
-            "- Write three paragraphs with four sentences each, for every h3 sub-subsection.",
-            "- Do not include any h4, h5, or h6 headings.",
+            "- Write three paragraphs for every h3 sub-subsection.",
         ]);
 
         if ($post->showcase_product_ids)
