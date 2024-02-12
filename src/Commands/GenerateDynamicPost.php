@@ -58,25 +58,20 @@ class GenerateDynamicPost extends Command
             "The article should be about: \"{$post->excerpt}\".",
         ];
 
-        if (false) // $post->content)
+        if ($post->content)
         {
             $prompt = array_merge($prompt, [
                 (string) null,
                 "Outline:",
                 "- The content you write must complete the following outline structure.",
-                "- Ignore and remove any Heading 1 present in the outline.",
-                "- Do not remove any Heading 2 or Heading 3 headings from the outline.",
+                "- Ignore and remove any h1 heading present in the outline.",
+                "- Do not remove any h2 or h3 headings from the outline.",
                 "- Outline structure: \"{$post->content}\".",
             ]);
         }
         else
         {
-            $prompt = array_merge($prompt, [
-                (string) null,
-                "Outline:",
-                "- The content you write must have four Heading 2 sections",
-                "- Every Heading 2 section must have two Heading 3 sub-sections each.",
-            ]);
+            $prompt[] = "The content you write should have a minimum of 6-8 h2, h3 heading sections.";
         }
 
         $prompt = array_merge($prompt, [
@@ -84,16 +79,15 @@ class GenerateDynamicPost extends Command
             "Response:",
             "- Language: \"" . strtoupper(config('app.locale')) . "\".",
             "- Response must be in Markdown format. Use bold, italics, lists, links, etc.",
-            "- Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
+            "- Response must contain more than 2000 words.",
             (string) null,
             "Conditions:",
-            "- Do not include the word \"Section\" in the title of the sections or sub-sections.",
-            "- Do not include a Heading 1; start with text.",
-            "- Do not include any Heading 4, Heading 5, or Heading 6 headings.",
-            "- Add an introductory paragraph before the first Heading 2 section.",
-            "- Write three paragraphs for every Heading 3 sub-subsection.",
-            "- Each sub-section must contain more than 600 words.",
             "- If available, use the \"Context sections\" to add links to other articles in the blog.",
+            "- Do not include an h1 title; start with text.",
+            "- Do not include the word \"Section\" in the title of the sections.",
+            "- Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
+            "- Add an introductory paragraph before the first h2 heading.",
+            "- Write at least two paragraphs for every h3 subsection.",
         ]);
 
         if ($post->showcase_product_ids)
