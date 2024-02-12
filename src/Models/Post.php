@@ -199,6 +199,7 @@ class Post extends Model implements Feedable
 
         $params = [
             'filename' => $filename,
+            'template' => 'square',
             'background' => $this->photo_url,
             'title' => $this->name,
             'description' => $this->excerpt,
