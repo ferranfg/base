@@ -23,7 +23,6 @@
 <body class="flex flex-col bg-black">
     <div id="capture" class="mx-auto text-base" style="width:{{ $width }}px;height:{{ $height }}px;">
         <div class="relative h-full p-8 bg-cover bg-center bg-repeat" style="background-image:url({{ $background }})">
-            <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
             @includeFirst(["html2img.{$template}", "base::html2img.{$template}"])
         </div>
     </div>
