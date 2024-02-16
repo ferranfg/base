@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;900&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -15,7 +15,7 @@
 
     <style>
         body {
-            font-family: "Nunito Sans", sans-serif;
+            font-family: "Nunito Sans", "Noto Color Emoji", sans-serif;
             line-height: 0.5 !important;
         }
     </style>
