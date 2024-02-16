@@ -12,7 +12,7 @@ class UpdatePublishedPost extends Command
      *
      * @var string
      */
-    protected $signature = 'base:update-published-post';
+    protected $signature = 'base:update-published-post {--publish_facebook=true} {--publish_instagram=true}';
 
     /**
      * The console command description.
@@ -44,7 +44,10 @@ class UpdatePublishedPost extends Command
         $post->updated_at = now();
         $post->save();
 
-        $post->publishMeta();
+        $post->publishMeta(
+            (bool) $this->option('publish_facebook'),
+            (bool) $this->option('publish_instagram')
+        );
 
         return Command::SUCCESS;
     }
