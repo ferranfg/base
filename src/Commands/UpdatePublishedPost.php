@@ -45,8 +45,8 @@ class UpdatePublishedPost extends Command
         $post->save();
 
         $post->publishMeta(
-            (bool) $this->option('publish_facebook'),
-            (bool) $this->option('publish_instagram')
+            $this->option('publish_facebook')  == 'true',
+            $this->option('publish_instagram') == 'true'
         );
 
         return Command::SUCCESS;
