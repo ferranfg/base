@@ -340,12 +340,12 @@ class Post extends Model implements Feedable
      *
      * @return void
      */
-    public function publishMeta()
+    public function publishMeta($publish_facebook = true, $publish_instagram = true)
     {
         if ($this->author and $this->author->facebook_token)
         {
-            if ($this->author->facebook_id) $this->publishFacebook();
-            if ($this->author->instagram_id) $this->publishInstagram();
+            if ($publish_facebook  and $this->author->facebook_id)  $this->publishFacebook();
+            if ($publish_instagram and $this->author->instagram_id) $this->publishInstagram();
         }
     }
 
