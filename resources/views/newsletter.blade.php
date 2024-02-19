@@ -42,7 +42,7 @@
 
 @component('mail::subcopy')
 <div style="text-align:center">
-You are subscribed to the {{ config('app.name') }} mailing list. <a href="{{ $unsubscribe_url }}">Unsubscribe</a>.
+You are subscribed to the {{ config('app.name') }} mailing list. <a href="{{ url("newsletter/unsubscribe/{$token}") }}">Unsubscribe</a>.
 </div>
 @endcomponent
 @endcomponent
