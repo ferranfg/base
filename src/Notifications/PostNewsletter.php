@@ -42,11 +42,18 @@ class PostNewsletter extends Notification
      */
     public function toMail($notifiable)
     {
+        $token = encrypt($notifiable->id);
+        $unsubscribe_url = url("newsletter/unsubscribe/{$token}");
+
         return (new MailMessage)
             ->subject($this->post->name)
             ->markdown('base::newsletter', [
-                'token' => encrypt($notifiable->id),
+                'unsubscribe_url' => $unsubscribe_url,
                 'post' => $this->post,
-            ]);
+            ])
+            ->withSwiftMessage(function ($message) use ($unsubscribe_url)
+            {
+                $message->getHeaders()->addTextHeader('List-Unsubscribe', $unsubscribe_url);
+            });
     }
 }
