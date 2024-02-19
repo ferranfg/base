@@ -2,9 +2,9 @@
 
 namespace Ferranfg\Base\Notifications;
 
+use Ferranfg\Base\Mail\BaseNewsletter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class PostNewsletter extends Notification
@@ -42,11 +42,6 @@ class PostNewsletter extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-            ->subject($this->post->name)
-            ->markdown('base::newsletter', [
-                'token' => encrypt($notifiable->id),
-                'post' => $this->post,
-            ]);
+        return new BaseNewsletter($notifiable, $this->post);
     }
 }
