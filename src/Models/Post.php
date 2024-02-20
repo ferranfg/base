@@ -2,6 +2,7 @@
 
 namespace Ferranfg\Base\Models;
 
+use Exception;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Ferranfg\Base\Base;
@@ -206,29 +207,38 @@ class Post extends Model implements Feedable
      */
     public function getSquareBannerUrlAttribute()
     {
-        $endpoint = 'https://us-central1-ferran-figueredo.cloudfunctions.net/crawler';
-        $filename = "banner-{$this->id}.png";
-
-        // Check if exists and has less than 5 minutes
-        if (Storage::exists($filename) and Storage::lastModified($filename) < (time() - 300))
+        try
         {
+            $endpoint = 'https://us-central1-ferran-figueredo.cloudfunctions.net/crawler';
+            $filename = "banner-{$this->id}.png";
+
+            // Check if exists and has less than 5 minutes
+            if (Storage::exists($filename) and Storage::lastModified($filename) < (time() - 300))
+            {
+                return Storage::url($filename);
+            }
+
+            $params = [
+                'filename' => $filename,
+                'template' => 'square',
+                'background' => $this->photo_url,
+                'title' => $this->name,
+                'description' => $this->excerpt,
+            ];
+
+            (new Client)->get("{$endpoint}?" . http_build_query([
+                'url' => route('html2img.preview', $params),
+                'wait' => 2000,
+            ]));
+
             return Storage::url($filename);
         }
-
-        $params = [
-            'filename' => $filename,
-            'template' => 'square',
-            'background' => $this->photo_url,
-            'title' => $this->name,
-            'description' => $this->excerpt,
-        ];
-
-        (new Client)->get("{$endpoint}?" . http_build_query([
-            'url' => route('html2img.preview', $params),
-            'wait' => 2000,
-        ]));
-
-        return Storage::url($filename);
+        catch (Exception $e)
+        {
+            return img_url($this->attached_url ?: $this->photo_url, [
+                ['width' => 1080, 'height' => 1080]
+            ]);
+        }
     }
 
     /**
