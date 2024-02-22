@@ -88,7 +88,7 @@ return [
 
     'blog_after_post' => null,
 
-    'blog_extended_post' => true,
+    'blog_extended_post' => 'base::blog.post-halfway',
 
     /*
     |--------------------------------------------------------------------------
