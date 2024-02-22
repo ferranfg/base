@@ -217,21 +217,26 @@ if ( ! function_exists('blog_extended_post'))
 
         // Buscamos un punto final, salto de linea y el segundo h2
         $content = str_replace("\r", '', $content);
-        $h_index = 1;
 
         preg_match_all('/\.\n\n## (.+)/i', $content, $matches);
 
-        // Si hay un segundo h2, lo reemplazamos por el post-halfway
-        if (array_key_exists(1, $matches) and array_key_exists($h_index, $matches[1]))
+        // Si hay un h2, lo reemplazamos por el post-halfway
+        for ($h_index = 0; $h_index < 8; $h_index++)
         {
-            $replace = $matches[1][$h_index];
-            $halfway = view('base::blog.post-halfway', ['related' => $related])->render();
+            if (array_key_exists(1, $matches) and array_key_exists($h_index, $matches[1]))
+            {
+                $replace = $matches[1][$h_index];
+                $halfway = view(config('base.blog_extended_post'), [
+                    'h_index' => $h_index,
+                    'related' => $related,
+                ])->render();
 
-            if ($halfway) $content = str_replace(
-                ".\n\n## {$replace}",
-                ".\n\n{$halfway}\n\n## {$replace}",
-                $content
-            );
+                if ($halfway) $content = str_replace(
+                    ".\n\n## {$replace}",
+                    ".\n\n{$halfway}\n\n## {$replace}",
+                    $content
+                );
+            }
         }
 
         // Buscamos las imagenes que no tienen alt y les añadimos el alt
