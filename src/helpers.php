@@ -94,7 +94,7 @@ if ( ! function_exists('img'))
         }
 
         if ( ! is_null($class)) array_push($tag, "class=\"{$class}\"");
-        if ( ! is_null($alt)) array_push($tag, "alt=\"{$alt}\"");
+        if ( ! is_null($alt)) array_push($tag, 'alt="' . htmlspecialchars($alt) . '"');
         if ( ! is_null($img_width)) array_push($tag, "width=\"{$img_width}\"");
         if ( ! is_null($img_height)) array_push($tag, "height=\"{$img_height}\"");
 
