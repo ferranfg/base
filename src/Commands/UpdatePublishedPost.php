@@ -32,7 +32,7 @@ class UpdatePublishedPost extends Command
             ->whereStatus('published')
             ->whereIn('type', ['entry', 'dynamic'])
             ->whereFeatured(false)
-            ->where('updated_at', '<', now()->subDays(30))
+            ->where('updated_at', '<', now()->subDays(90))
             ->orderBy('updated_at', 'asc')
             ->take(5)
             ->get();
