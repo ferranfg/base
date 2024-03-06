@@ -34,6 +34,8 @@ return [
 
     'headers_font_family' => env('BASE_HEADING_FONT_FAMILY'),
 
+    'cookie_consent' => env('BASE_COOKIE_CONSENT', true),
+
     'banner_path' => env('BASE_BANNER_PATH'),
 
     'tracking_api' => env('BASE_TRACKING_API'),
