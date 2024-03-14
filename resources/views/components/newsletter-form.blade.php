@@ -10,7 +10,7 @@
             <span class="invalid-feedback" v-show="subscribeForm.errors.has('email')">
                 @{{ subscribeForm.errors.get('email') }}
             </span>
-            <div class="custom-control custom-checkbox mt-2 mb-0 ml-3 text-white">
+            <div class="custom-control custom-checkbox mt-2 mb-0 ml-3">
                 @php
                     $terms = 'terms-' . Str::random(8);
                 @endphp
