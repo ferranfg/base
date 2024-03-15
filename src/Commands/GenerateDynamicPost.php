@@ -71,7 +71,7 @@ class GenerateDynamicPost extends Command
         }
         else
         {
-            $prompt[] = "The content you write should have a minimum of 6-8 h2, h3 heading sections.";
+            $prompt[] = "The content you write should have a minimum of 4-5 h2, h3 heading sections.";
         }
 
         $prompt = array_merge($prompt, [
@@ -87,7 +87,8 @@ class GenerateDynamicPost extends Command
             "- Do not include the word \"Section\" in the title of the sections.",
             "- Produce a reply that doesn't include phrases like 'Certainly,' or 'Here is the your content'.",
             "- Add an introductory paragraph before the first h2 heading.",
-            "- Write at least two paragraphs for every h3 subsection.",
+            "- Write at least two paragraphs (use a blank line to separate them) for every h3 subsection.",
+            "- Add a \"Key takeways\" section as the first subsection of the post.",
         ]);
 
         if ($post->showcase_product_ids)
