@@ -83,7 +83,7 @@ class BaseNewsletter extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'base::newsletter',
+            markdown: 'base::newsletter.markdown',
             with: [
                 'token' => encrypt($this->notifiable->id),
                 'post' => $this->post,
