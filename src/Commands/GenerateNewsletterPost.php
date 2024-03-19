@@ -12,7 +12,7 @@ class GenerateNewsletterPost extends Command
      *
      * @var string
      */
-    protected $signature = 'base:generate-newsletter-post';
+    protected $signature = 'base:generate-newsletter-post {--type=all}';
 
     /**
      * The console command description.
@@ -47,7 +47,7 @@ class GenerateNewsletterPost extends Command
         $newsletter->status = 'private';
         $newsletter->save();
 
-        $newsletter->sendNewsletter('test');
+        $newsletter->sendNewsletter($this->option('type'));
 
         return Command::SUCCESS;
     }
