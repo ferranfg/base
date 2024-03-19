@@ -9,6 +9,7 @@ use Ferranfg\Base\Commands\InstallCommand;
 use Ferranfg\Base\Commands\GenerateDynamicImages;
 use Ferranfg\Base\Commands\GenerateDynamicPost;
 use Ferranfg\Base\Commands\GenerateEmbeddingsPost;
+use Ferranfg\Base\Commands\GenerateNewsletterPost;
 use Ferranfg\Base\Commands\ImportProductsAmazon;
 use Ferranfg\Base\Commands\ImportProductsOutscraper;
 use Ferranfg\Base\Commands\SendPostNewsletter;
@@ -51,6 +52,7 @@ class BaseServiceProvider extends ServiceProvider
                 GenerateDynamicImages::class,
                 GenerateDynamicPost::class,
                 GenerateEmbeddingsPost::class,
+                GenerateNewsletterPost::class,
                 ImportProductsAmazon::class,
                 ImportProductsOutscraper::class,
                 InstallCommand::class,

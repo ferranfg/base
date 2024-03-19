@@ -1,7 +1,6 @@
 @extends(config('base.assistance_template', 'layouts.web'))
 
 @section('content')
-
     <section class="bg-half d-table w-100" style="background-image:url({{ $header }});padding:36px">
         <div class="bg-overlay"></div>
     </section>

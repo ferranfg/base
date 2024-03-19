@@ -15,14 +15,16 @@ trait HasVisits
      */
     public function scopeOrderByVisits($query)
     {
+        $model = $query->getModel();
+
         // Eliminamos del JSON la parte de {"es":" = 7
         return $query->select(
                 DB::raw('cast(substring(metadata.value, 7) as unsigned) as visits'),
-                'products.*'
+                "{$model->getTable()}.*"
             )
-            ->leftJoin('metadata', function ($join)
+            ->leftJoin('metadata', function ($join) use ($model)
             {
-                $join->on('products.id', 'metadata.parent_id');
+                $join->on("{$model->getTable()}.id", 'metadata.parent_id');
                 $join->where('metadata.name', '_visits');
                 $join->where('metadata.parent_type', get_class($this));
             })

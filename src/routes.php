@@ -22,6 +22,7 @@ Route::group(['middleware' => 'web'], function ()
     Route::get('/scheduler/weekly', '\Ferranfg\Base\Http\Controllers\SchedulerController@weekly');
     Route::get('/scheduler/daily', '\Ferranfg\Base\Http\Controllers\SchedulerController@daily');
 
+    Route::get('/newsletter', '\Ferranfg\Base\Http\Controllers\NewsletterController@index')->name('newsletter.index');
     Route::post('/request-access', '\Ferranfg\Base\Http\Controllers\NewsletterController@subscribe')->name('newsletter.waitlist');
     Route::post('/newsletter/subscribe', '\Ferranfg\Base\Http\Controllers\NewsletterController@subscribe')->name('newsletter.subscribe');
     Route::get('/newsletter/unsubscribe/{token}', '\Ferranfg\Base\Http\Controllers\NewsletterController@unsubscribe')->name('newsletter.unsubscribe');

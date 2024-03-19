@@ -24,6 +24,18 @@ class NewsletterController extends Controller
     }
 
     /**
+     * Página de inicio de la newsletter.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
+    {
+        return view('base::newsletter.index', [
+            'header' => hero_image(),
+        ]);
+    }
+
+    /**
      * Endpoint del formulario de registro.
      *
      * @return Response
