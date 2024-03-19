@@ -344,9 +344,21 @@ class Post extends Model implements Feedable
 
         activity()->performedOn($this)->log("sent_{$type}_newsletter");
 
+        $max_calls_per_second = 5;
+        $microseconds_per_call = round(1000000 / $max_calls_per_second);
+
+        $start_time = microtime(true);
+
         foreach ($users->get() as $user)
         {
             $user->notify(new PostNewsletter($this));
+
+            $time_taken = microtime(true) - $start_time;
+            $sleep_time = $microseconds_per_call - ($time_taken * 1000000);
+
+            if ($sleep_time > 0) usleep($sleep_time);
+
+            $start_time = microtime(true);
         }
 
         return $this;
