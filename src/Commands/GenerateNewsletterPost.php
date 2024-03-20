@@ -3,6 +3,7 @@
 namespace Ferranfg\Base\Commands;
 
 use Ferranfg\Base\Base;
+use Ferranfg\Base\Repositories\PostRepository;
 use Illuminate\Console\Command;
 
 class GenerateNewsletterPost extends Command
@@ -28,7 +29,10 @@ class GenerateNewsletterPost extends Command
      */
     public function handle()
     {
-        $posts = Base::post()
+        $posts = (new PostRepository)
+            ->whereStatus('published')
+            ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
+            ->whereFeatured(false)
             ->where(Base::post()->getTable() . '.created_at', '>=', now()->subWeek())
             ->orderByVisits()
             ->limit(3)

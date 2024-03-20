@@ -338,6 +338,9 @@ class Post extends Model implements Feedable
             case 'non-customers':
                 $users ->whereNull('stripe_id');
             break;
+            case strtotime($type):
+                $users->where('created_at', '>=', Carbon::createFromTimestamp($type));
+            break;
         endswitch;
 
         $this->setMetadata("sent_{$type}_newsletter_at", Carbon::now());
