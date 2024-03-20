@@ -48,7 +48,10 @@ trait HasVisits
     {
         $crawlers = ['bot', 'crawl', 'slurp', 'spider', 'mediapartners'];
 
-        if (Str::contains(request()->userAgent(), $crawlers)) return $this;
+        if (Str::contains(request()->userAgent(), $crawlers) or auth()->check())
+        {
+            return $this;
+        }
 
         if (config('base.tracking_api')) $this->trackVisitWithApi();
 
