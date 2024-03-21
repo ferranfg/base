@@ -142,6 +142,14 @@ class Post extends Model implements Feedable
     }
 
     /**
+     * Get the introduction text until the first line break.
+     */
+    public function getIntroductionAttribute()
+    {
+        return substr($this->content, 0, strpos($this->content, "\n"));
+    }
+
+    /**
      * Get the created at time in a human format.
      */
     public function getCreatedAtDiffAttribute()
