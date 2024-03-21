@@ -3,7 +3,7 @@
 
 ![{{ $post->name }}]({{ $post->horizontal_photo_url }})
 
-{{$post->excerpt }}
+{{ mb_strlen($post->introduction) > mb_strlen($post->excerpt) ? $post->introduction : $post->excerpt }}
 
 [{{ __('Read more') }}]({{ $post->canonical_url }})
 
