@@ -9,6 +9,10 @@ $dark: #191919;
 // Overlay
 $overlay: rgba($dark, 0.7);
 
+.text-white-70 {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 // Twemoji
 img.emoji {
     height: 1em;
@@ -315,4 +319,11 @@ img.emoji {
     .modal-body {
         overflow-y: auto;
     }
+}
+
+// FAQ
+.faq-content .card a.faq[data-toggle=collapse]:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f078";
 }
