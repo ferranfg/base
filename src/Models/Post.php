@@ -164,7 +164,9 @@ class Post extends Model implements Feedable
      */
     public function getIntroductionAttribute()
     {
-        return substr($this->content, 0, strpos($this->content, "\n"));
+        $introduction = substr($this->content, 0, strpos($this->content, "\n"));
+
+        return mb_strlen($introduction) > 460 ? substr($introduction, 0, 460) . '…' : $introduction;
     }
 
     /**
