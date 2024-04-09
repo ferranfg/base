@@ -54,6 +54,15 @@
 </head>
 <body>
     <div id="spark-app" v-cloak>
+        <div id="preloader" style="display:none">
+            <div id="status" style="display:none">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+        </div>
+
         @section('header')
             <header id="topnav" class="defaultscroll sticky">
                 <div class="container">
