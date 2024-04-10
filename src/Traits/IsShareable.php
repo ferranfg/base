@@ -2,8 +2,14 @@
 
 namespace Ferranfg\Base\Traits;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Arr;
+
 trait IsShareable
 {
+    use HasMetadata;
+
     /**
      * Construye la URL de intent tweet para compartir directamente
      * https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview
@@ -50,5 +56,36 @@ trait IsShareable
         return 'https://api.whatsapp.com/send?' . http_build_query([
             'text' => $this->canonical_url,
         ]);
+    }
+
+    /**
+     * Check if the model has a shortlink service.
+     */
+    public function hasShortlink()
+    {
+        return config('services.bitly.secret');
+    }
+
+    /**
+     * Get the shortlink of the model or create a new one.
+     */
+    public function shortlink()
+    {
+        if ($shortlink = $this->getMetadata('_shortlink')) return Arr::get($shortlink, 'link');
+
+        $request = (new Client)->post('https://api-ssl.bitly.com/v4/shorten', [
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . config('services.bitly.secret'),
+            ],
+            RequestOptions::JSON => [
+                'long_url' => $this->canonical_url,
+            ]
+        ]);
+
+        $response = json_decode($request->getBody()->getContents(), true);
+
+        $this->setMetadata('_shortlink', $response);
+
+        return Arr::get($response, 'link');
     }
 }
