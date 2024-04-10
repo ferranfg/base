@@ -58,9 +58,12 @@
             <div class="row justify-content-center">
                 <div class="col-md-1 d-none d-md-block">
                     <ul class="list-unstyled text-center social-icon">
-                        <li><a href="{{ $post->intentFacebookUrl() }}" class="rounded"><i class="fa fa-facebook-square"></i></a></li>
-                        <li><a href="{{ $post->intentTweetUrl() }}" class="rounded"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="{{ $post->intentWhatsAppUrl() }}" class="rounded"><i class="fa fa-whatsapp"></i></a></li>
+                        <li><a href="{{ $post->intentFacebookUrl() }}" class="rounded" rel="noreferrer nofollow"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="{{ $post->intentTweetUrl() }}" class="rounded" rel="noreferrer nofollow"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="{{ $post->intentWhatsAppUrl() }}" class="rounded" rel="noreferrer nofollow"><i class="fa fa-whatsapp"></i></a></li>
+                        @if ($post->hasShortlink())
+                            <li><a href="{{ $post->shortlink() }}" class="rounded" rel="noreferrer nofollow"><i class="fa fa-link"></i></a></li>
+                        @endif
                     </ul>
                 </div>
                 <div class="col-lg-7 col-md-11">
