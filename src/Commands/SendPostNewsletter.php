@@ -3,6 +3,7 @@
 namespace Ferranfg\Base\Commands;
 
 use Ferranfg\Base\Base;
+use Ferranfg\Base\Jobs\SendPostNewsletter as SendPostNewsletterJob;
 use Illuminate\Console\Command;
 
 class SendPostNewsletter extends Command
@@ -32,7 +33,7 @@ class SendPostNewsletter extends Command
 
         if (is_null($post)) return Command::FAILURE;
 
-        $post->sendNewsletter($this->option('type'));
+        SendPostNewsletterJob::dispatch($post, $this->option('type'));
 
         return Command::SUCCESS;
     }
