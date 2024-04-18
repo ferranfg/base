@@ -69,25 +69,27 @@ class UpdateDynamicPost extends Command
 
         foreach ($pieces as $piece)
         {
-            $tokens = ceil(count(explode(' ', $piece['body']))) * 1.5;
             $prompt = [
-                "Rewrite the following subsection taken from a blog post.",
-                "This subsection is titled: \"{$piece['header']}\".",
-                "The content you write must keep the same meaning and structure as the original.",
-                "The response must be in markdown format; using only paragraphs, bold, italics, lists or links.",
-                "Keep the original elements such as links, images, code blocks, etc.",
-                "Do not include the subsection title in your response; start writing from the first paragraph.",
-                "Limit your response to {$tokens} tokens or less.",
+                "Read the following subsection taken from a blog post.",
                 (string) null,
-                "Original content:",
+                "Post Title: \"{$post->name}\"",
+                "Post Except: \"{$post->excerpt}\"",
+                (string) null,
+                "Subsection Title: \"{$piece['header']}\".",
+                "Subsection Content:",
                 $piece['body'],
+                (string) null,
+                "Now, write a new paragraph to be included in this same subsection, written in a similar style and tone as the text above.",
+                "The new content must provide examples, use cases, personal experiences, or other relevant information related to this subsection.",
+                "The response must be plain text. Do not include any Markdown or HTML formatting.",
             ];
 
             $assistance = Assistance::completion(implode("\n", $prompt), [
+                'model' => 'gpt-3.5-turbo',
                 'temperature' => 0.5
             ]);
 
-            $content_updated = $assistance->choices[0]->message->content;
+            $content_updated = $piece['body'] . $assistance->choices[0]->message->content . "\n\n";
 
             if ($this->option('debug') == 'false')
             {

@@ -213,7 +213,7 @@ if ( ! function_exists('blog_extended_post'))
     {
         $content = $post->content;
 
-        if ( ! config('base.blog_extended_post')) return $content;
+        if ( ! config('base.blog_post_halfway')) return $content;
 
         // Buscamos un punto final, salto de linea y el segundo h2
         $content = str_replace("\r", '', $content);
@@ -226,7 +226,7 @@ if ( ! function_exists('blog_extended_post'))
             if (array_key_exists(1, $matches) and array_key_exists($h_index, $matches[1]))
             {
                 $replace = $matches[1][$h_index];
-                $halfway = view(config('base.blog_extended_post'), [
+                $halfway = view(config('base.blog_post_halfway'), [
                     'h_index' => $h_index,
                     'related' => $related,
                 ])->render();

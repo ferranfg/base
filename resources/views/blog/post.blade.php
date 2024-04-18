@@ -69,7 +69,7 @@
                 <div class="col-lg-7 col-md-11">
                     @if ( ! $post->is_page)
 
-                        @includeWhen(config('base.blog_before_post'), config('base.blog_before_post'))
+                        @includeWhen(config('base.blog_post_banner'), config('base.blog_post_banner'))
 
                         <div class="post">
                             @basedownExtended(
@@ -85,8 +85,6 @@
                                 @endforeach
                             </p>
                         @endif
-
-                        @includeWhen(config('base.blog_after_post'), config('base.blog_after_post'))
 
                         @if ($related->count())
                             <div class="mt-5">

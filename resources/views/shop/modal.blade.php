@@ -6,7 +6,7 @@
         </div>
         <div class="modal-body p-4">
             <div class="container-fluid px-0" style="min-height:718px">
-                @include('base::shop.detail', ['product' => $product])
+                @include('base::shop.product-detail', ['product' => $product])
             </div>
         </div>
     </div>

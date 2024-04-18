@@ -63,6 +63,8 @@ return [
 
     'shop_currency' => 'EUR',
 
+    'shop_product_detail' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Blog Information
@@ -86,11 +88,9 @@ return [
 
     'blog_keywords' => false,
 
-    'blog_before_post' => null,
+    'blog_post_banner' => null,
 
-    'blog_after_post' => null,
-
-    'blog_extended_post' => 'base::blog.post-halfway',
+    'blog_post_halfway' => 'base::blog.post-halfway',
 
     /*
     |--------------------------------------------------------------------------
