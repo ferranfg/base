@@ -65,6 +65,7 @@
                 <a href="{{ $product->intentFacebookUrl() }}" class="btn btn-outline-primary btn-sm" title="Compartir en Facebook" rel="noreferrer nofollow"><span class="fa fa-facebook-square"></span></a>
                 <a href="{{ $product->intentPinterestUrl() }}" class="btn btn-outline-danger btn-sm" title="Compartir en Pinterest" rel="noreferrer nofollow"><span class="fa fa-pinterest"></span></a>
             </div>
+            @includeWhen(config('base.shop_product_detail'), config('base.shop_product_detail'))
         </div>
     </div>
 </div>

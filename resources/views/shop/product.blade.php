@@ -37,7 +37,7 @@
 
     <section class="section">
         <div class="container">
-            @include('base::shop.detail', ['product' => $product])
+            @include('base::shop.product-detail', ['product' => $product])
         </div>
         <div class="container mt-100 mt-60" id="more-details">
             <ul class="nav nav-pills shadow flex-column flex-sm-row d-md-inline-flex mb-0 p-1 bg-white rounded position-relative overflow-hidden" id="pills-tab">

@@ -63,6 +63,8 @@ return [
 
     'shop_currency' => 'EUR',
 
+    'shop_product_detail' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Blog Information
