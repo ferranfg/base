@@ -71,7 +71,8 @@ class NewsletterController extends Controller
         event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'email' => $user->email,
         ]);
     }
 
