@@ -43,16 +43,29 @@
         "price": "{{ $product->amount }}",
         "priceCurrency": "{{ $product->currency }}",
         "availability": "http://schema.org/InStock",
+        "priceValidUntil": "{{ now()->endOfYear()->toISOString() }}",
         "seller": {
             "@type": "Organization",
             "name": "{{ config('base.shop_title') }}",
             "url": "{{ url('shop') }}"
+        },
+        "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "url": "{{ url('shop') }}"
+        },
+        "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": {
+                "@type": "MonetaryAmount",
+                "currency": "{{ config('base.shop_currency') }}",
+                "value": "0"
+            }
         }
     },
     "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "{{ $product->avgRating() }}",
-        "reviewCount": "{{ $product->comments_disabled ? 0 : $product->comments->count() }}"
+        "ratingValue": "{{ $product->avgRating() ?: 5 }}",
+        "reviewCount": "{{ $product->comments_disabled ? 1 : ($product->comments->count() ?: 1) }}"
     }
 }
 </script>

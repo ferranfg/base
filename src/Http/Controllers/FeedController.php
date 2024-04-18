@@ -48,6 +48,7 @@ class FeedController extends Controller
             $item = new Product();
 
             $item->setId((string) $product->slug);
+            $item->setGtin((string) $product->slug);
             $item->setTitle((string) $product->name);
             $item->setDescription((string) $product->description);
             $item->setLink((string) $product->canonical_url);
