@@ -14,7 +14,7 @@ class UpdateDynamicPost extends Command
      *
      * @var string
      */
-    public $signature = 'base:update-dynamic-post {post?} {--level=3} {--debug=false}';
+    public $signature = 'base:update-dynamic-post {post?} {--level=3} {--index=random} {--debug=false}';
 
     /**
      * The console command description.
@@ -47,60 +47,71 @@ class UpdateDynamicPost extends Command
         if (is_null($post)) return Command::FAILURE;
 
         $level = $this->option('level');
-        $pieces = collect(
-                (new markdownSplit)->splitMarkdownAtLevel((string) $post->content, true, $level)
-            )
-            ->reject(function($piece) use ($level)
-            {
-                // Wrong piece format
-                if ( ! array_key_exists('level', $piece)) return true;
-                // We only want level {$level} headings
-                if ($piece['level'] != $level) return true;
-                // Long text to rewrite
-                if (mb_strlen($piece['body']) < 200) return true;
 
-                return false;
-            });
+        $subsection_title = null;
+        $subsection_content = null;
 
-        if ( ! $pieces->count()) return Command::SUCCESS;
-
-        // Prueba piloto haciendo el cambio de un solo trozo
-        $pieces = [$pieces->random()];
-
-        foreach ($pieces as $piece)
+        if ($level == "intro")
         {
-            $prompt = [
-                "Read the following subsection taken from a blog post.",
-                (string) null,
-                "Post Title: \"{$post->name}\"",
-                "Post Except: \"{$post->excerpt}\"",
-                (string) null,
-                "Subsection Title: \"{$piece['header']}\".",
-                "Subsection Content:",
-                $piece['body'],
-                (string) null,
-                "Now, write a new paragraph to be included in this same subsection, written in a similar style and tone as the text above.",
-                "The new content must provide examples, use cases, personal experiences, or other relevant information related to this subsection.",
-                "The response must be plain text. Do not include any Markdown or HTML formatting.",
-            ];
-
-            $assistance = Assistance::completion(implode("\n", $prompt), [
-                'model' => 'gpt-3.5-turbo',
-                'temperature' => 0.5
-            ]);
-
-            $content_updated = $piece['body'] . $assistance->choices[0]->message->content . "\n\n";
-
-            if ($this->option('debug') == 'false')
-            {
-                $post->content = str_replace($piece['body'], $content_updated, $post->content);
-                $post->save();
-            }
-
-            $this->info("Post Updated ID: {$post->id}");
-            $this->info("Old Content: {$piece['body']}");
-            $this->info("New Content: {$content_updated}");
-            $this->info("Debug Mode: {$this->option('debug')}");
+            $subsection_title = "Introduction";
+            $subsection_content = explode("\r\n", $post->content)[0] . "\n\n";
         }
+        else
+        {
+            $subsections = collect(
+                    (new markdownSplit)->splitMarkdownAtLevel((string) $post->content, true, $level)
+                )
+                ->reject(function($subsection) use ($level)
+                {
+                    // Wrong subsection format
+                    if ( ! array_key_exists('level', $subsection)) return true;
+                    // We only want level {$level} headings
+                    if ($subsection['level'] != $level) return true;
+
+                    return false;
+                })
+                // Remove the keys to start from 0
+                ->values();
+
+            if ( ! $subsections->count()) return Command::SUCCESS;
+
+            $subsection = $subsections->get((int) $this->option('index'));
+
+            if ($this->option('index') == 'random' or is_null($subsection)) $subsection = $subsections->random();
+
+            $subsection_title = $subsection['header'];
+            $subsection_content = $subsection['body'];
+        }
+
+        $prompt = [
+            "Read the following subsection taken from a blog post.",
+            (string) null,
+            "Post Title: \"{$post->name}\"",
+            "Post Except: \"{$post->excerpt}\"",
+            (string) null,
+            "Subsection Title: \"{$subsection_title}\".",
+            "Subsection Content:",
+            $subsection_content,
+            (string) null,
+            "Now, write a new paragraph to extend this same subsection, written in a similar style and tone as the text above.",
+            "The response must be plain text. Do not include any Markdown or HTML formatting.",
+        ];
+
+        $assistance = Assistance::completion(implode("\n", $prompt), [
+            'temperature' => 0.5
+        ]);
+
+        $subsection_updated = $subsection_content . $assistance->choices[0]->message->content . "\n\n";
+
+        if ($this->option('debug') == 'false')
+        {
+            $post->content = str_replace($subsection_content, $subsection_updated, $post->content);
+            $post->save();
+        }
+
+        $this->info("Post Updated ID: {$post->id}");
+        $this->info("Old Content: {$subsection_content}");
+        $this->info("New Content: {$subsection_updated}");
+        $this->info("Debug Mode: {$this->option('debug')}");
     }
 }
