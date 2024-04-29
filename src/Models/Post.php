@@ -339,9 +339,6 @@ class Post extends Model implements Feedable
         $users = Base::user()->whereNull('unsubscribed_at')->where('email', '!=', '0x%');
 
         switch ($type):
-            case 'test':
-                $users->whereIn('email', Base::$developers);
-            break;
             case 'customers':
                 $users->whereNotNull('stripe_id');
             break;
@@ -351,6 +348,8 @@ class Post extends Model implements Feedable
             case strtotime($type):
                 $users->where('created_at', '>=', Carbon::createFromTimestamp($type));
             break;
+            default: // test or unknown
+                $users->whereIn('email', Base::$developers);
         endswitch;
 
         $this->setMetadata("sent_{$type}_newsletter_at", Carbon::now());
