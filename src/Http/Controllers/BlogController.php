@@ -99,35 +99,13 @@ class BlogController extends Controller
     }
 
     /**
-     * Lista y pagina las entradas del blog
+     * Lista y pagina las entradas del blog (Deprecated)
      *
      * @return Response
      */
     public function tag(Request $request)
     {
-        $keyword = rawurldecode($request->keyword);
-        $posts = $this->postRepository
-            ->whereStatus('published')
-            ->whereIn('type', ['entry', 'dynamic', 'newsletter'])
-            ->whereFeatured(false)
-            ->where('keywords', 'like', "%{$keyword}%")
-            ->orderBy('updated_at', 'desc')
-            ->simplePaginate(8);
-
-        abort_unless($posts->count(), 404);
-
-        view()->share([
-            'meta_title' => meta_title("Tag: {$keyword}"),
-            'meta_description' => config('base.blog_description')
-        ]);
-
-        return view('base::blog.list', [
-            'hero_title' => $keyword,
-            'hero_description' => null,
-            'posts' => $posts,
-            'featured' => collect(),
-            'pinned' => false,
-        ]);
+        return redirect()->route('blog.list', [], 301);
     }
 
     /**
