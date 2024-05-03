@@ -339,6 +339,9 @@ class Post extends Model implements Feedable
         $users = Base::user()->whereNull('unsubscribed_at')->where('email', '!=', '0x%');
 
         switch ($type):
+            case 'all':
+                // All users
+            break;
             case 'customers':
                 $users->whereNotNull('stripe_id');
             break;
@@ -348,7 +351,7 @@ class Post extends Model implements Feedable
             case strtotime($type):
                 $users->where('created_at', '>=', Carbon::createFromTimestamp($type));
             break;
-            default: // test or unknown
+            default: // "test", empty or unknown option
                 $users->whereIn('email', Base::$developers);
         endswitch;
 
