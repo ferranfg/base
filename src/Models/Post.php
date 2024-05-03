@@ -348,9 +348,6 @@ class Post extends Model implements Feedable
             case 'non-customers':
                 $users ->whereNull('stripe_id');
             break;
-            case strtotime($type):
-                $users->where('created_at', '>=', Carbon::createFromTimestamp($type));
-            break;
             default: // "test", empty or unknown option
                 $users->whereIn('email', Base::$developers);
         endswitch;
