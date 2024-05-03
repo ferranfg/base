@@ -1,6 +1,6 @@
 <link rel="canonical" href="{{ $meta_url }}">
 
-@if (function_exists('dialect') and ! route()->is('blog.*'))
+@if (function_exists('dialect') and ! str_contains(request()->url(), 'blog'))
     @foreach(tongue()->speaking()->all() as $locale => $properties)
         <link rel="alternate" href="{{ dialect_redirect_url($meta_url, $locale) }}" hreflang="{{ $locale }}" />
     @endforeach
