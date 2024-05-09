@@ -48,6 +48,8 @@ class ImportProductsOutscraper extends Command
             if ( ! $description) $description = Arr::get($product, 'about');
             if (str_contains($image, 'pixel')) $image = Arr::get($product, 'image_2');
 
+            $slug = str_replace('-', (string) null, $slug);
+
             $product = Base::product()->updateOrCreate([
                 'slug' => $slug,
             ], [
