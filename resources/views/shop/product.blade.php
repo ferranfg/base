@@ -105,13 +105,13 @@
                             @if ($previous)
                                 <a href="{{ $previous->canonical_url }}" class="text-dark align-items-center">
                                     <span class="fa fa-arrow-left"></span>
-                                    <span class="text-muted d-none d-md-inline-block">{{ $previous->name }}</span>
+                                    <span class="text-muted d-none d-lg-inline-block">{{ Str::limit($previous->name, 35) }}</span>
                                     {!! img($previous->photo_url, 75, 75, true, 'avatar avatar-small rounded shadow ml-2 lazy', $previous->name, 65, 65) !!}
                                 </a>
                             @else
                                 <a href="/random" class="text-dark align-items-center">
                                     <span class="fa fa-arrow-left"></span>
-                                    <span class="text-muted d-none d-md-inline-block">Ver producto random 🤩</span>
+                                    <span class="text-muted d-none d-lg-inline-block">Ver producto random 🤩</span>
                                 </a>
                             @endif
                             <a href="/" class="btn btn-lg btn-pills btn-icon btn-soft-primary">
@@ -120,12 +120,12 @@
                             @if ($next)
                                 <a href="{{ $next->canonical_url }}" class="text-dark align-items-center">
                                     {!! img($next->photo_url, 75, 75, true, 'avatar avatar-small rounded shadow mr-2 lazy', $next->name, 65, 65) !!}
-                                    <span class="text-muted d-none d-md-inline-block">{{ $next->name }}</span>
+                                    <span class="text-muted d-none d-lg-inline-block">{{ Str::limit($next->name, 35) }}</span>
                                     <span class="fa fa-arrow-right"></span>
                                 </a>
                             @else
                                 <a href="/random" class="text-dark align-items-center">
-                                    <span class="text-muted d-none d-md-inline-block">Ver producto random 🤩</span>
+                                    <span class="text-muted d-none d-lg-inline-block">Ver producto random 🤩</span>
                                     <span class="fa fa-arrow-right"></span>
                                 </a>
                             @endif
