@@ -1,6 +1,6 @@
 
 <div class="container-fluid mt-100 mt-60">
-    <div class="rounded shadow py-5 lazy" data-bg="url({{ hero_image() }})" style="background-position:center">
+    <div class="rounded shadow py-5 lazy" data-bg="url({{ hero_image() }})" style="background-position:center;background-size:cover">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
