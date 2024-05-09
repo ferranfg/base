@@ -40,18 +40,20 @@ class ImportProductsOutscraper extends Command
         foreach ($products as $product)
         {
             $name = Arr::get($product, 'name');
+            $slug = Arr::get($product, 'details_isbn-13');
             $description = Arr::get($product, 'description');
             $image = Arr::get($product, 'image_1');
 
+            if ( ! $slug) $slug = Arr::get($product, 'asin');
             if ( ! $description) $description = Arr::get($product, 'about');
             if (str_contains($image, 'pixel')) $image = Arr::get($product, 'image_2');
 
             $product = Base::product()->updateOrCreate([
-                'slug' => Arr::get($product, 'asin'),
+                'slug' => $slug,
             ], [
                 'owner_id' => 1,
                 'name' => implode(' ', array_slice(explode(' ', $name), 0, 7)),
-                'slug' => Arr::get($product, 'asin'),
+                'slug' => $slug,
                 'description' => "{$name}. {$description}",
                 'attached_url' => Arr::get($product, 'short_url'),
                 'photo_url' => $image,
