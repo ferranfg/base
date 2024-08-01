@@ -5,7 +5,6 @@ namespace Ferranfg\Base\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Ferranfg\Base\Events\DiscordMessage;
 use Ferranfg\Base\Repositories\UserRepository;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -68,8 +67,6 @@ class NewsletterController extends Controller
 
         activity()->performedOn($user)->log('subscribed');
 
-        event(new DiscordMessage('UserSubscribed', ['email' => $user->email]));
-
         return response()->json([
             'success' => true,
             'email' => $user->email,
@@ -98,8 +95,6 @@ class NewsletterController extends Controller
         $user->save();
 
         activity()->performedOn($user)->log('unsubscribed');
-
-        event(new DiscordMessage('UserUnsubscribed', ['email' => $user->email]));
 
         return redirect('/')->with('info', '
             <p class="mb-0">You have been unsubscribed from our newsletter 😥</p>

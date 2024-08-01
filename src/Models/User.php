@@ -72,17 +72,6 @@ class User extends SparkUser
     }
 
     /**
-     * Route notifications for the Discord channel.
-     *
-     * @param  \Illuminate\Notifications\Notification  $notification
-     * @return string
-     */
-    public function routeNotificationForDiscord($notification)
-    {
-        return config('base.discord_webhook');
-    }
-
-    /**
      * Get the customer id on Stripe.
      */
     public function stripeCustomerId()
