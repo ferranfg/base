@@ -29,8 +29,6 @@ class MixpanelEventSubscriber
     {
         try
         {
-            if ($name == ExceptionReported::class or app()->isLocal()) return;
-
             $mixpanel = Mixpanel::getInstance(config('services.mixpanel.key'), [
                 'host' => 'api-eu.mixpanel.com'
             ]);
