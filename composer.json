@@ -41,7 +41,7 @@
         "livewire/livewire": "^2.0",
         "mixpanel/mixpanel-php": "^2.11",
         "mpociot/vat-calculator": "^3.3",
-        "openai-php/client": "^0.4.1",
+        "openai-php/client": "^0.10.0",
         "ramsey/uuid": "^4.3",
         "laravel/slack-notification-channel": "^3.3",
         "soved/laravel-gdpr": "^1.5",
