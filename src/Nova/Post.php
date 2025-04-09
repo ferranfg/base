@@ -80,7 +80,7 @@ class Post extends Resource
                 ->hideFromIndex(),
 
             BelongsTo::make('Author', 'author', User::class)
-                ->sortable()
+                ->searchable()
                 ->rules('required')
                 ->hideFromIndex(),
 
