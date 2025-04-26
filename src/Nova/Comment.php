@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\BelongsTo;
 use Ferranfg\Base\Nova\Filters\CommentType;
 
 class Comment extends Resource
@@ -50,6 +51,9 @@ class Comment extends Resource
                 Post::class,
                 Product::class,
             ]),
+
+            BelongsTo::make('Author', 'author', User::class)
+                ->searchable(),
 
             Text::make('Author Name'),
 
