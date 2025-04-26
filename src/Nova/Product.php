@@ -87,7 +87,7 @@ class Product extends Resource
                 ->onlyOnForms(),
 
             BelongsTo::make('Owner', 'owner', User::class)
-                ->sortable()
+                ->searchable()
                 ->rules('required')
                 ->onlyOnForms(),
 
