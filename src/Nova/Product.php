@@ -63,12 +63,12 @@ class Product extends Resource
                 ->onlyOnDetail(),
 
             Number::make('Amount')
-                ->step(1)
+                ->step(0.01)
                 ->sortable()
                 ->rules('required'),
 
             Number::make('Sale Amount')
-                ->step(1)
+                ->step(0.01)
                 ->sortable(),
 
             Select::make('Currency')
