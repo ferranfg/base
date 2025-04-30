@@ -3,6 +3,7 @@
 namespace Ferranfg\Base\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Str;
 
 class BaseMiddleware
 {
@@ -28,6 +29,11 @@ class BaseMiddleware
 
             $redirect = $redirects->first(function ($redirect) use ($request)
             {
+                if (Str::startsWith($redirect->url, '/') and Str::endsWith($redirect->url, '/'))
+                {
+                    return preg_match($redirect->url, $request->url());
+                }
+
                 return $redirect->url == $request->url();
             });
 
