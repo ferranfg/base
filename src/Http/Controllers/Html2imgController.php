@@ -25,17 +25,20 @@ class Html2imgController extends Controller
 
         abort_unless($request->filename and $request->template, 422, 'Filename and template is required.');
 
+        $width = $request->get('width', 540);
+        $height = $request->get('height', 540);
+
         return view('base::html2img.preview', [
             'filename' => $request->filename,
             'template' => $request->template,
             'background' => img_url($request->get('background', hero_image()), [
-                ['width' => 1080, 'height' => 1080]
+                ['width' => $width * 2, 'height' => $height * 2]
             ]),
             'pre_title' => $request->get('pre_title', config('app.name')),
             'title' => $request->title,
             'description' => $request->description,
-            'width' => 540,
-            'height' => 540,
+            'width' => $width,
+            'height' => $height,
         ]);
     }
 
