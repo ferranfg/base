@@ -38,7 +38,7 @@
         "laravel/nova": "^4.24",
         "laravel/socialite": "^5.8",
         "league/commonmark": "^2.4",
-        "livewire/livewire": "^2.0",
+        "livewire/livewire": "^3.0",
         "mixpanel/mixpanel-php": "^2.11",
         "mpociot/vat-calculator": "^3.3",
         "openai-php/client": "^0.13",
