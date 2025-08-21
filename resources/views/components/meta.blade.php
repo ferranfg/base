@@ -1,3 +1,5 @@
+@props(['theme_color' => '#2f55d4'])
+
 <link rel="canonical" href="{{ $meta_url }}">
 
 @if (function_exists('dialect') and ! str_contains(request()->url(), 'blog'))
@@ -20,7 +22,7 @@
 
 <meta property="fb:app_id" content="{{ config('services.facebook.client_id') }}" />
 
-<meta name="theme-color" content="#2f55d4" />
+<meta name="theme-color" content="{{ $theme_color }}" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{ $meta_title }}" />
