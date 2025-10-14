@@ -35,7 +35,7 @@
         "intervention/image": "^2.5",
         "jakiboy/apaapi": "^1.1",
         "jenssegers/agent": "^2.6",
-        "laravel/nova": "^4.24",
+        "laravel/nova": "^5.0",
         "laravel/socialite": "^5.8",
         "league/commonmark": "^2.4",
         "livewire/livewire": "^3.0",
