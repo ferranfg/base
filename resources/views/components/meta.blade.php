@@ -6,7 +6,7 @@
     @foreach(tongue()->speaking()->all() as $locale => $properties)
         <link rel="alternate" href="{{ dialect_redirect_url($meta_url, $locale) }}" hreflang="{{ $locale }}" />
     @endforeach
-    <link rel="alternate" href="{{ dialect_redirect_url($meta_url, 'es') }}" hreflang="x-default" />
+    <link rel="alternate" href="{{ dialect_redirect_url($meta_url, config('app.locale')) }}" hreflang="x-default" />
 @else
     <link rel="alternate" href="{{ $meta_url }}" hreflang="{{ config('app.locale') }}" />
     <link rel="alternate" href="{{ $meta_url }}" hreflang="x-default" />
