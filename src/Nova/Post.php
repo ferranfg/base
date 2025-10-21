@@ -14,7 +14,6 @@ use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\MorphToMany;
 use Ferranfg\Base\Nova\Filters\PostType;
 use Ferranfg\Base\Nova\Filters\PostStatus;
 use Laravel\Nova\Fields\DateTime;
@@ -107,8 +106,6 @@ class Post extends Resource
 
             KeyValue::make('Showcase Product Ids')
                 ->rules('json'),
-
-            MorphToMany::make('Tags'),
         ];
     }
 
