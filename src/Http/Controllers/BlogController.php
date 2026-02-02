@@ -119,7 +119,7 @@ class BlogController extends Controller
 
         if (is_null($request->preview))
         {
-            abort_unless($post->status == 'published', 404);
+            abort_unless(in_array($post->status, ['published', 'private']), 404);
 
             $post->trackVisit();
         }
