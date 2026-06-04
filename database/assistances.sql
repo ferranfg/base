@@ -42,3 +42,7 @@ $$;
 create index on assistances using ivfflat (embedding vector_cosine_ops)
 with
   (lists = 100);
+
+-- STEP 5
+
+select setval('assistances_id_seq', (select coalesce(max(id), 1) from assistances));
