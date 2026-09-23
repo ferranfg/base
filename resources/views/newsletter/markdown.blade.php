@@ -10,6 +10,24 @@
         font-size: 16px;
         line-height: 1.5em;
     }
+    pre {
+        background: #1f2937;
+        border-radius: 6px;
+        padding: 16px;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+    pre code {
+        color: #e5e7eb;
+        font-size: 14px;
+        line-height: 1.6em;
+    }
+    pre a {
+        color: #93c5fd;
+    }
+    code {
+        font-size: 15px;
+    }
 </style>
 
 <h1 style="font-size:24px"><a href="{{ $post->canonical_url }}" style="text-decoration:none;color:#3d4852">{{ $post->name }}</a></h1>
