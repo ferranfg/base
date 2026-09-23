@@ -10,13 +10,9 @@
         font-size: 16px;
         line-height: 1.5em;
     }
-    h2 {
+    .content-cell h2 {
         font-size: 20px;
         margin-top: 32px;
-    }
-    h3 {
-        font-size: 18px;
-        margin-top: 24px;
     }
     pre {
         background: #f1f5f9;
