@@ -10,20 +10,26 @@
         font-size: 16px;
         line-height: 1.5em;
     }
+    h2 {
+        font-size: 20px;
+        margin-top: 32px;
+    }
+    h3 {
+        font-size: 18px;
+        margin-top: 24px;
+    }
     pre {
-        background: #1f2937;
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
         border-radius: 6px;
         padding: 16px;
         white-space: pre-wrap;
         word-break: break-word;
     }
     pre code {
-        color: #e5e7eb;
+        color: #1f2937;
         font-size: 14px;
         line-height: 1.6em;
-    }
-    pre a {
-        color: #93c5fd;
     }
     code {
         font-size: 15px;
