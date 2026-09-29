@@ -96,6 +96,8 @@ class NewsletterController extends Controller
 
         activity()->performedOn($user)->log('unsubscribed');
 
+        if ($request->isMethod('post')) return response()->noContent();
+
         return redirect('/')->with('info', '
             <p class="mb-0">You have been unsubscribed from our newsletter 😥</p>
         ');

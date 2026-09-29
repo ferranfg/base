@@ -71,6 +71,7 @@ class BaseNewsletter extends Mailable
         return new Headers(
             text: [
                 'List-Unsubscribe' => "<{$this->unsubscribe_url}>",
+                'List-Unsubscribe-Post' => 'List-Unsubscribe=One-Click',
             ],
         );
     }
