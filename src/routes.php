@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 if (config('feed.feeds.main.items')) Route::feeds('feed');
 
+Route::post('/newsletter/unsubscribe/{token}', '\Ferranfg\Base\Http\Controllers\NewsletterController@unsubscribe');
+
 Route::group(['middleware' => 'web'], function ()
 {
     Route::get('/_ah/{action}', '\Ferranfg\Base\Http\Controllers\SchedulerController@engine');

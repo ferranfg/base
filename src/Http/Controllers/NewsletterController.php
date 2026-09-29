@@ -92,6 +92,8 @@ class NewsletterController extends Controller
         $user->unsubscribed_at = Carbon::now();
         $user->save();
 
+        if ($request->isMethod('post')) return response()->noContent();
+
         return redirect('/')->with('info', '
             <p class="mb-0">You have been unsubscribed from our newsletter 😥</p>
         ');
