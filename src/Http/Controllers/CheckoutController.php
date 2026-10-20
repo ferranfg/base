@@ -7,6 +7,7 @@ use Stripe\Checkout\Session;
 use Illuminate\Http\Request;
 use Ferranfg\Base\Models\Cart;
 use Stripe\Charge;
+use Stripe\Stripe;
 use Stripe\Exception\InvalidRequestException;
 
 class CheckoutController extends ShopController
@@ -42,6 +43,8 @@ class CheckoutController extends ShopController
      */
     public function redirect()
     {
+        abort_unless(Stripe::getApiKey(), 404);
+
         try
         {
             $line_items = Cart::init('cart')->map(function ($item)
@@ -95,6 +98,7 @@ class CheckoutController extends ShopController
      */
     public function success(Request $request)
     {
+        abort_unless(Stripe::getApiKey(), 404);
         abort_unless($request->session_id, 404);
 
         try
@@ -128,6 +132,8 @@ class CheckoutController extends ShopController
      */
     public function invoice(Request $request)
     {
+        abort_unless(Stripe::getApiKey(), 404);
+
         try
         {
             $session = Session::retrieve($request->get('session_id'));
